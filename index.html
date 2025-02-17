@@ -1,24 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
+    <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZE9EYLHTK"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-YZE9EYLHTK');
+</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="K-ONE IT SOLUTIONS provides innovative IT services and solutions." />
+    <meta name="keywords" content="IT Solutions, Technology, Consulting" />
+    <meta name="author" content="K-ONE IT SOLUTIONS" />
     <title>K-ONE IT SOLUTIONS | Home</title>
     <!-- Link to external CSS (if you have one) -->
     <link rel="stylesheet" href="styles.css" />
+    <!-- Favicon -->
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
   </head>
   <body>
     <header>
       <div class="container">
         <div class="logo">
-          <!-- You can use an image or text logo -->
-          <img src="logo.png" alt="K-ONE IT SOLUTIONS Logo" />
-          <!-- Or simply: -->
-          <!-- <h1>K-ONE IT SOLUTIONS</h1> -->
+          <img src="images/icon.png" alt="K-ONE IT SOLUTIONS Logo" />
         </div>
         <nav>
           <ul>
-            <li><a href="#home">Home</a></li>
+            <li><a href="index.html">Home</a></li>
             <li><a href="services.html">Services</a></li>
             <li><a href="about.html">About Me</a></li>
             <li><a href="contact.html">Contact</a></li>
@@ -30,61 +41,39 @@
     <main id="home">
       <div class="container">
         <section class="hero">
-          <h2>Welcome to K-ONE IT SOLUTIONS</h2>
-          <p>Your trusted IT partner for innovative solutions.</p>
-          <a href="#contact" class="btn">Get in Touch</a>
+          <h1>Welcome to K-ONE IT SOLUTIONS</h1>
         </section>
-        <!-- You can add more sections below, e.g., services, about, etc. -->
-
-        <section id="about">
-          <h3>About Me</h3>
-          <p>I'm Kone Tshivhinda, owner of K-ONE IT SOLUTIONS. I'm enthusiastic about development, whether it's frontend or backend, I can do it all. With a passion for creating innovative solutions, I strive to deliver the best IT services to my clients. My expertise spans across various technologies and I am always eager to learn and adapt to new challenges.</p>
-          <p>In my free time, I enjoy exploring new programming languages, contributing to open-source projects, and staying updated with the latest trends in the tech industry. My goal is to help businesses achieve their full potential through effective and efficient IT solutions.</p>
-        </section>
-
-        <section id="services">
-          <h3>Our Services</h3>
-          <div class="service-list">
-            <article class="service">
-              <h4>IT Consulting</h4>
-              <p>Expert advice to streamline your technology strategy.</p>
-            </article>
-            <article class="service">
-              <h4>Network Solutions</h4>
-              <p>Robust and secure network setups tailored for your business.</p>
-            </article>
-            <article class="service">
-              <h4>Cloud Integration</h4>
-              <p>Seamless cloud solutions to scale your operations.</p>
-            </article>
-
-            <section id="contact">
-              <h3>Contact</h3>
-              <p>Feel free to reach out to us for any inquiries or collaborations.</p>
-              <form action="submit.php" method="post">
-                <label for="name">Name:</label>
-                <input type="text" id="name" name="name" required />
-                <label for="email">Email:</label>
-                <input type="email" id="email" name="email" required />
-                <label for="message">Message:</label>
-                <textarea id="message" name="message" required></textarea>
-                <button type="submit" class="btn">Send</button>
-              </form>
-              <p>Phone: 0813025435</p>
-              <p>Email: <a href="mailto:erictshivhinda@gmail.com">erictshivhinda@gmail.com</a></p>
-              <p>LinkedIn: <a href="https://www.linkedin.com/in/kone-tshivhinda-32a760233" target="_blank">Kone Tshivhinda</a></p>
-              <p>GitHub: <a href="https://github.com/konethegreat" target="_blank">konethegreat</a></p>
-            </section>
-
+        <section class="socials">
+          <h2>Follow My Socials</h2>
+          <div class="social-columns">
+            <div class="social-column">
+              <a href="https://www.linkedin.com/in/kone-tshivhinda-32a760233" target="_blank">
+                <img src="images/Linkedin-logo.jpg" alt="LinkedIn" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://www.facebook.com/share/1A4q81U8vX/" target="_blank">
+                <img src="images/facebook-logo.jpg" alt="Facebook" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://www.tiktok.com/@kone.tshivhinda?_t=ZM-8tzlSdNpDR1&_r=1" target="_blank">
+                <img src="images/TikTok-Logo.jpg" alt="TikTok" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://github.com/konethegreat" target="_blank">
+                <img src="images/GitHub-Logo.png" alt="GitHub" />
+              </a>
+            </div>
           </div>
         </section>
-      
       </div>
     </main>
     <footer id="contact">
       <div class="container">
         <p>&copy; 2025 K-ONE IT SOLUTIONS. All rights reserved.</p>
-        <p>Email: <a href="mailto:erictshivhinda@gmail.com">info@k-oneitsolutions.live</a></p>
+        <p>Email: <a href="mailto:erictshivhinda@gmail.com">erictshivhinda@gmail.com</a></p>
       </div>
     </footer>
     <script src="script.js"></script>
