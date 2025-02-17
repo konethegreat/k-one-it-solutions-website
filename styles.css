@@ -129,9 +129,18 @@ footer {
 body {
   font-family: Arial, sans-serif;
   color: #333;
-  background-color: #fff;
+  background-color: #f5f5dc; /* Beige background color */
   margin: 0;
   padding: 0;
+}
+
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
 }
 
 header {
@@ -156,6 +165,56 @@ nav ul li a {
   text-decoration: none;
   padding: 10px 15px;
   display: block;
+}
+
+.contact-form {
+  flex: 1;
+  min-width: 300px;
+}
+
+.contact-form form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-form label {
+  font-weight: bold;
+}
+
+.contact-form input,
+.contact-form textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.contact-form button {
+  padding: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.contact-image {
+  flex: 1;
+  min-width: 300px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.contact-image img {
+  max-width: 100%;
+  border-radius: 10px;
+}
+
+.social-links {
+  text-align: center;
+  padding: 40px 20px;
+  width: 100%;
 }
 
 .hero {

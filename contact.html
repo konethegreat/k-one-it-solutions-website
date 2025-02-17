@@ -1,25 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZE9EYLHTK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YZE9EYLHTK');
-</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="K-ONE IT SOLUTIONS provides innovative IT services and solutions." />
     <meta name="keywords" content="IT Solutions, Technology, Consulting" />
     <meta name="author" content="K-ONE IT SOLUTIONS" />
-    <title>K-ONE IT SOLUTIONS | Services</title>
+    <title>K-ONE IT SOLUTIONS | Contact</title>
     <link rel="stylesheet" href="styles.css" />
+    <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZE9EYLHTK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
 
-     <!-- Favicon -->
-     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+      gtag('config', 'G-YZE9EYLHTK');
+    </script>
   </head>
   <body>
     <header>
@@ -38,25 +36,50 @@
         </nav>
       </div>
     </header>
-    <main>
-        <section id="contact">
-            <h3>Contact</h3>
-            <p>Feel free to reach out to us for any inquiries or collaborations.</p>
-            <form action="submit.php" method="post">
-              <label for="name">Name:</label>
-              <input type="text" id="name" name="name" required />
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required />
-              <label for="message">Message:</label>
-              <textarea id="message" name="message" required></textarea>
-              <button type="submit" class="btn">Send</button>
-            </form>
-            <p>Phone: 0813025435</p>
-            <p>Email: <a href="mailto:erictshivhinda@gmail.com">erictshivhinda@gmail.com</a></p>
-            <p>LinkedIn: <a href="https://www.linkedin.com/in/kone-tshivhinda-32a760233" target="_blank">Kone Tshivhinda</a></p>
-            <p>GitHub: <a href="https://github.com/konethegreat" target="_blank">konethegreat</a></p>
-          </section>
-
+    <main id="contact">
+      <div class="container">
+        <section class="contact-form">
+          <h2>Contact Us</h2>
+          <form action="submit.php" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit" class="btn">Send</button>
+          </form>
+        </section>
+        <section class="contact-image">
+          <img src="images/My Picture.jpg" alt="Your Photo" />
+        </section>
+      </div>
+      <div class="container">
+        <section class="social-links">
+          <h2>Follow Me</h2>
+          <div class="social-columns">
+            <div class="social-column">
+              <a href="https://www.linkedin.com/in/kone-tshivhinda-32a760233" target="_blank">
+                <img src="images/Linkedin-logo.jpg" alt="LinkedIn" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://www.facebook.com/share/1A4q81U8vX/" target="_blank">
+                <img src="images/facebook-logo.jpg" alt="Facebook" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://www.tiktok.com/@kone.tshivhinda?_t=ZM-8tzlSdNpDR1&_r=1" target="_blank">
+                <img src="images/TikTok-Logo.jpg" alt="TikTok" />
+              </a>
+            </div>
+            <div class="social-column">
+              <a href="https://github.com/konethegreat" target="_blank">
+                <img src="images/GitHub-Logo.png" alt="GitHub" />
+              </a>
+            </div>
+          </div>
+        </section>
       </div>
     </main>
     <footer id="contact">
