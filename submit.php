@@ -32,8 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail->Port = 587;
 
     // Recipients
+    // Recipients
     $mail->setFrom('erictshivhinda@gmail.com', 'K-ONE IT SOLUTIONS');
-$mail->addReplyTo($email, $name);
+    $mail->addReplyTo($email, $name);
+    $mail->addAddress('erictshivhinda@gmail.com'); // Replace with your email address
 
 
     // Content
