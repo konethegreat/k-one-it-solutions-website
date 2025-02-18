@@ -27,13 +27,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $mail->Host = 'smtp.gmail.com';
     $mail->SMTPAuth = true;
     $mail->Username = 'erictshivhinda@gmail.com'; // Replace with your email address
-    $mail->Password = 'Ilovemy2018_thegreat'; // Replace with your email password
+    $mail->Password = 'rysr andj rgtz udwk'; // Replace with your email password
     $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
     $mail->Port = 587;
 
     // Recipients
-    $mail->setFrom($email, $name);
-    $mail->addAddress('erictshivhinda@gmail.com'); // Replace with your email address
+    $mail->setFrom('erictshivhinda@gmail.com', 'K-ONE IT SOLUTIONS');
+$mail->addReplyTo($email, $name);
+
 
     // Content
     $mail->isHTML(false);
