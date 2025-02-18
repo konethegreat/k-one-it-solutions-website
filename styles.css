@@ -1,57 +1,42 @@
-/* Basic Reset */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-  }
-
-  /* Branding Colors */
-:root {
-  --primary-color: #ff6600;
-  --secondary-color: #333;
-  --text-color: #333;
-  --background-color: #fff;
+/* General Styles */
+body {
+  font-family: Arial, sans-serif;
+  color: #333;
+  background-color: #f5f5f5; /* Light gray background color */
+  margin: 0;
+  padding: 0;
+  font-size: 18px; /* Increase font size */
 }
-  
-  /* Body Styles */
-  body {
-    font-family: Arial, sans-serif;
-    line-height: 1.6;
-    background-color: #f5f5f5;
-    color: #333;
-  }
 
-  
-  
-  /* Header Styling */
-  header {
-    background-color: #004080;
-    color: #fff;
-    padding: 20px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-  }
-  
-  header .logo img {
-    max-width: 150px;
-  }
-  
-  /* Responsive Navigation */
-  nav ul {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    justify-content: space-around;
-  }
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 0 auto;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
 
+header {
+  background-color: #ffffff; /* White background color */
+  color: #333; /* Dark gray text color */
+  padding: 20px 0;
+}
 
-nav ul li {
-  margin: 0 10px;
+header .logo img {
+  max-width: 150px;
+}
+
+nav ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  gap: 20px;
 }
 
 nav ul li a {
-  color: #333;
+  color: #333; /* Dark gray text color */
   text-decoration: none;
   padding: 10px 15px;
   display: block;
@@ -79,6 +64,7 @@ nav ul li a {
   }
 }
 
+
 /* Container for consistent widths and margins */
 .container {
   width: 90%;
@@ -94,79 +80,7 @@ nav ul li a {
   color: #fff;
 }
 
-.socials {
-  text-align: center;
-  padding: 40px 20px;
-}
-
-.social-columns {
-  display: flex;
-  justify-content: space-around;
-  flex-wrap: wrap;
-}
-
-.social-column {
-  flex: 1;
-  max-width: 250px; /* Increase the max-width for larger columns */
-  margin: 20px;
-}
-
-.social-column img {
-  width: 100%;
-  height: auto; /* Ensure the image maintains its aspect ratio */
-}
-
-/* Footer Styling */
-footer {
-  background-color: #333;
-  color: #fff;
-  text-align: center;
-  padding: 20px;
-  margin-top: 40px;
-}
-
-/* General Styles */
-body {
-  font-family: Arial, sans-serif;
-  color: #333;
-  background-color: #f5f5dc; /* Beige background color */
-  margin: 0;
-  padding: 0;
-}
-
-.container {
-  width: 90%;
-  max-width: 1200px;
-  margin: 0 auto;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 20px;
-}
-
-header {
-  background-color: #ff6600;
-  color: #fff;
-  padding: 20px 0;
-}
-
-header .logo img {
-  max-width: 150px;
-}
-
-nav ul {
-  list-style: none;
-  padding: 0;
-  display: flex;
-  justify-content: space-around;
-}
-
-nav ul li a {
-  color: #fff;
-  text-decoration: none;
-  padding: 10px 15px;
-  display: block;
-}
-
+/* Contact Form */
 .contact-form {
   flex: 1;
   min-width: 300px;
@@ -191,13 +105,14 @@ nav ul li a {
 
 .contact-form button {
   padding: 10px;
-  background-color: #ff6600;
-  color: #fff;
+  background-color: #333; /* Dark gray background color */
+  color: #fff; /* White text color */
   border: none;
   border-radius: 5px;
   cursor: pointer;
 }
 
+/* Contact Image */
 .contact-image {
   flex: 1;
   min-width: 300px;
@@ -211,20 +126,11 @@ nav ul li a {
   border-radius: 10px;
 }
 
+/* Social Links */
 .social-links {
   text-align: center;
   padding: 40px 20px;
   width: 100%;
-}
-
-.hero {
-  text-align: center;
-  padding: 60px 20px;
-}
-
-.socials {
-  text-align: center;
-  padding: 40px 20px;
 }
 
 .social-columns {
@@ -244,11 +150,170 @@ nav ul li a {
   max-width: 100px;
 }
 
+/* Footer */
 footer {
-  background-color: #333;
-  color: #fff;
+  background-color: #333; /* Dark gray background color */
+  color: #fff; /* White text color */
   text-align: center;
   padding: 20px;
   margin-top: 40px;
 }
+
+/* Services Page Styles */
+#services {
+  width: 100%;
+}
+
+#services h3 {
+  text-align: center;
+  margin-bottom: 40px;
+  font-size: 70px; /* Increase font size */
+}
+
+.service-list {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.service {
+  background-color: #ffffff; /* White background color */
+  padding: 20px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.service h4 {
+  margin-bottom: 10px;
+}
+
+.service p {
+  margin-bottom: 0;
+  line-height: 1.6; /* Increase line height for better readability */
+}
+
+/* About Image */
+.about-image {
+  display: flex;
+  justify-content: center; /* Center the image */
+  align-items: center;
+  padding: 20px; /* Add some padding for spacing */
+}
+
+.about-image img {
+  max-width: 50%; /* Adjust the size to be fairly sized */
+  border-radius: 10px;
+}
+/* Section Styles */
+section {
+  padding: 60px 20px;
+  background-size: cover;
+  background-position: center;
+  color: #080808;
+}
+
+.section-2 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 60px 20px;
+  background: url('images/section2-bg.jpg') no-repeat center/cover;
+  color: #000000;
+  text-align: center;
+}
+
+.section-2 h2 {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.section-2 p {
+  margin-bottom: 20px;
   
+}
+
+.section-2 .btn {
+  background-color: #ff6600;
+  color: #fff;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+  
+}
+
+
+.section-1, .section-2, .section-3, .section-4, .section-5, .section-6 {
+  background-size: cover;
+  background-position: center;
+}
+
+.section-1 .logo img {
+  max-width: 200px;
+}
+
+ .section-3, .section-4, .section-5 {
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent background */
+  padding: 60px 20px;
+  color: #000000;
+}
+
+
+
+ .section-3 h2, .section-4 h2, .section-5 h2 {
+  margin-bottom: 20px;
+}
+
+.section-3 p, .section-5 p {
+  margin-bottom: 20px;
+}
+
+.section-3 .btn, .section-5 .btn {
+  background-color: #ff6600;
+  color: #000000;
+  padding: 10px 20px;
+  text-decoration: none;
+  border-radius: 5px;
+}
+
+.section-4 .social-columns {
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.section-4 .social-column {
+  flex: 1;
+  max-width: 200px;
+  margin: 20px;
+}
+
+.section-4 .social-column img {
+  width: 100%;
+  max-width: 100px;
+}
+
+.section-5 form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.section-5 label {
+  font-weight: bold;
+}
+
+.section-5 input, .section-5 textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+.section-5 button {
+  padding: 10px;
+  background-color: #ff6600;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}

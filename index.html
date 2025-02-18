@@ -1,49 +1,61 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-YZE9EYLHTK"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'G-YZE9EYLHTK');
-</script>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="K-ONE IT SOLUTIONS provides innovative IT services and solutions." />
     <meta name="keywords" content="IT Solutions, Technology, Consulting" />
     <meta name="author" content="K-ONE IT SOLUTIONS" />
     <title>K-ONE IT SOLUTIONS | Home</title>
-    <!-- Link to external CSS (if you have one) -->
     <link rel="stylesheet" href="styles.css" />
-    <!-- Favicon -->
     <link rel="icon" href="images/favicon.ico" type="image/x-icon" />
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-YZE9EYLHTK"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-YZE9EYLHTK');
+    </script>
   </head>
   <body>
-    <header>
+    <!-- Section 1: Site Header -->
+    <header class="section-1" style="background-image: url('images/section1-bg.jpg');">
       <div class="container">
         <div class="logo">
-          <img src="images/icon.png" alt="K-ONE IT SOLUTIONS Logo" />
+          <img src="images/K.png" alt="K-ONE IT SOLUTIONS Logo" />
         </div>
         <nav>
           <ul>
-            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
             <li><a href="services.html">Services</a></li>
-            <li><a href="about.html">About Me</a></li>
             <li><a href="contact.html">Contact</a></li>
           </ul>
           <div class="menu-toggle">☰</div>
         </nav>
       </div>
     </header>
-    <main id="home">
-      <div class="container">
-        <section class="hero">
-          <h1>Welcome to K-ONE IT SOLUTIONS</h1>
-        </section>
-        <section class="socials">
+    <main>
+      <!-- Section 2: Short Introduction -->
+<section class="section-2">
+  <div class="container">
+    <h2>Welcome to K-ONE IT SOLUTIONS</h2>
+    <p>I'm Kone Tshivhinda, owner of K-ONE IT SOLUTIONS. I'm enthusiastic about development, whether it's frontend or backend I can do it all.</p>
+    <a href="about.html" class="btn">Learn More</a>
+  </div>
+</section>
+      <!-- Section 3: Services -->
+      <section class="section-3" style="background-image: url('images/section3-bg.jpg');">
+        <div class="container">
+          <h2>Our Services</h2>
+          <p>We offer a range of IT services designed to empower businesses and elevate their technological capabilities.</p>
+          <a href="services.html" class="btn">Learn More</a>
+        </div>
+      </section>
+      <!-- Section 4: Social Media Links -->
+      <section class="section-4" style="background-image: url('images/section4-bg.jpg');">
+        <div class="container">
           <h2>Follow My Socials</h2>
           <div class="social-columns">
             <div class="social-column">
@@ -67,15 +79,32 @@
               </a>
             </div>
           </div>
-        </section>
-      </div>
+        </div>
+      </section>
+      <!-- Section 5: Contact Form -->
+      <section class="section-5" style="background-image: url('images/section5-bg.jpg');">
+        <div class="container">
+          <h2>Contact Us</h2>
+          <form action="submit.php" method="post">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" required />
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required />
+            <label for="message">Message:</label>
+            <textarea id="message" name="message" required></textarea>
+            <button type="submit" class="btn">Send</button>
+          </form>
+          <a href="contact.html" class="btn">Learn More</a>
+        </div>
+      </section>
+      <!-- Section 6: Footer -->
+      <footer class="section-6" style="background-image: url('images/section6-bg.jpg');">
+        <div class="container">
+          <p>&copy; 2025 K-ONE IT SOLUTIONS. All rights reserved.</p>
+          <p>Email: <a href="mailto:erictshivhinda@gmail.com">erictshivhinda@gmail.com</a></p>
+        </div>
+      </footer>
     </main>
-    <footer id="contact">
-      <div class="container">
-        <p>&copy; 2025 K-ONE IT SOLUTIONS. All rights reserved.</p>
-        <p>Email: <a href="mailto:erictshivhinda@gmail.com">erictshivhinda@gmail.com</a></p>
-      </div>
-    </footer>
     <script src="script.js"></script>
   </body>
 </html>
