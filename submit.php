@@ -2,8 +2,13 @@
 // filepath: /c:/wamp64/www/KONE_IT_SOLUTIONS_Website/submit.php
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
+use Dotenv\Dotenv;
 
 require __DIR__ . '/vendor/autoload.php';
+
+// Load environment variables
+$dotenv = Dotenv::createImmutable(__DIR__);
+$dotenv->load();
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
