@@ -56,12 +56,19 @@ nav ul li a {
     display: none; /* Initially hide the menu */
   }
 
+  .section-1 {
+    height: 60vh; /* Adjust height for smaller screens */
+  }
+
   nav ul li {
     margin: 10px 0;
   }
 
   .menu-toggle {
     display: block;
+  }
+  .section-1 .content {
+    padding: 20px;
   }
 }
 
@@ -229,7 +236,10 @@ footer {
 }
 
 .section-1 .content {
+  position: relative;
   z-index: 1;
+  text-align: center;
+  color: white;
 }
 
 .section-1 h1 {
