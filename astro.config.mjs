@@ -5,7 +5,7 @@ import sitemap from '@astrojs/sitemap';
 import tailwindcss from '@tailwindcss/vite';
 
 // The public URL. Change this one value when the site moves to a custom domain.
-const SITE_URL = process.env.SITE_URL ?? 'https://k-one-it-solutions.pages.dev';
+const SITE_URL = process.env.SITE_URL ?? 'https://k-one-it-solutions-website.erictshivhinda.workers.dev';
 
 export default defineConfig({
   site: SITE_URL,
