@@ -17,6 +17,8 @@ export const statusLabel: Record<Status, string> = {
 };
 
 interface Curated {
+  /** Overrides the GitHub homepage field for the live link. */
+  liveUrl?: string;
   title: string;
   summary?: string;
   category: Category;
@@ -98,7 +100,8 @@ const curated: Record<string, Curated> = {
     title: 'This website',
     summary: 'The source for this site: Astro, React islands and Tailwind CSS, deployed as static files.',
     category: 'Web & apps',
-    status: 'public',
+    status: 'live',
+    liveUrl: import.meta.env.SITE,
   },
   'server-health-monitor': {
     title: 'Server Health Monitor',
@@ -143,7 +146,7 @@ export const projects: Project[] = repos.map((r) => {
     tech,
     highlights: c?.highlights ?? [],
     repoUrl: `https://github.com/konethegreat/${r.name}`,
-    liveUrl: r.homepage,
+    liveUrl: c?.liveUrl ?? r.homepage,
     license: r.license,
   };
 });
