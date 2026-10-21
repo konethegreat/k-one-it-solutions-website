@@ -1,0 +1,10 @@
+{
+  // Written by Kone Tshivhinda & Claude
+  // Cloudflare Workers Static Assets: serves the built site in ./dist. No Worker script needed.
+  "name": "k-one-it-solutions",
+  "compatibility_date": "2026-10-21",
+  "assets": {
+    "directory": "./dist",
+    "not_found_handling": "404-page"
+  }
+}

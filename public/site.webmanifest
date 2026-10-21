@@ -1,0 +1,13 @@
+{
+  "name": "K-ONE IT SOLUTIONS",
+  "short_name": "K-ONE",
+  "description": "Independent software studio in Johannesburg.",
+  "start_url": "/",
+  "display": "browser",
+  "background_color": "#fbfaff",
+  "theme_color": "#6d28d9",
+  "icons": [
+    { "src": "/icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "/icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}

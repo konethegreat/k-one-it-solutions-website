@@ -1,0 +1,27 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Image } from 'astro:assets';
+import mark from '../assets/logo-mark.png';
+
+interface Props {
+  size?: number;
+  showText?: boolean;
+}
+const { size = 40, showText = true } = Astro.props;
+---
+
+<span class="inline-flex items-center gap-3">
+  <span
+    class="grid place-items-center rounded-xl bg-white ring-1 ring-line"
+    style={`width:${size}px;height:${size}px`}
+  >
+    <Image src={mark} alt="" width={Math.round(size * 0.72)} height={Math.round(size * 0.72)} />
+  </span>
+  {
+    showText && (
+      <span class="font-display text-[1.05rem] font-bold leading-none tracking-tight">
+        K-ONE <span class="grad-text">IT SOLUTIONS</span>
+      </span>
+    )
+  }
+</span>

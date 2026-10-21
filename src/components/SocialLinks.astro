@@ -1,0 +1,28 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ExternalLink } from '@lucide/astro';
+import { links } from '../config';
+
+const items = [
+  { label: 'GitHub', href: links.github },
+  { label: 'LinkedIn', href: links.linkedin },
+  { label: 'Portfolio', href: links.portfolio },
+  { label: 'Credly', href: links.credly },
+  { label: 'Facebook', href: links.facebook },
+  { label: 'TikTok', href: links.tiktok },
+];
+---
+
+<ul class="flex flex-wrap gap-2" aria-label="Profiles">
+  {
+    items.map((i) => (
+      <li>
+        <a class="pill-link" href={i.href} target="_blank" rel="noopener noreferrer">
+          {i.label}
+          <ExternalLink size={13} aria-hidden="true" />
+          <span class="sr-only">(opens in a new tab)</span>
+        </a>
+      </li>
+    ))
+  }
+</ul>
