@@ -1,55 +1,129 @@
-# K-ONE IT SOLUTIONS website
+<!-- Written by Kone Tshivhinda & Claude -->
+<div align="center">
 
-Source for the K-ONE IT SOLUTIONS company website: service information, an about
-page, and contact details. The site uses plain HTML, CSS, and JavaScript.
+# K-ONE IT SOLUTIONS
 
-## Current status
+**Your vision, our code.**
 
-GitHub Pages publishes the static files from `main` at
-[k-oneitsolutions.live](https://k-oneitsolutions.live/). A successful Pages build
-does not establish that every page, DNS configuration, or contact flow works.
+An independent software studio in Johannesburg, South Africa, building AI systems, web and mobile apps, and cloud infrastructure that are auditable, cost-capped and built to last.
 
-The repository also contains a PHP/PHPMailer contact handler (`submit.php`).
-GitHub Pages cannot execute PHP, and the current contact form has an empty
-`action`; it is not connected to that handler. Treat email submission as an
-unfinished integration. Use the contact details displayed on the site meanwhile.
+[**Live site**](https://k-one-it-solutions-website.erictshivhinda.workers.dev) · [Services](https://k-one-it-solutions-website.erictshivhinda.workers.dev/services/) · [Work](https://k-one-it-solutions-website.erictshivhinda.workers.dev/work/) · [Contact](https://k-one-it-solutions-website.erictshivhinda.workers.dev/contact/)
 
-## Preview the static site
+</div>
 
-```sh
-git clone https://github.com/konethegreat/k-one-it-solutions-website.git
-cd k-one-it-solutions-website
-python -m http.server 8080 --bind 127.0.0.1
+---
+
+## What the site covers
+
+| Page | Purpose |
+| --- | --- |
+| Home | Who we are, the proof points, services at a glance, featured work |
+| Services | Six service lines, the four working rules and the four-step process |
+| Work | Every public repository on the [GitHub profile](https://github.com/konethegreat), searchable and filterable, with honest status labels |
+| About | The founder, skills, certifications and timeline |
+| Contact | Phone, email and an enquiry form |
+| Privacy | Plain-language notice (no cookies, no analytics, no ad scripts) |
+
+### Services
+
+1. AI agents and workflow automation
+2. RAG and document intelligence
+3. Web and mobile applications
+4. Cloud, DevOps and CI/CD
+5. Local and sovereign AI
+6. QA, testing and technical support
+
+## Tech stack
+
+- [Astro](https://astro.build) 7, static output, with React islands where the page needs interactivity
+- [Tailwind CSS](https://tailwindcss.com) v4 with CSS-variable theme tokens
+- [Framer Motion](https://www.framer.com/motion/) for the hero animation (respects reduced-motion settings)
+- Light theme by default with a dark-mode toggle that remembers the choice
+- Self-hosted fonts (Inter, Space Grotesk, JetBrains Mono), no third-party requests
+- Hosted on [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/) (free plan)
+- GitHub Actions build check on every push and pull request
+
+No PHP, no database, no server code. The site builds to plain files in `dist/`.
+
+## Project layout
+
+```
+.
+├── public/                 favicons, social image, web manifest, Cloudflare _headers
+├── scripts/
+│   └── sync-repos.mjs      refreshes the public repository snapshot at build time
+├── src/
+│   ├── assets/             logo files
+│   ├── components/         Header, Footer, Logo, cards, project explorer, hero visual
+│   ├── data/               content.ts, projects.ts, repos.json
+│   ├── layouts/Base.astro  SEO tags, theme script, page shell
+│   ├── pages/              index, services, work, about, contact, privacy, 404, robots.txt
+│   ├── styles/global.css   design tokens and shared classes
+│   └── config.ts           company details, contact info and links
+├── astro.config.mjs
+├── wrangler.jsonc          Cloudflare deployment configuration
+└── .github/workflows/ci.yml
 ```
 
-Open `http://127.0.0.1:8080/`. This previews static pages only.
+## Develop
 
-| File | Purpose |
+Requires Node 22.12 or newer.
+
+```sh
+npm ci
+npm run dev        # local dev server
+npm run build      # refresh project list, type-check, build to dist/
+npm run preview    # serve the built site locally
+```
+
+## Where to change things
+
+| To change | Edit |
 | --- | --- |
-| `index.html` | Landing page |
-| `about.html` | Company information |
-| `services.html` | Service descriptions |
-| `contact.html` | Contact details and unfinished form integration |
-| `styles.css`, `script.js` | Shared styling and client behavior |
-| `submit.php`, `composer.json` | Optional PHP email-handler prototype |
-| `CNAME` | GitHub Pages custom-domain declaration |
+| Phone, email, links, company details | `src/config.ts` |
+| Services, principles, process, skills, About timeline | `src/data/content.ts` |
+| Project titles, summaries, categories and the featured projects | `src/data/projects.ts` |
+| Colours, fonts, spacing | `src/styles/global.css` |
+| Public site address (sitemap, canonical links, social image) | `SITE_URL` in `astro.config.mjs`, or the `SITE_URL` environment variable at build time |
 
-## PHP contact-handler development
+### The project list
 
-The PHP prototype requires Composer, PHPMailer, and phpdotenv. On a local PHP
-host, run `composer install`, copy `.env.example` to `.env`, and configure your
-own SMTP credentials privately. `EMAIL_USERNAME` and `EMAIL_PASSWORD` are used
-by the existing Gmail SMTP handler. The sender and recipient are currently
-configured in `submit.php`.
+`npm run build` first runs `scripts/sync-repos.mjs`, which reads the public repositories of the GitHub profile and updates `src/data/repos.json`. If GitHub is unreachable or rate-limited, the committed snapshot is used and the build continues. Only public repositories are ever listed. A new public repository appears on the Work page automatically; add an entry to `curated` in `src/data/projects.ts` to give it a title, summary and category.
 
-Before connecting the form on a PHP-capable deployment, finish server-side email
-validation, request throttling, error handling, and local or sandbox delivery
-tests. Do not submit real contact details during automated tests. No live SMTP
-delivery was tested as part of the documentation update.
+### The contact form
 
-## Contributing
+By default the form opens the visitor's email app with the message filled in, so nothing is collected by the site. To use a hosted form service instead, create a [Formspree](https://formspree.io) form and paste its URL into `formEndpoint` in `src/config.ts`. The privacy page updates itself to match.
 
-Open an issue with the page, expected result, and reproduction steps. For a pull
-request, preview the affected pages at desktop and mobile widths and describe
-what you checked. Keep `.env`, credentials, generated dependencies, and private
-contact submissions out of Git.
+## Deploy
+
+Production runs on Cloudflare, connected to this repository through Workers Builds.
+
+| Setting | Value |
+| --- | --- |
+| Production branch | `main` |
+| Build command | `npm run build` |
+| Deploy command | `npx wrangler deploy` |
+| Worker name | `k-one-it-solutions-website` (must match `wrangler.jsonc`) |
+| Environment variable | `NODE_VERSION` = `22` if the build asks for it |
+
+Every push to `main` builds and deploys the site. To use a custom domain later, add it under the Worker's **Settings → Domains & Routes** and update `SITE_URL`.
+
+## Continuous integration
+
+`.github/workflows/ci.yml` runs `npm ci` and `npm run build` (type-check included) on pushes to `main` and on pull requests, so a broken change is caught before it deploys.
+
+## History
+
+The first version of this site was static HTML with a PHP contact handler. It was retired in October 2026 in favour of the current build and is preserved on the [`legacy/php-site`](../../tree/legacy/php-site) branch for reference.
+
+## Contact
+
+**Kone Tshivhinda**, founder
+Email: [erictshivhinda@gmail.com](mailto:erictshivhinda@gmail.com) · Phone: [+27 81 302 5435](tel:+27813025435)
+[GitHub](https://github.com/konethegreat) · [LinkedIn](https://www.linkedin.com/in/kone-tshivhinda-32a760233) · [Portfolio](https://konethegreat.github.io)
+
+© K-ONE IT SOLUTIONS. All rights reserved.
+
+---
+
+Written by Kone Tshivhinda & Claude

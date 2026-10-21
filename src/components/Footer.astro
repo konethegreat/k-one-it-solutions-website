@@ -1,0 +1,49 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Mail, Phone, MapPin } from '@lucide/astro';
+import Logo from './Logo.astro';
+import SocialLinks from './SocialLinks.astro';
+import { site, contact, nav } from '../config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-8 border-t border-line bg-surface-2/60">
+  <div class="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
+    <div class="space-y-4">
+      <Logo />
+      <p class="max-w-sm text-sm text-muted">{site.tagline} An independent software studio building AI systems, apps and infrastructure.</p>
+      <SocialLinks />
+    </div>
+
+    <nav aria-label="Footer" class="space-y-3">
+      <p class="eyebrow">Explore</p>
+      <ul class="space-y-2 text-sm">
+        <li><a href="/" class="text-fg no-underline hover:underline">Home</a></li>
+        {nav.map((item) => <li><a href={item.href} class="text-fg no-underline hover:underline">{item.label}</a></li>)}
+        <li><a href="/privacy/" class="text-fg no-underline hover:underline">Privacy</a></li>
+      </ul>
+    </nav>
+
+    <div class="space-y-3">
+      <p class="eyebrow">Get in touch</p>
+      <ul class="space-y-3 text-sm">
+        <li class="flex items-center gap-2.5">
+          <Mail size={16} class="text-muted" aria-hidden="true" />
+          <a href={`mailto:${contact.email}`} class="text-fg no-underline hover:underline">{contact.email}</a>
+        </li>
+        <li class="flex items-center gap-2.5">
+          <Phone size={16} class="text-muted" aria-hidden="true" />
+          <a href={contact.phoneHref} class="text-fg no-underline hover:underline">{contact.phone}</a>
+        </li>
+        <li class="flex items-center gap-2.5 text-muted">
+          <MapPin size={16} aria-hidden="true" />
+          {site.location}
+        </li>
+      </ul>
+    </div>
+  </div>
+  <div class="border-t border-line py-5">
+    <p class="container-x text-xs text-muted">&copy; {year} {site.name}. All rights reserved.</p>
+  </div>
+</footer>

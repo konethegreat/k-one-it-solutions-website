@@ -1,0 +1,118 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Sun, Moon, Menu, X } from '@lucide/astro';
+import Logo from './Logo.astro';
+import { nav } from '../config';
+
+const path = Astro.url.pathname;
+const isActive = (href: string) => path === href || path.startsWith(href);
+---
+
+<header class="sticky top-0 z-40 border-b border-line bg-bg/85 backdrop-blur-md">
+  <div class="container-x flex h-16 items-center justify-between gap-4">
+    <a href="/" aria-label="K-ONE IT SOLUTIONS, home" class="no-underline" style="color:inherit">
+      <Logo />
+    </a>
+
+    <nav aria-label="Main" class="hidden items-center gap-1 md:flex">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class="rounded-full px-4 py-2 text-sm font-medium text-muted no-underline transition hover:text-fg aria-[current=page]:bg-surface-2 aria-[current=page]:text-fg"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="flex items-center gap-2">
+      <button
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label="Dark mode"
+        class="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface text-fg transition hover:border-brand"
+      >
+        <Sun class="theme-sun" size={18} aria-hidden="true" />
+        <Moon class="theme-moon" size={18} aria-hidden="true" />
+      </button>
+      <a href="/contact/" class="btn btn-primary hidden py-2.5! sm:inline-flex">Start a project</a>
+      <button
+        type="button"
+        data-menu-btn
+        aria-expanded="false"
+        aria-controls="mobile-nav"
+        aria-label="Open menu"
+        class="grid h-10 w-10 place-items-center rounded-full border border-line bg-surface md:hidden"
+      >
+        <Menu class="menu-open" size={18} aria-hidden="true" />
+        <X class="menu-close hidden" size={18} aria-hidden="true" />
+      </button>
+    </div>
+  </div>
+
+  <nav id="mobile-nav" aria-label="Mobile" class="hidden border-t border-line bg-bg md:hidden">
+    <div class="container-x flex flex-col gap-1 py-3">
+      {
+        nav.map((item) => (
+          <a
+            href={item.href}
+            aria-current={isActive(item.href) ? 'page' : undefined}
+            class="rounded-xl px-3 py-3 text-base font-medium text-fg no-underline aria-[current=page]:bg-surface-2"
+          >
+            {item.label}
+          </a>
+        ))
+      }
+      <a href="/contact/" class="btn btn-primary mt-2">Start a project</a>
+    </div>
+  </nav>
+</header>
+
+<style is:global>
+  /* Show the sun in light mode and the moon in dark mode. */
+  [data-theme-toggle] .theme-moon { display: none; }
+  :root[data-theme='dark'] [data-theme-toggle] .theme-sun { display: none; }
+  :root[data-theme='dark'] [data-theme-toggle] .theme-moon { display: block; }
+</style>
+
+<script>
+  const root = document.documentElement;
+
+  // Theme toggle
+  const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+  const syncTheme = () => themeBtn?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
+  syncTheme();
+  themeBtn?.addEventListener('click', () => {
+    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+    if (next === 'dark') root.dataset.theme = 'dark';
+    else root.removeAttribute('data-theme');
+    try {
+      localStorage.setItem('theme', next);
+    } catch {}
+    syncTheme();
+  });
+
+  // Mobile menu
+  const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+  const panel = document.getElementById('mobile-nav');
+  const setMenu = (open: boolean) => {
+    if (!menuBtn || !panel) return;
+    panel.classList.toggle('hidden', !open);
+    menuBtn.setAttribute('aria-expanded', String(open));
+    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+    menuBtn.querySelector('.menu-open')?.classList.toggle('hidden', open);
+    menuBtn.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+  };
+  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
+  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') setMenu(false);
+  });
+  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
+    if (e.matches) setMenu(false);
+  });
+</script>

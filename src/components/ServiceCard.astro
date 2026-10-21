@@ -1,0 +1,31 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Bot, FileSearch, LayoutDashboard, Cloud, ShieldCheck, Wrench, CircleCheck } from '@lucide/astro';
+import type { Service } from '../data/content';
+
+interface Props {
+  service: Service;
+  detailed?: boolean;
+}
+const { service, detailed = false } = Astro.props;
+const icons = { bot: Bot, search: FileSearch, layout: LayoutDashboard, cloud: Cloud, shield: ShieldCheck, wrench: Wrench };
+const Icon = icons[service.icon];
+---
+
+<article id={service.id} class:list={['card card-hover h-full p-6 sm:p-7', detailed && 'scroll-mt-24']}>
+  <span class="icon-tile"><Icon size={22} aria-hidden="true" /></span>
+  <h3 class="mt-5 text-xl font-semibold">{service.title}</h3>
+  <p class="mt-2 text-sm leading-relaxed text-muted">{service.summary}</p>
+  {
+    detailed && (
+      <ul class="mt-5 space-y-2.5 text-sm">
+        {service.points.map((p) => (
+          <li class="flex items-start gap-2.5">
+            <CircleCheck size={16} class="mt-0.5 shrink-0 text-brand" aria-hidden="true" />
+            <span>{p}</span>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</article>

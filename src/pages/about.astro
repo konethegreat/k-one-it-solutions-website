@@ -1,0 +1,110 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Image } from 'astro:assets';
+import { ArrowRight, ExternalLink } from '@lucide/astro';
+import Base from '../layouts/Base.astro';
+import SocialLinks from '../components/SocialLinks.astro';
+import logo from '../assets/logo-full.png';
+import { timeline, skillGroups } from '../data/content';
+import { site, links } from '../config';
+---
+
+<Base
+  title="About"
+  description="Kone Tshivhinda is the founder of K-ONE IT SOLUTIONS, an AI systems engineer and full-stack developer based in Johannesburg."
+>
+  <section class="relative overflow-hidden border-b border-line">
+    <div class="bg-aurora absolute inset-0" aria-hidden="true"></div>
+    <div class="container-x relative grid items-center gap-12 py-16 md:py-20 lg:grid-cols-[1.3fr_1fr]">
+      <div>
+        <p class="eyebrow">About</p>
+        <h1 class="mt-3 text-4xl font-bold sm:text-5xl">
+          Engineer by trade, <span class="grad-text">builder by habit</span>.
+        </h1>
+        <div class="mt-6 max-w-2xl space-y-4 text-lg text-muted">
+          <p>
+            I&rsquo;m {site.founder}, founder of {site.name}. I&rsquo;m an AI systems engineer and full-stack developer based in Johannesburg.
+          </p>
+          <p>
+            I ship agent-driven software from the first commit to live deployment: sovereign and local-first AI, legal tech, civic tech and developer tooling, always with a person signing off the decisions that matter.
+          </p>
+          <p>
+            I use the major AI coding tools every day, and I&rsquo;m just as comfortable running local and open-weight models.
+          </p>
+        </div>
+        <div class="mt-8"><SocialLinks /></div>
+      </div>
+      <div class="card mx-auto w-full max-w-sm bg-white p-6">
+        <Image src={logo} alt="K-ONE IT SOLUTIONS logo: a stylised face made of circuit lines, with the tagline Your vision, our code" width={640} height={640} class="h-auto w-full" />
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.2fr_1fr]">
+      <div>
+        <p class="eyebrow">Experience</p>
+        <h2 class="mt-3 text-3xl font-bold">Where the experience comes from.</h2>
+        <ol class="mt-8 space-y-6 border-l border-line pl-6">
+          {
+            timeline.map((t) => (
+              <li class="relative">
+                <span class="absolute -left-[1.95rem] top-1.5 h-3 w-3 rounded-full" style="background-image:linear-gradient(135deg,var(--d1),var(--d3))" aria-hidden="true" />
+                <p class="font-mono text-xs uppercase tracking-wider text-muted">{t.when}</p>
+                <h3 class="mt-1 text-lg font-semibold">{t.role}</h3>
+                <p class="text-sm text-muted">{t.org}</p>
+                <p class="mt-2 text-sm leading-relaxed">{t.body}</p>
+              </li>
+            ))
+          }
+        </ol>
+      </div>
+
+      <div class="space-y-6">
+        <div class="card p-6">
+          <p class="eyebrow">Education</p>
+          <h3 class="mt-3 text-lg font-semibold">Diploma in Information Technology (NQF 6)</h3>
+          <p class="text-sm text-muted">Damelin, 2022 to 2024</p>
+          <h3 class="mt-5 text-lg font-semibold">IBM Full Stack Software Developer Professional Certificate</h3>
+          <p class="text-sm text-muted">12 courses, IBM / Coursera</p>
+          <p class="mt-2">
+            <a href={links.ibmCertificate} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1 text-sm font-medium">
+              Verify the certificate <ExternalLink size={13} aria-hidden="true" />
+              <span class="sr-only">(opens in a new tab)</span>
+            </a>
+          </p>
+        </div>
+        <div class="card p-6">
+          <p class="eyebrow">Languages</p>
+          <ul class="mt-3 space-y-1.5 text-sm">
+            <li class="flex justify-between"><span>English</span><span class="text-muted">Advanced</span></li>
+            <li class="flex justify-between"><span>Tshivenda</span><span class="text-muted">Native</span></li>
+            <li class="flex justify-between"><span>Northern Sotho</span><span class="text-muted">Intermediate</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section border-y border-line bg-surface-2/60">
+    <div class="container-x">
+      <p class="eyebrow">Skills</p>
+      <h2 class="mt-3 text-3xl font-bold">The toolbox.</h2>
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {
+          skillGroups.map((g) => (
+            <div class="card p-6">
+              <h3 class="text-base font-semibold">{g.title}</h3>
+              <ul class="mt-3 flex flex-wrap gap-1.5">
+                {g.items.map((i) => <li class="chip">{i}</li>)}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+      <div class="mt-12 text-center">
+        <a href="/contact/" class="btn btn-primary">Work with me <ArrowRight size={16} aria-hidden="true" /></a>
+      </div>
+    </div>
+  </section>
+</Base>
