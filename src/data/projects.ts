@@ -32,22 +32,23 @@ const curated: Record<string, Curated> = {
   Vigil: {
     title: 'Vigil',
     summary:
-      'A sovereign operational-intelligence platform that models evidence, investigations and missions as a governed ontology, designed so no prompt ever leaves South Africa.',
+      'A sovereign operational-intelligence platform that models assets, people, places and events as a governed ontology. In development, source available, no live deployment.',
     category: 'AI & agents',
     status: 'public',
     featured: 1,
     tech: ['Java', 'Python', 'TypeScript', 'Next.js', 'PostgreSQL'],
-    highlights: ['12 ADRs', '43 roadmap phases'],
+    highlights: ['In development', '12 ADRs', 'Source available'],
   },
   scratch: {
     title: 'SA-JAS',
     summary:
-      'A desktop app where AI agents find South African vacancies, tailor an ATS-friendly CV and cover letter for each role, and guide the application, always leaving the final Submit to the person.',
+      'Three AI agents find South African vacancies, tailor an ATS-friendly CV and cover letter, and guide the application in a visible browser. The person still presses submit. Hosted web alpha.',
     category: 'AI & agents',
-    status: 'public',
+    status: 'live',
+    liveUrl: 'https://sajas.pages.dev/',
     featured: 2,
     tech: ['Electron', 'React', 'Express', 'Playwright', 'Claude'],
-    highlights: ['3 AI agents', '12 job boards'],
+    highlights: ['Hosted alpha', '3 AI agents', '12 job boards'],
   },
   'munisolve-za': {
     title: 'MuniSolve ZA',
@@ -55,29 +56,41 @@ const curated: Record<string, Curated> = {
       'Citizens report municipal issues, administrators triage them on a live heat map, and a Claude-powered assistant answers citizen questions within a strict hourly limit.',
     category: 'Legal & civic tech',
     status: 'live',
+    liveUrl: 'https://munisolve-za.vercel.app/',
     featured: 3,
     tech: ['React 19', 'Node.js', 'Express', 'PostgreSQL', 'Prisma'],
-    highlights: ['3 user roles', 'Rate-limited AI assistant'],
+    highlights: ['Live', '3 user roles', 'Rate-limited AI assistant'],
   },
   clearcut: {
     title: 'ClearCut',
     summary:
-      'Agent-native invoicing for South Africa: one Rust codebase exposed as a REST API, an MCP server and a Claude plugin, with VAT rules written as tested code.',
+      'Agent-native invoicing for South Africa: one Rust codebase exposed as a REST API, an MCP server and a Claude plugin, with VAT rules written as tested code. Live alpha, invite only.',
     category: 'AI & agents',
-    status: 'public',
+    status: 'live',
+    liveUrl: 'https://145-241-100-85.sslip.io/',
     featured: 4,
     tech: ['Rust', 'axum', 'PostgreSQL', 'MCP', 'TypeScript'],
-    highlights: ['Pre-alpha', 'Apache-2.0'],
+    highlights: ['Live alpha', 'Apache-2.0', '13 MCP tools'],
   },
   timelex: {
     title: 'TimeLex',
     summary:
-      'Open, API-first practice management for South African law firms. It captures work signals, drafts the narrative and prepares the bill, asking a person only when it must.',
+      'Open, API-first practice management for South African law firms. It captures work signals, drafts the narrative and prepares the bill, asking a person only when it must. Pre-alpha.',
     category: 'Legal & civic tech',
     status: 'public',
     featured: 5,
     tech: ['Rust', 'Python', 'TypeScript', 'PostgreSQL', 'MCP'],
-    highlights: ['Apache-2.0', 'Designed in the open'],
+    highlights: ['Pre-alpha', 'Apache-2.0', 'Designed in the open'],
+  },
+  'ui-vault': {
+    title: 'UI Vault',
+    summary:
+      'A provenance-first index of UI and UX patterns, with attribution and usage rights recorded for every entry.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/ui-vault/',
+    tech: ['TypeScript', 'Astro'],
+    highlights: ['Live gallery', 'MIT'],
   },
   Diary: {
     title: 'Diary',
@@ -127,6 +140,7 @@ export interface Project {
 }
 
 const prettify = (name: string) => name.replace(/[-_.]+/g, ' ').replace(/\s+/g, ' ').trim();
+const tidy = (text: string) => text.replace(/\s*\u2014\s*/g, ', ');
 
 export const projects: Project[] = repos.map((r) => {
   const c = curated[r.name];
@@ -139,7 +153,7 @@ export const projects: Project[] = repos.map((r) => {
   return {
     name: r.name,
     title: c?.title ?? prettify(r.name),
-    summary: c?.summary ?? r.description,
+    summary: c?.summary ?? tidy(r.description),
     category: isLearning && !c ? 'Learning' : category,
     status,
     featured: c?.featured ?? null,

@@ -1,25 +1,384 @@
 [
-  { "name": "clearcut", "description": "Agent-native invoicing for South Africa: Rust core, REST API, MCP server and Claude plugin. VAT-correct, e-invoicing ready.", "language": "Rust", "topics": ["rust", "typescript", "mcp", "invoicing", "peppol", "vat", "south-africa"], "homepage": null, "fork": false, "license": "Apache-2.0" },
-  { "name": "Diary", "description": "Single-user diary with local SQLite storage and optional AI providers. FastAPI; PolyForm Noncommercial license.", "language": "Python", "topics": ["python", "sqlite", "diary", "fastapi", "ai-assistant"], "homepage": null, "fork": false, "license": null },
-  { "name": "e-plantShopping", "description": "Learning project: a demo plant-shop front end (React, Redux Toolkit, Vite). No backend; checkout is a placeholder. Maintained copy of Paradise-Nursery.", "language": "JavaScript", "topics": ["react", "shopping-cart", "coursework", "vite", "redux-toolkit", "ibm-skills-network"], "homepage": null, "fork": false, "license": null },
-  { "name": "expressBookReviews", "description": "IBM Skills Network coursework fork: Express book-review API and Node.js HTTP request exercises.", "language": "JavaScript", "topics": ["nodejs", "express", "rest-api", "coursework", "ibm-skills-network"], "homepage": null, "fork": true, "license": "Apache-2.0" },
-  { "name": "github-final-project", "description": "Learning project: a bash script that calculates simple interest with bc, with a test script and ShellCheck CI.", "language": "Shell", "topics": ["bash", "coursework", "shell-script", "shellcheck", "github-actions", "simple-interest"], "homepage": null, "fork": false, "license": "Apache-2.0" },
-  { "name": "k-one-it-solutions-website", "description": "K-ONE IT SOLUTIONS company website.", "language": "TypeScript", "topics": ["astro", "react", "tailwindcss", "company-website"], "homepage": null, "fork": false, "license": null },
-  { "name": "k-one-solutions-media", "description": "Historical React/Express/MongoDB social-media prototype with feeds, messages, notifications and uploads; requires further maintenance.", "language": "JavaScript", "topics": ["react", "express", "prototype", "mongodb", "socket-io"], "homepage": null, "fork": false, "license": null },
-  { "name": "konethegreat", "description": "Kone Tshivhinda: portfolio of civic tech, legal tech, AI assistants and practical automation.", "language": null, "topics": ["portfolio", "south-africa", "profile-readme"], "homepage": null, "fork": false, "license": null },
-  { "name": "konethegreat.github.io", "description": "Portfolio of Kone Tshivhinda: AI systems engineer and full-stack developer in Johannesburg.", "language": "TypeScript", "topics": ["react", "github-pages", "portfolio", "typescript", "tailwindcss", "vite", "ai-engineer"], "homepage": "https://konethegreat.github.io", "fork": false, "license": null },
-  { "name": "mcino-Introduction-to-Git-and-GitHub", "description": "Learning project: fork of an IBM Skills Network lab repository for an introduction to Git and GitHub (simple and compound interest scripts).", "language": "Python", "topics": ["github", "python", "git", "bash", "coursework", "ibm-skills-network"], "homepage": null, "fork": true, "license": "Apache-2.0" },
-  { "name": "munisolve-za", "description": "Municipal fault-reporting app with citizen/admin workflows, authorization tests and a React frontend.", "language": "JavaScript", "topics": ["react", "express", "civic-tech", "south-africa", "github-actions"], "homepage": "https://munisolve-za.vercel.app", "fork": false, "license": null },
-  { "name": "oaqjp-final-project-emb-ai", "description": "IBM Skills Network AI coursework fork; retained as a learning project with upstream attribution.", "language": "Python", "topics": ["artificial-intelligence", "coursework", "ibm-skills-network"], "homepage": null, "fork": true, "license": "Apache-2.0" },
-  { "name": "Paradise-Nursery", "description": "Learning project: older copy of a demo plant-shop front end (React, Redux Toolkit, Vite). Superseded by e-plantShopping.", "language": "JavaScript", "topics": ["react", "shopping-cart", "coursework", "vite", "redux-toolkit", "ibm-skills-network"], "homepage": null, "fork": false, "license": null },
-  { "name": "performance-management-tool", "description": "Legal performance-management demo with quarterly reviews, 360 feedback, approval workflows and optional AI assistance.", "language": "JavaScript", "topics": ["react", "express", "postgresql", "performance-management", "legal-tech"], "homepage": null, "fork": false, "license": null },
-  { "name": "scratch", "description": "SA-JAS: desktop assistant for job discovery, tailored CVs and guided applications with human submission.", "language": "JavaScript", "topics": ["electron", "south-africa", "human-in-the-loop", "job-search", "ai-assistant"], "homepage": null, "fork": false, "license": "MIT" },
-  { "name": "server-health-monitor", "description": "Python CPU, memory and disk checks with configurable Slack/SMTP alerts, Windows/Linux tests and Docker support.", "language": "Python", "topics": ["python", "docker", "automation", "monitoring", "github-actions"], "homepage": null, "fork": false, "license": null },
-  { "name": "systems-project-management-", "description": "Engineering workspace demo with projects, sprints, role-based dashboards, diagrams and optional AI assistance.", "language": "TypeScript", "topics": ["react", "express", "typescript", "project-management", "prisma"], "homepage": null, "fork": false, "license": null },
-  { "name": "tfjzl-final-cloud-app-with-database", "description": "IBM Skills Network cloud application and database coursework fork; retained as a learning project.", "language": "JavaScript", "topics": ["cloud", "database", "coursework", "ibm-skills-network"], "homepage": null, "fork": true, "license": "Apache-2.0" },
-  { "name": "timelex", "description": "Open, API-first, exception-based autonomous practice management for South African law firms. Rust + Python + TypeScript microservices, MCP host, bring-your-own-keys.", "language": "Rust", "topics": [], "homepage": null, "fork": false, "license": "Apache-2.0" },
-  { "name": "timelex-automated-time-tracking", "description": "Earlier TimeLex legal time-tracking prototype. Current development is in timelex-automated-time-tracking-v2.", "language": "JavaScript", "topics": ["prototype", "time-tracking", "legal-tech"], "homepage": null, "fork": false, "license": "MIT" },
-  { "name": "timelex-automated-time-tracking-v2", "description": "Legal time-capture prototype with draft review, tenant boundaries and a simulated ledger gateway. Next.js, Prisma and PostgreSQL.", "language": "TypeScript", "topics": ["typescript", "nextjs", "postgresql", "prisma", "legal-tech"], "homepage": null, "fork": false, "license": null },
-  { "name": "Vigil", "description": "Sovereign operational intelligence for Africa, built by Africans.", "language": null, "topics": ["ontology", "knowledge-graph", "africa", "investigations", "decision-support", "operational-intelligence"], "homepage": null, "fork": false, "license": null },
-  { "name": "xrwvm-fullstack_developer_capstone", "description": "IBM Skills Network full-stack developer capstone fork; retained as a learning project with upstream attribution.", "language": "JavaScript", "topics": ["full-stack", "coursework", "ibm-skills-network"], "homepage": null, "fork": true, "license": "Apache-2.0" }
+  {
+    "name": "clearcut",
+    "description": "Agent-native invoicing for South Africa: Rust core, REST API, MCP server and Claude plugin. VAT-correct, e-invoicing ready.",
+    "language": "Rust",
+    "topics": [
+      "ai-agents",
+      "e-invoicing",
+      "invoicing",
+      "mcp",
+      "model-context-protocol",
+      "peppol",
+      "rust",
+      "south-africa",
+      "typescript",
+      "vat"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "Diary",
+    "description": "Single-user diary with local SQLite storage and optional AI providers. FastAPI; PolyForm Noncommercial license.",
+    "language": "Python",
+    "topics": [
+      "ai-assistant",
+      "diary",
+      "fastapi",
+      "python",
+      "sqlite"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "e-plantShopping",
+    "description": "Learning project: a demo plant-shop front end (React, Redux Toolkit, Vite). No backend; checkout is a placeholder. Maintained copy of Paradise-Nursery.",
+    "language": "JavaScript",
+    "topics": [
+      "coursework",
+      "ibm-skills-network",
+      "react",
+      "redux-toolkit",
+      "shopping-cart",
+      "vite"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "expressBookReviews",
+    "description": "IBM Skills Network coursework fork: Express book-review API and Node.js HTTP request exercises.",
+    "language": "JavaScript",
+    "topics": [
+      "coursework",
+      "express",
+      "ibm-skills-network",
+      "nodejs",
+      "rest-api"
+    ],
+    "homepage": null,
+    "fork": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "github-final-project",
+    "description": "Learning project: a bash script that calculates simple interest with bc, with a test script and ShellCheck CI.",
+    "language": "Shell",
+    "topics": [
+      "bash",
+      "coursework",
+      "github-actions",
+      "shell-script",
+      "shellcheck",
+      "simple-interest"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "k-one-it-solutions-website",
+    "description": "K-ONE IT SOLUTIONS company website: an independent software studio in Johannesburg building AI systems, web and mobile apps, and cloud infrastructure. Astro + Tailwind, hosted free on Cloudflare.",
+    "language": "Astro",
+    "topics": [
+      "astro",
+      "cloudflare-workers",
+      "company-website",
+      "portfolio-website",
+      "react",
+      "south-africa",
+      "static-site",
+      "tailwindcss",
+      "typescript"
+    ],
+    "homepage": "https://k-one-it-solutions-website.erictshivhinda.workers.dev",
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "k-one-solutions-media",
+    "description": "Historical React/Express/MongoDB social-media prototype with feeds, messages, notifications and uploads; requires further maintenance.",
+    "language": "JavaScript",
+    "topics": [
+      "express",
+      "mongodb",
+      "prototype",
+      "react",
+      "socket-io"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "konethegreat",
+    "description": "Kone Tshivhinda: portfolio of civic tech, legal tech, AI assistants and practical automation.",
+    "language": null,
+    "topics": [
+      "portfolio",
+      "profile-readme",
+      "south-africa"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "konethegreat.github.io",
+    "description": "Portfolio of Kone Tshivhinda: AI systems engineer and full-stack developer in Johannesburg.",
+    "language": "TypeScript",
+    "topics": [
+      "ai-engineer",
+      "github-pages",
+      "portfolio",
+      "react",
+      "tailwindcss",
+      "typescript",
+      "vite"
+    ],
+    "homepage": "https://konethegreat.github.io",
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "mcino-Introduction-to-Git-and-GitHub",
+    "description": "Learning project: fork of an IBM Skills Network lab repository for an introduction to Git and GitHub (simple and compound interest scripts).",
+    "language": "Python",
+    "topics": [
+      "bash",
+      "coursework",
+      "git",
+      "github",
+      "ibm-skills-network",
+      "python"
+    ],
+    "homepage": null,
+    "fork": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "munisolve-za",
+    "description": "Municipal fault-reporting app with citizen/admin workflows, authorization tests and a React frontend.",
+    "language": "JavaScript",
+    "topics": [
+      "civic-tech",
+      "express",
+      "github-actions",
+      "react",
+      "south-africa"
+    ],
+    "homepage": "https://munisolve-za.vercel.app",
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "oaqjp-final-project-emb-ai",
+    "description": "IBM Skills Network AI coursework fork; retained as a learning project with upstream attribution.",
+    "language": "Python",
+    "topics": [
+      "artificial-intelligence",
+      "coursework",
+      "ibm-skills-network"
+    ],
+    "homepage": null,
+    "fork": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "Paradise-Nursery",
+    "description": "Learning project: older copy of a demo plant-shop front end (React, Redux Toolkit, Vite). Superseded by e-plantShopping.",
+    "language": "JavaScript",
+    "topics": [
+      "coursework",
+      "ibm-skills-network",
+      "react",
+      "redux-toolkit",
+      "shopping-cart",
+      "vite"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "performance-management-tool",
+    "description": "Legal performance-management demo with quarterly reviews, 360 feedback, approval workflows and optional AI assistance.",
+    "language": "JavaScript",
+    "topics": [
+      "express",
+      "legal-tech",
+      "performance-management",
+      "postgresql",
+      "react"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "reservoir",
+    "description": "Free, open, community-grown memory of South African culture: plants, practices, languages — with community-controlled consent and a mission-native AI.",
+    "language": null,
+    "topics": [
+      "african-languages",
+      "ai-for-good",
+      "cultural-heritage",
+      "ethnobotany",
+      "flutter",
+      "indigenous-knowledge",
+      "language-preservation",
+      "nextjs",
+      "offline-first",
+      "open-source",
+      "plant-identification",
+      "python",
+      "rust",
+      "south-africa"
+    ],
+    "homepage": "https://konethegreat.github.io/reservoir/",
+    "fork": false,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "scratch",
+    "description": "SA-JAS: desktop assistant for job discovery, tailored CVs and guided applications with human submission.",
+    "language": "JavaScript",
+    "topics": [
+      "ai-assistant",
+      "electron",
+      "human-in-the-loop",
+      "job-search",
+      "south-africa"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": "MIT"
+  },
+  {
+    "name": "server-health-monitor",
+    "description": "Python CPU, memory and disk checks with configurable Slack/SMTP alerts, Windows/Linux tests and Docker support.",
+    "language": "Python",
+    "topics": [
+      "automation",
+      "docker",
+      "github-actions",
+      "monitoring",
+      "python"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "systems-project-management-",
+    "description": "Engineering workspace demo with projects, sprints, role-based dashboards, diagrams and optional AI assistance.",
+    "language": "TypeScript",
+    "topics": [
+      "express",
+      "prisma",
+      "project-management",
+      "react",
+      "typescript"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "tfjzl-final-cloud-app-with-database",
+    "description": "IBM Skills Network cloud application and database coursework fork; retained as a learning project.",
+    "language": "JavaScript",
+    "topics": [
+      "cloud",
+      "coursework",
+      "database",
+      "ibm-skills-network"
+    ],
+    "homepage": null,
+    "fork": true,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "timelex",
+    "description": "Open, API-first, exception-based autonomous practice management for South African law firms. Rust + Python + TypeScript microservices, MCP host, bring-your-own-keys.",
+    "language": "Rust",
+    "topics": [],
+    "homepage": null,
+    "fork": false,
+    "license": "Apache-2.0"
+  },
+  {
+    "name": "timelex-automated-time-tracking",
+    "description": "Earlier TimeLex legal time-tracking prototype. Current development is in timelex-automated-time-tracking-v2.",
+    "language": "JavaScript",
+    "topics": [
+      "legal-tech",
+      "prototype",
+      "time-tracking"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": "MIT"
+  },
+  {
+    "name": "timelex-automated-time-tracking-v2",
+    "description": "Legal time-capture prototype with draft review, tenant boundaries and a simulated ledger gateway. Next.js, Prisma and PostgreSQL.",
+    "language": "TypeScript",
+    "topics": [
+      "legal-tech",
+      "nextjs",
+      "postgresql",
+      "prisma",
+      "typescript"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "ui-vault",
+    "description": "Provenance-first index of UI and UX patterns, with attribution for every entry.",
+    "language": "TypeScript",
+    "topics": [],
+    "homepage": null,
+    "fork": false,
+    "license": "MIT"
+  },
+  {
+    "name": "Vigil",
+    "description": "Sovereign operational intelligence for Africa, built by Africans.",
+    "language": null,
+    "topics": [
+      "africa",
+      "decision-support",
+      "investigations",
+      "knowledge-graph",
+      "mission-systems",
+      "ontology",
+      "operational-intelligence",
+      "palantir-alternative",
+      "sovereign-tech"
+    ],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
+    "name": "xrwvm-fullstack_developer_capstone",
+    "description": "IBM Skills Network full-stack developer capstone fork; retained as a learning project with upstream attribution.",
+    "language": "JavaScript",
+    "topics": [
+      "coursework",
+      "full-stack",
+      "ibm-skills-network"
+    ],
+    "homepage": null,
+    "fork": true,
+    "license": "Apache-2.0"
+  }
 ]
