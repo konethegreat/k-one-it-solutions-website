@@ -1,0 +1,571 @@
+---
+// Written by Kone Tshivhinda & Claude
+import '@fontsource-variable/inter';
+import '@fontsource/instrument-serif';
+import '@fontsource-variable/jetbrains-mono';
+import '../../styles/global.css';
+import { ArrowLeft, ArrowRight, Printer } from '@lucide/astro';
+import VigilDiagram from '../../components/diagrams/VigilDiagram.astro';
+import SajasDiagram from '../../components/diagrams/SajasDiagram.astro';
+import ClearCutDiagram from '../../components/diagrams/ClearCutDiagram.astro';
+import TimeLexDiagram from '../../components/diagrams/TimeLexDiagram.astro';
+import { dossiers, type DiagramKind } from '../../data/dossiers';
+import { site, links } from '../../config';
+
+export function getStaticPaths() {
+  return dossiers.map((dossier, index) => ({
+    params: { slug: dossier.slug },
+    props: { dossier, index, next: dossiers[(index + 1) % dossiers.length] },
+  }));
+}
+
+const { dossier, index, next } = Astro.props;
+const diagramMap: Record<DiagramKind, typeof VigilDiagram> = {
+  vigil: VigilDiagram,
+  sajas: SajasDiagram,
+  clearcut: ClearCutDiagram,
+  timelex: TimeLexDiagram,
+};
+const Diagram = diagramMap[dossier.diagram];
+const dossierNo = String(index + 1).padStart(2, '0');
+const generated = new Intl.DateTimeFormat('en-ZA', { day: 'numeric', month: 'long', year: 'numeric' }).format(new Date());
+const licenceUrl =
+  dossier.licence === 'Apache-2.0'
+    ? 'https://www.apache.org/licenses/LICENSE-2.0'
+    : dossier.licence === 'MIT'
+      ? 'https://opensource.org/license/mit'
+      : null;
+---
+<!doctype html>
+<html lang="en-ZA">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{dossier.title} technical brief | {site.name}</title>
+    <meta name="description" content={`Two-page technical brief for ${dossier.title}: status, architecture, decisions and source links.`} />
+    <meta name="robots" content="noindex" />
+    <link rel="canonical" href={new URL(`/work/${dossier.slug}/`, Astro.site).href} />
+  </head>
+  <body class="brief">
+    <div class="brief-bar no-print">
+      <a href={`/work/${dossier.slug}/`} class="brief-btn brief-btn-ghost"><ArrowLeft size={15} aria-hidden="true" /> Back to dossier</a>
+      <span class="brief-bar-label">A4 · 2 pages · {dossier.title}</span>
+      <button type="button" class="brief-btn" data-print><Printer size={15} aria-hidden="true" /> Print or save as PDF</button>
+    </div>
+
+    <main class="brief-sheet">
+      <section class="page" aria-label={`${dossier.title} brief, page 1`}>
+        <header class="brief-head">
+          <div>
+            <p class="brief-brand">{site.name}</p>
+            <p class="brief-kicker">Technical brief · Dossier {dossierNo}</p>
+          </div>
+          <p class="brief-kicker">Generated {generated}</p>
+        </header>
+
+        <div class="brief-title-row">
+          <div>
+            <h1>{dossier.title}</h1>
+            {dossier.codename && <p class="brief-codename">{dossier.codename}</p>}
+          </div>
+          <span class:list={['stamp', dossier.statusTone === 'ok' ? 'stamp-ok' : 'stamp-warn']}>{dossier.statusLabel}</span>
+        </div>
+
+        <p class="brief-summary">{dossier.summary}</p>
+
+        <dl class="brief-facts">
+          {dossier.facts.map((fact) => (
+            <div>
+              <dt>{fact.label}</dt>
+              <dd>{fact.value}</dd>
+            </div>
+          ))}
+        </dl>
+
+        <h2 class="brief-section-title">Architecture</h2>
+        <div class="brief-diagram">
+          <Diagram />
+        </div>
+
+        <footer class="brief-foot">
+          <span>{site.name} · {site.location}</span>
+          <span>Source: {dossier.repoUrl}</span>
+        </footer>
+      </section>
+
+      <section class="page" aria-label={`${dossier.title} brief, page 2`}>
+        <header class="brief-head">
+          <div>
+            <p class="brief-brand">{dossier.title}</p>
+            <p class="brief-kicker">Decisions, evidence and links</p>
+          </div>
+          <p class="brief-kicker">Page 2 of 2</p>
+        </header>
+
+        <h2 class="brief-section-title">Decisions that shaped it</h2>
+        <div class="brief-decisions">
+          {dossier.decisions.map((decision) => (
+            <article>
+              <div class="brief-decision-head">
+                <span class="brief-code">{decision.code}</span>
+                <span class="brief-state">{decision.state}</span>
+              </div>
+              <h3>{decision.title}</h3>
+              <p>{decision.decision}</p>
+              <p class="brief-why"><strong>Why.</strong> {decision.why}</p>
+            </article>
+          ))}
+        </div>
+
+        <h2 class="brief-section-title">What is real, and what is not</h2>
+        <table class="brief-table">
+          <thead>
+            <tr><th scope="col">Area</th><th scope="col">Status</th><th scope="col">Note</th></tr>
+          </thead>
+          <tbody>
+            {dossier.honesty.map((row) => (
+              <tr>
+                <th scope="row">{row.area}</th>
+                <td>{row.status}</td>
+                <td>{row.note}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+
+        <div class="brief-two">
+          <div>
+            <h2 class="brief-section-title">Stack</h2>
+            <ul class="brief-chips">
+              {dossier.stack.map((item) => <li>{item}</li>)}
+            </ul>
+          </div>
+          <div>
+            <h2 class="brief-section-title">Links</h2>
+            <ul class="brief-links">
+              <li><span>Source</span><a href={dossier.repoUrl}>{dossier.repoUrl.replace('https://', '')}</a></li>
+              <li><span>Docs</span><a href={dossier.docsUrl}>{dossier.docsUrl.replace('https://', '')}</a></li>
+              {dossier.liveUrl && <li><span>Live</span><a href={dossier.liveUrl}>{dossier.liveUrl.replace('https://', '')}</a></li>}
+              <li><span>Studio</span><a href={links.liveSite}>{links.liveSite.replace('https://', '')}</a></li>
+              {licenceUrl && <li><span>Licence</span><a href={licenceUrl}>{dossier.licence}</a></li>}
+            </ul>
+          </div>
+        </div>
+
+        <footer class="brief-foot">
+          <span>Generated {generated} from the public repository record</span>
+          <span>
+            Next: {next.title} <ArrowRight size={11} aria-hidden="true" />
+          </span>
+        </footer>
+      </section>
+    </main>
+
+    <script is:inline>
+      document.querySelector('[data-print]')?.addEventListener('click', () => window.print());
+    </script>
+
+    <style is:global>
+      @page {
+        size: A4;
+        margin: 0;
+      }
+
+      .brief {
+        margin: 0;
+        background: transparent;
+      }
+
+      .brief-bar {
+        position: sticky;
+        top: 0;
+        z-index: 10;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+        justify-content: space-between;
+        gap: 0.75rem;
+        border-bottom: 1px solid var(--line);
+        background: color-mix(in oklab, var(--bg) 92%, transparent);
+        padding: 0.7rem 1.25rem;
+        backdrop-filter: blur(8px);
+      }
+      .brief-bar-label {
+        font-family: var(--font-mono);
+        font-size: 0.62rem;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brief-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.45rem;
+        border: 1px solid var(--brand);
+        border-radius: 0.4rem;
+        background: var(--brand);
+        padding: 0.5rem 0.85rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        color: #fff;
+        text-decoration: none;
+        cursor: pointer;
+      }
+      .brief-btn-ghost {
+        border-color: var(--line);
+        background: transparent;
+        color: var(--fg);
+      }
+
+      .brief-sheet {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1.5rem;
+        padding: 2rem 1rem 3rem;
+      }
+
+      .page {
+        --bg: #ffffff;
+        --surface: #ffffff;
+        --surface-2: #f2eee3;
+        --fg: #14151c;
+        --muted: #5c5a52;
+        --line: #ded8c9;
+        --brand: #2b4eff;
+        --link: #1a2fa8;
+        --ok: #0f7b4f;
+        --warn: #9a5b00;
+        color-scheme: light;
+        display: flex;
+        flex-direction: column;
+        width: 210mm;
+        min-height: 297mm;
+        padding: 14mm;
+        background: #ffffff;
+        color: #14151c;
+        box-shadow: var(--shadow);
+        font-size: 9.6pt;
+        line-height: 1.45;
+      }
+      .page * {
+        box-sizing: border-box;
+      }
+
+      .brief-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        border-bottom: 1px solid var(--line);
+        padding-bottom: 3mm;
+      }
+      .brief-brand {
+        margin: 0;
+        font-family: var(--font-mono);
+        font-size: 8pt;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+      }
+      .brief-kicker {
+        margin: 2px 0 0;
+        font-family: var(--font-mono);
+        font-size: 6.6pt;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+        text-align: right;
+      }
+      .brief-head > div .brief-kicker {
+        text-align: left;
+      }
+
+      .brief-title-row {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: 7mm;
+      }
+      .brief-title-row h1 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 30pt;
+        font-weight: 400;
+        line-height: 1;
+        letter-spacing: -0.015em;
+      }
+      .brief-codename {
+        margin: 2mm 0 0;
+        font-family: var(--font-mono);
+        font-size: 6.8pt;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .stamp {
+        font-size: 6pt;
+      }
+
+      .brief-summary {
+        margin: 5mm 0 0;
+        max-width: 155mm;
+        font-size: 11pt;
+        line-height: 1.45;
+        color: var(--muted);
+      }
+
+      .brief-facts {
+        display: grid;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+        gap: 0;
+        margin: 6mm 0 0;
+        border-top: 1px solid var(--line);
+        border-left: 1px solid var(--line);
+      }
+      .brief-facts > div {
+        border-right: 1px solid var(--line);
+        border-bottom: 1px solid var(--line);
+        padding: 2.5mm 3mm;
+      }
+      .brief-facts dt {
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brief-facts dd {
+        margin: 1mm 0 0;
+        font-size: 7.6pt;
+        line-height: 1.25;
+      }
+
+      .brief-section-title {
+        margin: 7mm 0 3mm;
+        font-family: var(--font-mono);
+        font-size: 7.2pt;
+        font-weight: 600;
+        letter-spacing: 0.14em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+
+      .brief-diagram {
+        max-width: 152mm;
+        margin-inline: auto;
+        break-inside: avoid;
+      }
+      .brief-diagram [role='group'] {
+        overflow: visible !important;
+      }
+      .brief-diagram [role='group'] > div {
+        min-width: 0 !important;
+        padding: 0 !important;
+      }
+      .brief-diagram .grid-blueprint {
+        display: none;
+      }
+      .brief-diagram figcaption {
+        padding: 2mm 0 0 !important;
+        border-top: 0 !important;
+      }
+      .brief-diagram figcaption p {
+        font-size: 6.8pt !important;
+        line-height: 1.35 !important;
+      }
+      .brief-diagram .card {
+        border: 0;
+        box-shadow: none;
+      }
+      .brief-diagram .card > div:first-child {
+        display: none;
+      }
+
+      .brief-foot {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        margin-top: auto;
+        border-top: 1px solid var(--line);
+        padding-top: 3mm;
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        letter-spacing: 0.06em;
+        color: var(--muted);
+      }
+
+      .brief-decisions {
+        display: grid;
+        gap: 3mm;
+      }
+      .brief-decisions article {
+        border: 1px solid var(--line);
+        border-left: 2.5px solid var(--brand);
+        border-radius: 1.5mm;
+        padding: 3.5mm 4mm;
+        break-inside: avoid;
+      }
+      .brief-decision-head {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+      }
+      .brief-code {
+        font-family: var(--font-mono);
+        font-size: 6.4pt;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--brand);
+      }
+      .brief-state {
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brief-decisions h3 {
+        margin: 1.5mm 0 0;
+        font-size: 10.5pt;
+      }
+      .brief-decisions p {
+        margin: 1.5mm 0 0;
+        font-size: 8.2pt;
+        line-height: 1.42;
+      }
+      .brief-why {
+        color: var(--muted);
+      }
+
+      .brief-table {
+        width: 100%;
+        border-collapse: collapse;
+        font-size: 7.6pt;
+        line-height: 1.35;
+      }
+      .brief-table th,
+      .brief-table td {
+        border-bottom: 1px solid var(--line);
+        padding: 2mm 2.5mm;
+        text-align: left;
+        vertical-align: top;
+      }
+      .brief-table thead th {
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        letter-spacing: 0.1em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brief-table tbody th {
+        font-weight: 600;
+        white-space: nowrap;
+      }
+
+      .brief-two {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 8mm;
+      }
+      .brief-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1mm;
+        margin: 0;
+        padding: 0;
+        list-style: none;
+      }
+      .brief-chips li {
+        border: 1px solid var(--line);
+        border-radius: 1mm;
+        padding: 0.8mm 1.6mm;
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        color: var(--muted);
+      }
+      .brief-links {
+        margin: 0;
+        padding: 0;
+        list-style: none;
+        font-size: 7.2pt;
+      }
+      .brief-links li {
+        display: flex;
+        gap: 2mm;
+        padding: 1.2mm 0;
+        border-bottom: 1px solid var(--line);
+      }
+      .brief-links span {
+        width: 16mm;
+        flex-shrink: 0;
+        font-family: var(--font-mono);
+        font-size: 5.8pt;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--muted);
+      }
+      .brief-links a {
+        color: var(--fg);
+        text-decoration: none;
+        overflow-wrap: anywhere;
+      }
+
+      @media print {
+        .no-print,
+        .brief-bar {
+          display: none !important;
+        }
+        .brief {
+          background: #ffffff;
+        }
+        .brief-sheet {
+          display: block;
+          padding: 0;
+        }
+        .page {
+          width: 210mm;
+          height: 296mm;
+          min-height: 296mm;
+          overflow: hidden;
+          box-shadow: none;
+          padding: 14mm;
+          break-after: page;
+          break-inside: avoid;
+        }
+        .page:last-child {
+          break-after: auto;
+        }
+        .page a {
+          color: inherit;
+        }
+        .brief,
+        .page {
+          -webkit-print-color-adjust: exact;
+          print-color-adjust: exact;
+        }
+        .brief-section-title {
+          break-after: avoid;
+        }
+        .brief-table tr {
+          break-inside: avoid;
+        }
+      }
+
+      @media (max-width: 900px) {
+        .page {
+          width: 100%;
+          min-height: 0;
+        }
+        .brief-two {
+          grid-template-columns: 1fr;
+          gap: 4mm;
+        }
+      }
+    </style>
+  </body>
+</html>

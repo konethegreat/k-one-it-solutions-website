@@ -1,0 +1,30 @@
+---
+// Written by Kone Tshivhinda & Claude
+interface Props {
+  status: 'live' | 'alpha' | 'source' | 'prototype' | 'verified' | 'prealpha';
+  label?: string;
+}
+const { status, label } = Astro.props;
+const labels: Record<Props['status'], string> = {
+  live: 'Live',
+  alpha: 'Live alpha',
+  source: 'Source only',
+  prototype: 'Prototype',
+  verified: 'Verified',
+  prealpha: 'Pre-alpha',
+};
+const tone: Record<Props['status'], string> = {
+  live: 'stamp-ok',
+  alpha: 'stamp-warn',
+  source: 'stamp-neutral',
+  prototype: 'stamp-warn',
+  verified: 'stamp-ok',
+  prealpha: 'stamp-neutral',
+};
+const showDot = status === 'live' || status === 'alpha' || status === 'verified';
+---
+
+<span class:list={['stamp', tone[status]]}>
+  {showDot && <span class="status-dot" aria-hidden="true"></span>}
+  {label ?? labels[status]}
+</span>

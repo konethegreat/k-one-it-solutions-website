@@ -1,0 +1,36 @@
+---
+// Written by Kone Tshivhinda & Claude
+interface Props {
+  number: string;
+  label: string;
+  title: string;
+  lead?: string;
+}
+const { number, label, title, lead } = Astro.props;
+const hasAside = Astro.slots.has('aside');
+---
+
+<section class="relative overflow-hidden border-b border-line">
+  <div class="grid-blueprint absolute inset-0" aria-hidden="true"></div>
+  <div class="container-x relative py-16 md:py-24">
+    <div class:list={['grid gap-10', hasAside && 'lg:grid-cols-[1.25fr_0.75fr] lg:items-end']}>
+      <div>
+        <p class="eyebrow">
+          <span class="text-brand">{number}</span>
+          <span class="h-px w-8 bg-line" aria-hidden="true"></span>
+          {label}
+        </p>
+        <h1 class="mt-5 max-w-4xl text-5xl sm:text-6xl lg:text-7xl">{title}</h1>
+        {lead && <p class="mt-6 max-w-2xl text-lg text-muted">{lead}</p>}
+        <slot />
+      </div>
+      {
+        hasAside && (
+          <div class="hidden lg:block">
+            <slot name="aside" />
+          </div>
+        )
+      }
+    </div>
+  </div>
+</section>

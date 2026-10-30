@@ -1,13 +1,20 @@
 ---
 // Written by Kone Tshivhinda & Claude
-import { ArrowRight, Phone } from '@lucide/astro';
+import { Image } from 'astro:assets';
+import { ArrowRight, ArrowUpRight, ExternalLink, Phone } from '@lucide/astro';
 import Base from '../layouts/Base.astro';
-import HeroVisual from '../components/HeroVisual';
-import ProjectCard from '../components/ProjectCard';
-import ServiceCard from '../components/ServiceCard.astro';
+import SystemMap from '../components/SystemMap';
+import StatTicker from '../components/StatTicker';
+import Marquee from '../components/Marquee.astro';
+import SectionHeading from '../components/SectionHeading.astro';
+import ProjectEvidenceCard from '../components/ProjectEvidenceCard.astro';
 import { site, contact, links } from '../config';
-import { services, principles } from '../data/content';
-import { featured, projects } from '../data/projects';
+import { services } from '../data/services';
+import { principles } from '../data/content';
+import { projects } from '../data/projects';
+import portrait from '../assets/about/portrait.webp';
+import sajasShot from '../assets/work/sajas/01-dashboard.jpg';
+import clearcutShot from '../assets/work/clearcut/result.png';
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -23,84 +30,193 @@ const jsonLd = {
   sameAs: [links.github, links.linkedin, links.portfolio],
 };
 
+const stack = ['Python', 'TypeScript', 'Rust', 'Java', 'PostgreSQL', 'MCP', 'AWS', 'Astro', 'Playwright', 'Docker'];
+
+const dossiers = [
+  {
+    index: '01',
+    title: 'SA-JAS',
+    status: 'Hosted alpha',
+    summary:
+      'AI agents find South African vacancies, tailor an ATS-friendly CV for each role and prepare the application. The final submit always stays with the person.',
+    meta: ['Electron', 'React', '3 agents'],
+    href: '/work/sajas/',
+    liveUrl: links.sajas,
+    image: sajasShot,
+    imageAlt: 'SA-JAS dashboard showing a tailored application and the agent terminal',
+    accent: 'cyan' as const,
+  },
+  {
+    index: '02',
+    title: 'ClearCut',
+    status: 'Live alpha',
+    summary:
+      'Agent-native invoice reading for South Africa. One Rust core, exposed as a REST API, an MCP server and a Claude plugin, with VAT checks written as tested code.',
+    meta: ['Rust', 'axum', 'MCP'],
+    href: '/work/clearcut/',
+    liveUrl: links.clearcut,
+    image: clearcutShot,
+    imageAlt: 'ClearCut demo showing invoice figures checked to the cent',
+    accent: 'violet' as const,
+  },
+  {
+    index: '03',
+    title: 'Vigil',
+    status: 'In development',
+    summary:
+      'A sovereign operational-intelligence platform that models evidence, investigations and missions as a governed ontology, designed so no prompt has to leave the country.',
+    meta: ['Java', 'PostgreSQL', '12 ADRs'],
+    href: '/work/vigil/',
+    layers: ['Clients', 'Gateway and Warden', 'Core ontology', 'Data plane and AI plane', 'Sovereign delivery'],
+    accent: 'brand' as const,
+  },
+  {
+    index: '04',
+    title: 'TimeLex',
+    status: 'Pre-alpha',
+    summary:
+      'Open, API-first practice management for South African law firms. It captures work signals, drafts the narrative and prepares the bill, asking a person only when it must.',
+    meta: ['Rust', 'Python', '12 ADRs'],
+    href: '/work/timelex/',
+    layers: ['Clients', 'Identity and vault', 'Capture and attribution', 'Narrative', 'Ledger and billing'],
+    accent: 'ok' as const,
+  },
+];
+
+const liveNow = [
+  { name: 'SA-JAS', note: 'AI job application suite', href: links.sajas, status: 'Alpha' },
+  { name: 'ClearCut', note: 'Invoice reading demo', href: links.clearcut, status: 'Alpha' },
+  { name: 'MuniSolve ZA', note: 'Municipal issue reporting', href: links.munisolve, status: 'Live' },
+  { name: 'Portfolio', note: 'Personal site and notes', href: links.portfolio, status: 'Live' },
+  { name: 'UI Vault', note: 'Interface reference gallery', href: links.vault, status: 'Live' },
+];
+
 const proof = [
-  { big: String(projects.length), label: 'public repositories on GitHub' },
-  { big: 'IBM', label: 'Full Stack Developer Professional Certificate' },
-  { big: 'NQF 6', label: 'Diploma in Information Technology' },
-  { big: 'POPIA', label: 'aware engineering, by default' },
+  { value: projects.length, label: 'public repositories' },
+  { value: liveNow.length, label: 'live deployments' },
+  { value: dossiers.length, label: 'technical dossiers' },
+  { value: services.length, label: 'services offered' },
 ];
 ---
 
 <Base title={site.name} jsonLd={jsonLd}>
   <!-- Hero -->
   <section class="relative overflow-hidden">
-    <div class="bg-aurora absolute inset-0" aria-hidden="true"></div>
-    <div class="bg-grid absolute inset-0" aria-hidden="true"></div>
-    <div class="container-x relative grid items-center gap-14 py-16 md:py-24 lg:grid-cols-[1.15fr_1fr]">
+    <div class="grid-blueprint absolute inset-0" aria-hidden="true"></div>
+    <div class="container-x relative grid items-center gap-12 py-14 md:py-20 lg:grid-cols-[1.08fr_0.92fr] lg:gap-8">
       <div>
-        <p class="eyebrow flex items-center gap-2.5">
-          <span class="h-2 w-2 animate-pulse rounded-full bg-emerald-500" aria-hidden="true"></span>
-          Independent software studio / Johannesburg, ZA
+        <p class="eyebrow tracking-[0.14em] sm:tracking-[0.18em]">
+          <span class="status-dot" aria-hidden="true"></span>
+          Software and AI studio, Johannesburg
         </p>
-        <h1 class="mt-6 text-4xl font-bold sm:text-5xl lg:text-[3.6rem]">
-          Software and AI systems that are <span class="grad-text">auditable</span>, accountable and built to last.
+        <h1 class="mt-6 text-[3.1rem] leading-[0.98] sm:text-6xl lg:text-[4.6rem]">
+          Software that <em class="text-brand">shows its working.</em>
         </h1>
-        <p class="mt-6 max-w-xl text-lg text-muted">
-          {site.name} designs and builds agentic AI, web and mobile apps, and cloud infrastructure for businesses that need software to work, and to be able to prove it.
+        <p class="mt-6 max-w-xl text-lg leading-relaxed text-muted">
+          K-ONE designs and builds AI systems, web and mobile apps, and cloud infrastructure. Every claim on this site
+          links to something you can inspect.
         </p>
-        <div class="mt-9 flex flex-wrap items-center gap-3">
+        <div class="mt-8 flex flex-wrap items-center gap-3">
           <a href="/contact/" class="btn btn-primary">Start a project <ArrowRight size={16} aria-hidden="true" /></a>
-          <a href="/work/" class="btn btn-ghost">See the work</a>
-          <a href={contact.phoneHref} class="btn btn-ghost"><Phone size={16} aria-hidden="true" /> {contact.phone}</a>
+          <a href="#proof" class="btn btn-ghost">See the proof</a>
         </div>
-        <p class="mt-8 font-mono text-xs uppercase tracking-[0.2em] text-muted">&ldquo;{site.tagline}&rdquo;</p>
+        <p class="mt-8 flex flex-wrap items-center gap-x-5 gap-y-2 font-mono text-[0.66rem] uppercase tracking-[0.16em] text-muted">
+          <span>Founder-led</span>
+          <span class="h-1 w-1 rounded-full bg-line" aria-hidden="true"></span>
+          <span>Remote and on site</span>
+          <span class="h-1 w-1 rounded-full bg-line" aria-hidden="true"></span>
+          <span>Available for new work</span>
+        </p>
       </div>
-      <HeroVisual client:load />
+      <SystemMap client:load />
     </div>
   </section>
 
-  <!-- Proof -->
+  <!-- Proof strip -->
   <section aria-label="At a glance" class="border-y border-line bg-surface/60">
-    <ul class="container-x grid grid-cols-2 gap-6 py-8 md:grid-cols-4">
+    <div class="container-x grid grid-cols-2 divide-line md:grid-cols-4 md:divide-x">
       {
-        proof.map((p) => (
-          <li>
-            <p class="font-display text-3xl font-bold grad-text">{p.big}</p>
-            <p class="mt-1 text-sm text-muted">{p.label}</p>
-          </li>
+        proof.map((p, i) => (
+          <div class:list={['py-7 md:py-9', i % 2 === 1 && 'pl-6 md:pl-8', i % 2 === 0 && 'pr-6 md:pr-8', i < 2 && 'border-b border-line md:border-b-0', i >= 2 && 'md:pl-8']}>
+            <StatTicker value={p.value} label={p.label} client:visible />
+          </div>
         ))
       }
-    </ul>
+    </div>
   </section>
 
-  <!-- Services -->
-  <section class="section">
+  <Marquee items={stack} label="Working stack" />
+
+  <!-- Services index -->
+  <section id="services" class="section scroll-mt-20">
     <div class="container-x">
-      <p class="eyebrow">Services</p>
-      <h2 class="mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">From first idea to live deployment, end to end.</h2>
-      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {services.map((s) => <ServiceCard service={s} />)}
+      <SectionHeading
+        number="01"
+        title="Six ways a system gets built."
+        lead="Each track has defined deliverables, a written plan and a clear handover. Most projects use two or three together."
+      />
+      <div class="mt-10">
+        {
+          services.map((service, i) => (
+            <a
+              href={`/services/${service.id}/`}
+              class="group grid gap-3 border-t border-line py-6 no-underline transition-colors hover:bg-surface/70 md:grid-cols-[3.5rem_1fr_1.25fr_auto] md:items-baseline md:gap-6 md:px-3"
+            >
+              <span class="font-mono text-[0.66rem] uppercase tracking-[0.16em] text-muted">S{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="text-xl text-fg md:text-2xl">{service.title}</h3>
+              <p class="text-sm leading-relaxed text-muted">{service.summary}</p>
+              <ArrowUpRight
+                size={18}
+                class="hidden text-muted transition-colors group-hover:text-brand md:block"
+                aria-hidden="true"
+              />
+            </a>
+          ))
+        }
+        <div class="border-t border-line" />
       </div>
       <p class="mt-8">
-        <a href="/services/" class="inline-flex items-center gap-2 font-semibold">
-          See what is included in each service <ArrowRight size={16} aria-hidden="true" />
-        </a>
+        <a href="/services/" class="link-arrow">Compare every service <ArrowRight size={16} aria-hidden="true" /></a>
+      </p>
+    </div>
+  </section>
+
+  <!-- Selected work -->
+  <section id="proof" class="section scroll-mt-20 border-t border-line bg-surface-2/40">
+    <div class="container-x">
+      <SectionHeading
+        number="02"
+        title="Proof in the open."
+        lead="Four systems, documented as dossiers: what they do, how they are built and what is honestly finished."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-2">
+        {dossiers.map((d, i) => <ProjectEvidenceCard {...d} revealIndex={i} />)}
+      </div>
+      <p class="mt-8">
+        <a href="/work/" class="link-arrow">See every public project <ArrowRight size={16} aria-hidden="true" /></a>
       </p>
     </div>
   </section>
 
   <!-- Principles -->
-  <section class="section border-y border-line bg-surface-2/60">
+  <section class="section">
     <div class="container-x">
-      <p class="eyebrow">How the work is done</p>
-      <h2 class="mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">Four rules every system is held to.</h2>
-      <div class="mt-10 grid gap-5 md:grid-cols-2">
+      <SectionHeading
+        number="03"
+        title="The rules the work is held to."
+        lead="These are not values on a wall. They decide how a system is scoped, built and handed over."
+      />
+      <div class="mt-10 border-t border-line">
         {
           principles.map((p, i) => (
-            <div class="card p-6 sm:p-7">
-              <p class="font-mono text-xs text-muted">0{i + 1}</p>
-              <h3 class="mt-2 text-xl font-semibold">{p.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
+            <div
+              class="grid gap-3 border-b border-line py-7 md:grid-cols-[4rem_1fr_1.3fr] md:items-baseline md:gap-6"
+              data-reveal
+              style={`--i:${i}`}
+            >
+              <span class="font-display text-3xl text-brand">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="text-xl md:text-2xl">{p.title}</h3>
+              <p class="text-sm leading-relaxed text-muted">{p.body}</p>
             </div>
           ))
         }
@@ -108,34 +224,107 @@ const proof = [
     </div>
   </section>
 
-  <!-- Featured work -->
-  <section class="section">
-    <div class="container-x">
-      <p class="eyebrow">Selected work</p>
-      <h2 class="mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">Systems that think, cite and hand over.</h2>
-      <p class="mt-3 max-w-2xl text-muted">Every card links to public source code or a live site. Prototypes are labelled as prototypes.</p>
-      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
-        {featured.map((p) => <ProjectCard project={p} />)}
+  <!-- About teaser -->
+  <section class="section border-y border-line bg-surface-2/40">
+    <div class="container-x grid items-center gap-10 lg:grid-cols-[0.8fr_1.2fr]">
+      <div class="relative mx-auto w-full max-w-sm" data-reveal>
+        <div class="corner-ticks overflow-hidden rounded-sm border border-line bg-surface p-2">
+          <Image
+            src={portrait}
+            alt="Kone Tshivhinda, founder of K-ONE IT SOLUTIONS"
+            widths={[320, 480, 640]}
+            sizes="(min-width: 1024px) 22rem, 80vw"
+            class="aspect-[4/5] w-full object-cover"
+          />
+          <div class="flex items-center justify-between gap-3 px-2 pb-1 pt-3">
+            <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Kone Tshivhinda</p>
+            <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Founder</p>
+          </div>
+        </div>
+        <span class="stamp stamp-ok absolute -right-2 -top-3 bg-surface">Johannesburg</span>
       </div>
-      <p class="mt-8">
-        <a href="/work/" class="inline-flex items-center gap-2 font-semibold">
-          Browse all {projects.length} public repositories <ArrowRight size={16} aria-hidden="true" />
-        </a>
-      </p>
+
+      <div data-reveal style="--i:1">
+        <SectionHeading
+          number="04"
+          title="One person, accountable end to end."
+          lead="No handoffs between agencies. The person who scopes the work also builds it and answers for it."
+        />
+        <p class="mt-6 max-w-2xl text-muted">
+          I am Kone Tshivhinda, a software engineer in Johannesburg. I build the interface, the API, the infrastructure
+          and the AI layer, and I stay available after it ships.
+        </p>
+        <p class="mt-4 max-w-2xl text-muted">
+          The studio is intentionally small. Work is scoped in writing, shipped in tested increments and documented so
+          you are never dependent on me to understand your own system.
+        </p>
+        <ul class="mt-6 flex flex-wrap gap-2">
+          <li class="chip">IBM Full Stack certified</li>
+          <li class="chip">NQF 6 Diploma in IT</li>
+          <li class="chip">POPIA-aware engineering</li>
+        </ul>
+        <p class="mt-8">
+          <a href="/about/" class="link-arrow">More about K-ONE <ArrowRight size={16} aria-hidden="true" /></a>
+        </p>
+      </div>
     </div>
   </section>
 
-  <!-- CTA -->
-  <section class="pb-20">
+  <!-- Night lab: live links -->
+  <section class="band-ink relative overflow-hidden" aria-labelledby="live-title">
+    <div class="grid-blueprint absolute inset-0 opacity-30" aria-hidden="true"></div>
+    <div class="container-x relative section">
+      <div class="flex flex-wrap items-end justify-between gap-6" data-reveal>
+        <div class="max-w-2xl">
+          <p class="eyebrow"><span class="text-brand">05</span><span class="h-px w-8 bg-line" aria-hidden="true"></span>Live right now</p>
+          <h2 id="live-title" class="mt-4 text-4xl sm:text-5xl">Open the real thing.</h2>
+          <p class="mt-4 text-lg text-muted">
+            No screenshots of things that might exist. Each link opens a working site or a public repository.
+          </p>
+        </div>
+        <p class="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-muted">Alpha means early, not pretend.</p>
+      </div>
+
+      <ul class="mt-10 grid gap-x-10 border-t border-line md:grid-cols-2">
+        {
+          liveNow.map((item) => (
+            <li class="border-b border-line">
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group flex items-center gap-4 py-5 no-underline"
+              >
+                <span class:list={['status-dot', item.status === 'Live' ? 'bg-ok' : 'bg-warn']} aria-hidden="true" />
+                <span class="min-w-0 flex-1">
+                  <span class="block text-lg font-medium text-fg">{item.name}</span>
+                  <span class="block text-sm text-muted">{item.note}</span>
+                </span>
+                <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">{item.status}</span>
+                <ExternalLink size={16} class="text-muted transition-colors group-hover:text-brand" aria-hidden="true" />
+                <span class="sr-only">for {item.name} (opens in a new tab)</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- Closing CTA -->
+  <section class="pb-16 pt-16 sm:pb-20 sm:pt-20">
     <div class="container-x">
-      <div class="rounded-[1.75rem] p-px" style="background-image:linear-gradient(135deg,var(--d1),var(--d2),var(--d3))">
-        <div class="rounded-[1.7rem] bg-surface px-6 py-12 text-center sm:px-12">
-          <h2 class="mx-auto max-w-2xl text-3xl font-bold sm:text-4xl">Have a project in mind?</h2>
-          <p class="mx-auto mt-3 max-w-xl text-muted">Tell me what you are trying to achieve and I will come back with a clear, honest plan.</p>
-          <div class="mt-8 flex flex-wrap justify-center gap-3">
-            <a href="/contact/" class="btn btn-primary">Get in touch <ArrowRight size={16} aria-hidden="true" /></a>
-            <a href={`mailto:${contact.email}`} class="btn btn-ghost">{contact.email}</a>
-          </div>
+      <div class="corner-ticks border-y border-line py-14 text-center" data-reveal>
+        <p class="eyebrow justify-center">Start here</p>
+        <h2 class="mx-auto mt-5 max-w-3xl text-4xl sm:text-6xl">Tell me what you are trying to build.</h2>
+        <p class="mx-auto mt-5 max-w-xl text-muted">
+          A short description is enough to start. You will get a straight answer about scope, cost and whether I am the
+          right fit.
+        </p>
+        <div class="mt-8 flex flex-wrap justify-center gap-3">
+          <a href="/contact/" class="btn btn-primary">Start a project <ArrowRight size={16} aria-hidden="true" /></a>
+          <a href={`mailto:${contact.email}`} class="btn btn-ghost">{contact.email}</a>
+          <a href={contact.phoneHref} class="btn btn-ghost"><Phone size={15} aria-hidden="true" /> {contact.phone}</a>
         </div>
       </div>
     </div>

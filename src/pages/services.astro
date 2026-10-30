@@ -1,45 +1,105 @@
 ---
 // Written by Kone Tshivhinda & Claude
-import { ArrowRight } from '@lucide/astro';
+import { ArrowRight, ChevronDown } from '@lucide/astro';
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import ServiceCard from '../components/ServiceCard.astro';
-import { services, process, skillGroups } from '../data/content';
+import EngagementCard from '../components/EngagementCard.astro';
+import CtaBand from '../components/CtaBand.astro';
+import { serviceDetails, engagements } from '../data/services';
+import { process, skillGroups } from '../data/content';
+import { site } from '../config';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'ItemList',
+  name: 'Services',
+  itemListElement: serviceDetails.map((service, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    item: {
+      '@type': 'Service',
+      name: service.title,
+      description: service.summary,
+      url: new URL(`/services/${service.id}/`, Astro.site).href,
+      provider: { '@type': 'Organization', name: site.name },
+    },
+  })),
+};
+
+const fit = [
+  {
+    title: 'Describe the problem',
+    body: 'What is slow, risky, manual or missing? Bring the workflow, the documents or the system as it is.',
+    link: { label: 'Start with a message', href: '/contact/' },
+  },
+  {
+    title: 'Pick the closest track',
+    body: 'If several tracks fit, that is normal. The track sets expectations; the written scope decides the work.',
+    link: { label: 'Compare the six tracks', href: '#services' },
+  },
+  {
+    title: 'Get a written plan',
+    body: 'The approach, deliverables, assumptions and a fixed or capped estimate arrive before any code is written.',
+    link: { label: 'See how engagements run', href: '#engagements' },
+  },
+];
+
+const models = Object.keys(engagements) as (keyof typeof engagements)[];
 ---
 
 <Base
   title="Services"
   description="AI agents, RAG and document intelligence, web and mobile apps, cloud and DevOps, local and sovereign AI, and QA, from K-ONE IT SOLUTIONS in Johannesburg."
+  jsonLd={jsonLd}
 >
-  <section class="relative overflow-hidden border-b border-line">
-    <div class="bg-aurora absolute inset-0" aria-hidden="true"></div>
-    <div class="container-x relative py-16 md:py-20">
-      <p class="eyebrow">Services</p>
-      <h1 class="mt-3 max-w-3xl text-4xl font-bold sm:text-5xl">
-        What <span class="grad-text">K-ONE IT SOLUTIONS</span> builds.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-muted">
-        Six focused services, each backed by shipped, public work. Every engagement starts with a clear scope and an honest estimate.
-      </p>
+  <PageHero
+    number="01"
+    label="Services"
+    title="What gets built, and how."
+    lead="Six focused tracks. Most projects combine two or three, and every engagement starts with a written scope and an honest estimate."
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href="/contact/" class="btn btn-primary">Start a project <ArrowRight size={16} aria-hidden="true" /></a>
+      <a href="#services" class="btn btn-ghost">See the six tracks</a>
     </div>
-  </section>
 
-  <section class="section">
-    <div class="container-x grid gap-5 md:grid-cols-2">
-      {services.map((s) => <ServiceCard service={s} detailed />)}
-    </div>
-  </section>
-
-  <section class="section border-y border-line bg-surface-2/60">
-    <div class="container-x">
-      <p class="eyebrow">Process</p>
-      <h2 class="mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">A simple, visible way of working.</h2>
-      <ol class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-4">
+    <aside slot="aside" class="corner-ticks border border-line bg-surface/75 p-5 backdrop-blur-sm">
+      <p class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">The six tracks</p>
+      <ol class="mt-4 space-y-3">
         {
-          process.map((p) => (
-            <li class="card p-6">
-              <p class="font-mono text-sm grad-text">{p.step}</p>
-              <h3 class="mt-2 text-lg font-semibold">{p.title}</h3>
-              <p class="mt-2 text-sm leading-relaxed text-muted">{p.body}</p>
+          serviceDetails.map((item) => (
+            <li>
+              <a href={`/services/${item.id}/`} class="group flex items-baseline gap-3 no-underline">
+                <span class="font-mono text-[0.6rem] text-muted">S{item.number}</span>
+                <span class="text-sm text-fg transition-colors group-hover:text-brand">{item.title}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </aside>
+  </PageHero>
+
+  <!-- Fit finder -->
+  <section class="section">
+    <div class="container-x">
+      <SectionHeading
+        number="02"
+        title="Not sure which service you need?"
+        lead="Start with the problem, not the technology. Three steps are usually enough to find the right track."
+      />
+      <ol class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          fit.map((item, i) => (
+            <li class="card flex h-full flex-col p-6 sm:p-7" data-reveal style={`--i:${i}`}>
+              <span class="font-display text-4xl text-brand">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-4 text-xl">{item.title}</h3>
+              <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{item.body}</p>
+              <a href={item.link.href} class="link-arrow mt-5 text-sm">
+                {item.link.label} <ArrowRight size={15} aria-hidden="true" />
+              </a>
             </li>
           ))
         }
@@ -47,25 +107,90 @@ import { services, process, skillGroups } from '../data/content';
     </div>
   </section>
 
-  <section class="section">
+  <!-- Six tracks -->
+  <section id="services" class="section scroll-mt-20 border-y border-line bg-surface-2/40">
     <div class="container-x">
-      <p class="eyebrow">Technology</p>
-      <h2 class="mt-3 max-w-2xl text-3xl font-bold sm:text-4xl">The tools in daily use.</h2>
-      <div class="mt-10 grid gap-5 md:grid-cols-2">
-        {
-          skillGroups.map((g) => (
-            <div class="card p-6">
-              <h3 class="text-base font-semibold">{g.title}</h3>
-              <ul class="mt-3 flex flex-wrap gap-1.5">
-                {g.items.map((i) => <li class="chip">{i}</li>)}
-              </ul>
-            </div>
-          ))
-        }
-      </div>
-      <div class="mt-12 text-center">
-        <a href="/contact/" class="btn btn-primary">Discuss your project <ArrowRight size={16} aria-hidden="true" /></a>
+      <SectionHeading
+        number="03"
+        title="Six tracks. One accountable team."
+        lead="Each track has defined deliverables and a handover. Nothing is subcontracted to a stranger."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+        {serviceDetails.map((service) => <ServiceCard service={service} detailed />)}
       </div>
     </div>
   </section>
+
+  <!-- Engagement models -->
+  <section id="engagements" class="section scroll-mt-20">
+    <div class="container-x">
+      <SectionHeading
+        number="04"
+        title="Three ways to work together."
+        lead="No prices on this page, because scope decides cost. Each model still ends with a written plan before work starts."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        {models.map((id, i) => <EngagementCard engagement={id} index={String(i + 1).padStart(2, '0')} />)}
+      </div>
+      <p class="mt-8 max-w-2xl text-sm text-muted">
+        Every model includes a written scope, weekly progress and a handover with documentation. Quotes are itemised, and
+        any change to scope is agreed in writing before it is built.
+      </p>
+    </div>
+  </section>
+
+  <!-- Process -->
+  <section class="section border-y border-line bg-surface-2/40">
+    <div class="container-x">
+      <SectionHeading
+        number="05"
+        title="Four steps, visible from day one."
+        lead="The same process runs underneath every track, so you always know what is happening and what comes next."
+      />
+      <ol class="mt-10 grid gap-8 md:grid-cols-4 md:gap-0">
+        {
+          process.map((step) => (
+            <li class="border-t border-line pt-5 md:border-l md:border-t-0 md:pl-6 md:pt-0">
+              <span class="font-display text-3xl text-brand">{step.step}</span>
+              <h3 class="mt-2 text-lg">{step.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{step.body}</p>
+            </li>
+          ))
+        }
+      </ol>
+    </div>
+  </section>
+
+  <!-- Stack -->
+  <section class="section">
+    <div class="container-x">
+      <SectionHeading
+        number="06"
+        title="The stack behind the work."
+        lead="Tools are chosen per project. These are the ones in daily use, not a list of everything that has ever been tried."
+      />
+      <details class="group mt-8 rounded-md border border-line bg-surface">
+        <summary
+          class="flex cursor-pointer list-none items-center justify-between gap-4 px-5 py-4 font-mono text-[0.68rem] uppercase tracking-[0.16em] text-fg [&::-webkit-details-marker]:hidden"
+        >
+          Show the full stack
+          <ChevronDown size={16} class="text-muted transition-transform group-open:rotate-180" aria-hidden="true" />
+        </summary>
+        <div class="grid gap-6 border-t border-line p-5 sm:grid-cols-2 lg:grid-cols-3">
+          {
+            skillGroups.map((group) => (
+              <div>
+                <h3 class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">{group.title}</h3>
+                <ul class="mt-3 flex flex-wrap gap-1.5">
+                  {group.items.map((item) => <li class="chip">{item}</li>)}
+                </ul>
+              </div>
+            ))
+          }
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <CtaBand />
 </Base>

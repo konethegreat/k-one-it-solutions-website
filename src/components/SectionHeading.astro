@@ -1,0 +1,19 @@
+---
+// Written by Kone Tshivhinda & Claude
+interface Props {
+  number: string;
+  title: string;
+  lead?: string;
+  id?: string;
+}
+const { number, title, lead, id } = Astro.props;
+---
+
+<div class="max-w-3xl" data-reveal>
+  <p class="eyebrow">
+    <span class="font-mono text-brand">{number}</span>
+    <span class="h-px w-8 bg-line" aria-hidden="true"></span>
+  </p>
+  <h2 id={id} class="mt-4 text-4xl sm:text-5xl">{title}</h2>
+  {lead && <p class="mt-4 max-w-2xl text-lg text-muted">{lead}</p>}
+</div>

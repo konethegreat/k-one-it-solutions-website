@@ -1,0 +1,25 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ArrowUpRight, BookOpen, Code, ExternalLink, FileText } from '@lucide/astro';
+
+interface Props {
+  href: string;
+  kind?: 'source' | 'live' | 'docs' | 'pdf' | 'proof' | 'dossier';
+  class?: string;
+}
+const { href, kind = 'proof', class: className } = Astro.props;
+const external = href.startsWith('http');
+const icons = { source: Code, live: ExternalLink, docs: BookOpen, pdf: FileText, proof: ArrowUpRight, dossier: FileText };
+const Icon = icons[kind];
+---
+
+<a
+  href={href}
+  class:list={['pill-link', className]}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noopener noreferrer' : undefined}
+>
+  <Icon size={14} aria-hidden="true" />
+  <slot />
+  {external && <span class="sr-only">(opens in a new tab)</span>}
+</a>

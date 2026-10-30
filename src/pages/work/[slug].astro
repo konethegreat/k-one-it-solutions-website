@@ -1,0 +1,368 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ArrowLeft, ArrowRight, ArrowUpRight, ExternalLink, FileText } from '@lucide/astro';
+import Base from '../../layouts/Base.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import DecisionCard from '../../components/DecisionCard.astro';
+import ScreenshotGallery from '../../components/ScreenshotGallery.astro';
+import BriefDownload from '../../components/BriefDownload.astro';
+import ReadingProgress from '../../components/ReadingProgress.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import VigilDiagram from '../../components/diagrams/VigilDiagram.astro';
+import SajasDiagram from '../../components/diagrams/SajasDiagram.astro';
+import ClearCutDiagram from '../../components/diagrams/ClearCutDiagram.astro';
+import TimeLexDiagram from '../../components/diagrams/TimeLexDiagram.astro';
+import { dossiers, type DiagramKind } from '../../data/dossiers';
+import { site } from '../../config';
+
+export function getStaticPaths() {
+  return dossiers.map((dossier, index) => ({
+    params: { slug: dossier.slug },
+    props: {
+      dossier,
+      index,
+      next: dossiers[(index + 1) % dossiers.length],
+    },
+  }));
+}
+
+const { dossier, index, next } = Astro.props;
+const diagramMap: Record<DiagramKind, typeof VigilDiagram> = {
+  vigil: VigilDiagram,
+  sajas: SajasDiagram,
+  clearcut: ClearCutDiagram,
+  timelex: TimeLexDiagram,
+};
+const Diagram = diagramMap[dossier.diagram];
+const dossierNo = String(index + 1).padStart(2, '0');
+const total = String(dossiers.length).padStart(2, '0');
+const licenceUrl =
+  dossier.licence === 'Apache-2.0'
+    ? 'https://www.apache.org/licenses/LICENSE-2.0'
+    : dossier.licence === 'MIT'
+      ? 'https://opensource.org/license/mit'
+      : undefined;
+
+const sections = [
+  { id: 'problem', label: 'The problem' },
+  { id: 'capabilities', label: 'What it does' },
+  { id: 'architecture', label: 'Architecture' },
+  { id: 'decisions', label: 'Decisions' },
+  { id: 'evidence', label: dossier.screenshots.length ? 'Screens' : 'Documents' },
+  { id: 'reality', label: 'What is real' },
+  { id: 'stack', label: 'Stack and links' },
+  { id: 'brief', label: 'Technical brief' },
+];
+
+const realityTone = (status: string) =>
+  /not live|not declared|proposed|pre-alpha|skeleton|fixture|at rest|soft guard/i.test(status)
+    ? 'stamp-warn'
+    : 'stamp-ok';
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'CreativeWork',
+  name: dossier.title,
+  description: dossier.summary,
+  url: Astro.url.href,
+  author: { '@type': 'Person', name: site.founder },
+  creator: { '@type': 'Organization', name: site.name, url: Astro.site?.href },
+  dateCreated: dossier.year,
+  codeRepository: dossier.repoUrl,
+  ...(licenceUrl ? { license: licenceUrl } : {}),
+};
+
+const cover = dossier.screenshots[0];
+const coverImage = cover ? new URL(cover.src.src, Astro.site).href : undefined;
+---
+<Base
+  title={`${dossier.title} dossier`}
+  description={dossier.summary}
+  jsonLd={jsonLd}
+  type="article"
+  ogImage={coverImage}
+>
+  <ReadingProgress />
+
+  <header class="relative overflow-hidden border-b border-line">
+    <div class="grid-blueprint absolute inset-0" aria-hidden="true"></div>
+    <div class="container-x relative py-12 md:py-20">
+      <nav aria-label="Breadcrumb" class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">
+        <a href="/work/" class="text-muted no-underline hover:text-fg">Work</a>
+        <span aria-hidden="true"> / </span>
+        <span>Dossier {dossierNo}</span>
+      </nav>
+
+      <div class="mt-8 grid gap-10 lg:grid-cols-[1.35fr_0.65fr] lg:items-start">
+        <div>
+          <div class="flex flex-wrap items-center gap-3">
+            <span class:list={['stamp', dossier.statusTone === 'ok' ? 'stamp-ok' : 'stamp-warn']}>{dossier.statusLabel}</span>
+            <span class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">Dossier {dossierNo} / {total}</span>
+          </div>
+          <h1 class="mt-5 text-5xl sm:text-6xl lg:text-7xl">{dossier.title}</h1>
+          {dossier.codename && <p class="mt-3 font-mono text-[0.66rem] uppercase tracking-[0.14em] text-muted">{dossier.codename}</p>}
+          <p class="mt-6 max-w-2xl text-lg text-muted">{dossier.summary}</p>
+
+          <dl class="mt-8 flex flex-wrap gap-x-8 gap-y-3 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted">
+            <div><dt class="inline">Year </dt><dd class="inline text-fg">{dossier.year}</dd></div>
+            <div><dt class="inline">Role </dt><dd class="inline text-fg">{dossier.role}</dd></div>
+            <div><dt class="inline">Licence </dt><dd class="inline text-fg">{dossier.licence}</dd></div>
+          </dl>
+
+          <div class="mt-8 flex flex-wrap items-center gap-3">
+            <a href={dossier.repoUrl} target="_blank" rel="noopener noreferrer" class="btn btn-primary">
+              Open the source <ExternalLink size={15} aria-hidden="true" />
+              <span class="sr-only">(opens in a new tab)</span>
+            </a>
+            {
+              dossier.liveUrl && (
+                <a href={dossier.liveUrl} target="_blank" rel="noopener noreferrer" class="btn btn-ghost">
+                  Visit the live site <ExternalLink size={15} aria-hidden="true" />
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              )
+            }
+            <a href="#brief" class="btn btn-ghost no-print">
+              Technical brief <FileText size={15} aria-hidden="true" />
+            </a>
+          </div>
+        </div>
+
+        <aside class="card p-5 sm:p-6">
+          <h2 class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">At a glance</h2>
+          <dl class="mt-4 divide-y divide-line border-y border-line">
+            {
+              dossier.facts.map((fact) => (
+                <div class="grid grid-cols-[0.9fr_1.1fr] gap-3 py-2.5">
+                  <dt class="font-mono text-[0.56rem] uppercase leading-relaxed tracking-[0.12em] text-muted">{fact.label}</dt>
+                  <dd class="text-[0.8rem] leading-snug">{fact.value}</dd>
+                </div>
+              ))
+            }
+          </dl>
+          <a href={dossier.docsUrl} target="_blank" rel="noopener noreferrer" class="link-arrow mt-4 text-sm">
+            Read the docs <ArrowUpRight size={14} aria-hidden="true" />
+            <span class="sr-only">(opens in a new tab)</span>
+          </a>
+        </aside>
+      </div>
+    </div>
+  </header>
+
+  <div class="container-x grid gap-12 py-12 md:py-16 lg:grid-cols-[200px_minmax(0,1fr)] lg:gap-16">
+    <aside class="no-print hidden lg:block">
+      <nav aria-label="On this page" class="sticky top-24">
+        <p class="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted">Contents</p>
+        <ol class="mt-4 space-y-1 border-l border-line">
+          {
+            sections.map((section, i) => (
+              <li>
+                <a
+                  href={`#${section.id}`}
+                  class="-ml-px flex items-baseline gap-2 border-l border-transparent py-1.5 pl-3 font-mono text-[0.62rem] uppercase tracking-[0.12em] text-muted no-underline transition hover:border-brand hover:text-fg"
+                >
+                  <span class="text-brand">{String(i + 1).padStart(2, '0')}</span>
+                  {section.label}
+                </a>
+              </li>
+            ))
+          }
+        </ol>
+        <a href="/contact/" class="btn btn-ghost mt-6 w-full py-2.5! text-xs">Discuss similar work</a>
+      </nav>
+    </aside>
+
+    <article class="min-w-0">
+      <section id="problem" class="scroll-mt-24">
+        <SectionHeading number="01" title="The problem it answers." lead="Written from the repository and its design records, not from a pitch deck." />
+        <div class="prose-dossier mt-6 max-w-3xl">
+          {dossier.problem.map((paragraph) => <p>{paragraph}</p>)}
+        </div>
+      </section>
+
+      <section id="capabilities" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading number="02" title="What it does." lead="The parts that carry the weight." />
+        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+          {
+            dossier.capabilities.map((capability, i) => (
+              <li class="card p-5" data-reveal style={`--i:${i}`}>
+                <span class="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-brand">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
+                <h3 class="mt-2 text-lg">{capability.title}</h3>
+                <p class="mt-2 text-sm leading-relaxed text-muted">{capability.body}</p>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section id="architecture" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading
+          number="03"
+          title="How the parts fit."
+          lead="An authored diagram based on the architecture documentation, with real component names."
+        />
+        <div class="mt-8">
+          <Diagram />
+        </div>
+      </section>
+
+      <section id="decisions" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading
+          number="04"
+          title="Decisions that shaped it."
+          lead="Real records from the repository. Proposed decisions are labelled as proposed."
+        />
+        <div class="mt-8 grid gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {dossier.decisions.map((decision, i) => <DecisionCard decision={decision} index={i} />)}
+        </div>
+      </section>
+
+      <section id="evidence" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading
+          number="05"
+          title={dossier.screenshots.length ? 'Screens from the product.' : 'Documents, not mock-ups.'}
+          lead={
+            dossier.screenshots.length
+              ? 'Captured from the demo or repository. No invented interface.'
+              : 'No interface is invented for this dossier. The documentation and the diagram are the evidence.'
+          }
+        />
+        <div class="mt-8">
+          {
+            dossier.screenshots.length > 0 ? (
+              <ScreenshotGallery
+                screenshots={dossier.screenshots}
+                note={
+                  dossier.slug === 'clearcut'
+                    ? 'Captured from the public demo. Every invoice is a prepared fixture.'
+                    : 'Captured from the repository demo fixture. All names, vacancies and profiles are fictional.'
+                }
+              />
+            ) : (
+              <ul class="grid gap-4 sm:grid-cols-3">
+                {dossier.excerpts.map((excerpt, i) => (
+                  <li class="card card-hover h-full" data-reveal style={`--i:${i}`}>
+                    <a
+                      href={excerpt.href}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      class="flex h-full flex-col p-5 text-fg no-underline"
+                    >
+                      <span class="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-brand">{excerpt.label}</span>
+                      <span class="mt-2 font-mono text-[0.72rem] leading-snug">{excerpt.title}</span>
+                      <span class="mt-2 flex-1 text-sm leading-relaxed text-muted">{excerpt.body}</span>
+                      <span class="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold">
+                        Open <ArrowUpRight size={14} aria-hidden="true" />
+                        <span class="sr-only">(opens in a new tab)</span>
+                      </span>
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            )
+          }
+        </div>
+      </section>
+
+      <section id="reality" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading
+          number="06"
+          title="What is real, and what is not."
+          lead="A status table for the claims on this page."
+        />
+        <div class="mt-8 overflow-x-auto">
+          <table class="w-full min-w-[34rem] border-collapse text-left text-sm">
+            <caption class="sr-only">Honesty table for {dossier.title}</caption>
+            <thead>
+              <tr class="border-b border-line">
+                <th scope="col" class="py-3 pr-4 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">Area</th>
+                <th scope="col" class="py-3 pr-4 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">Status</th>
+                <th scope="col" class="py-3 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">Note</th>
+              </tr>
+            </thead>
+            <tbody>
+              {
+                dossier.honesty.map((row) => (
+                  <tr class="border-b border-line align-top">
+                    <th scope="row" class="py-3.5 pr-4 text-[0.82rem] font-medium">{row.area}</th>
+                    <td class="py-3.5 pr-4">
+                      <span class:list={['stamp', realityTone(row.status)]}>{row.status}</span>
+                    </td>
+                    <td class="py-3.5 text-[0.82rem] leading-relaxed text-muted">{row.note}</td>
+                  </tr>
+                ))
+              }
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <section id="stack" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading number="07" title="Stack and links." lead="What it is built with, and where to check the claims." />
+        <div class="mt-8 grid gap-6 md:grid-cols-2">
+          <div class="card p-6">
+            <h3 class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">Stack</h3>
+            <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies">
+              {dossier.stack.map((item) => <li class="chip">{item}</li>)}
+            </ul>
+          </div>
+          <div class="card p-6">
+            <h3 class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">Links</h3>
+            <ul class="mt-4 space-y-2.5">
+              <li>
+                <a href={dossier.repoUrl} target="_blank" rel="noopener noreferrer" class="link-arrow text-sm">
+                  Source repository <ExternalLink size={14} aria-hidden="true" />
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+              <li>
+                <a href={dossier.docsUrl} target="_blank" rel="noopener noreferrer" class="link-arrow text-sm">
+                  Documentation <ExternalLink size={14} aria-hidden="true" />
+                  <span class="sr-only">(opens in a new tab)</span>
+                </a>
+              </li>
+              {
+                dossier.liveUrl && (
+                  <li>
+                    <a href={dossier.liveUrl} target="_blank" rel="noopener noreferrer" class="link-arrow text-sm">
+                      Live site <ExternalLink size={14} aria-hidden="true" />
+                      <span class="sr-only">(opens in a new tab)</span>
+                    </a>
+                  </li>
+                )
+              }
+              <li>
+                <a href={dossier.relatedService.href} class="link-arrow text-sm">
+                  Related service: {dossier.relatedService.label} <ArrowRight size={14} aria-hidden="true" />
+                </a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <section id="brief" class="mt-16 scroll-mt-24 md:mt-20">
+        <SectionHeading number="08" title="Take the brief." lead="The same evidence, in a format you can attach to an email." />
+        <div class="mt-8">
+          <BriefDownload slug={dossier.slug} title={dossier.title} />
+        </div>
+      </section>
+
+      <nav aria-label="Dossier navigation" class="no-print mt-16 border-t border-line pt-8">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <a href="/work/" class="link-arrow text-sm"><ArrowLeft size={15} aria-hidden="true" /> All work</a>
+          <a href={`/work/${next.slug}/`} class="group text-right no-underline">
+            <span class="block font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">Next dossier</span>
+            <span class="mt-1 flex items-center gap-2 text-xl text-fg transition-colors group-hover:text-brand">
+              {next.title} <ArrowRight size={17} aria-hidden="true" />
+            </span>
+          </a>
+        </div>
+      </nav>
+    </article>
+  </div>
+
+  <CtaBand />
+</Base>

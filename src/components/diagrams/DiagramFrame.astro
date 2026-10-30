@@ -1,0 +1,34 @@
+---
+// Written by Kone Tshivhinda & Claude
+interface Props {
+  label: string;
+  caption: string;
+  legend: { name: string; tone: 'brand' | 'ok' | 'warn' | 'muted' }[];
+}
+const { label, caption, legend } = Astro.props;
+const toneVar = { brand: 'var(--brand)', ok: 'var(--ok)', warn: 'var(--warn)', muted: 'var(--muted)' };
+---
+<figure class="card overflow-hidden">
+  <div class="flex flex-wrap items-center justify-between gap-2 border-b border-line px-4 py-3 sm:px-5">
+    <p class="font-mono text-[0.62rem] uppercase tracking-[0.16em] text-muted">{label}</p>
+    <p class="font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted md:hidden">Scroll sideways</p>
+  </div>
+  <div class="overflow-x-auto" tabindex="0" role="group" aria-label="Architecture diagram, scroll horizontally on a small screen">
+    <div class="min-w-[680px] p-3 sm:p-5">
+      <slot />
+    </div>
+  </div>
+  <figcaption class="border-t border-line px-4 py-4 sm:px-5">
+    <p class="text-sm leading-relaxed text-muted">{caption}</p>
+    <ul class="mt-3 flex flex-wrap gap-x-5 gap-y-2">
+      {
+        legend.map((item) => (
+          <li class="flex items-center gap-1.5 font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted">
+            <span class="h-2 w-2 rounded-sm border" style={`background: color-mix(in oklab, ${toneVar[item.tone]} 14%, transparent); border-color:${toneVar[item.tone]}`} aria-hidden="true"></span>
+            {item.name}
+          </li>
+        ))
+      }
+    </ul>
+  </figcaption>
+</figure>

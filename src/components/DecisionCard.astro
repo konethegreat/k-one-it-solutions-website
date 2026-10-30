@@ -1,0 +1,32 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ArrowUpRight } from '@lucide/astro';
+import type { DossierDecision } from '../data/dossiers';
+
+interface Props {
+  decision: DossierDecision;
+  index: number;
+}
+const { decision, index } = Astro.props;
+---
+<article class="card flex h-full flex-col p-6 sm:p-7" data-reveal style={`--i:${index}`}>
+  <div class="flex flex-wrap items-center justify-between gap-2">
+    <p class="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-brand">{decision.code}</p>
+    <span class="stamp stamp-neutral">{decision.state}</span>
+  </div>
+  <h3 class="mt-4 text-xl">{decision.title}</h3>
+  <p class="mt-3 text-sm leading-relaxed">{decision.decision}</p>
+  <div class="mt-4 border-l-2 border-line pl-4">
+    <p class="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted">Why it matters</p>
+    <p class="mt-1 text-sm leading-relaxed text-muted">{decision.why}</p>
+  </div>
+  <a
+    href={decision.href}
+    target="_blank"
+    rel="noopener noreferrer"
+    class="link-arrow mt-auto pt-5 text-sm"
+  >
+    Read the record <ArrowUpRight size={15} aria-hidden="true" />
+    <span class="sr-only">for {decision.code} (opens in a new tab)</span>
+  </a>
+</article>

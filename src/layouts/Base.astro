@@ -1,11 +1,14 @@
 ---
 // Written by Kone Tshivhinda & Claude
 import '@fontsource-variable/inter';
-import '@fontsource-variable/space-grotesk';
+import '@fontsource/instrument-serif';
+import '@fontsource/instrument-serif/400-italic.css';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import CircularNav from '../components/CircularNav';
 import { site } from '../config';
 
 interface Props {
@@ -13,12 +16,21 @@ interface Props {
   description?: string;
   jsonLd?: Record<string, unknown>;
   noindex?: boolean;
+  type?: 'website' | 'article';
+  ogImage?: string;
 }
 
-const { title, description = site.description, jsonLd, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  jsonLd,
+  noindex = false,
+  type = 'website',
+  ogImage: ogImageProp,
+} = Astro.props;
 const fullTitle = title === site.name ? `${site.name} | Software & AI studio, Johannesburg` : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og-image.png', Astro.site).href;
+const ogImage = ogImageProp ? new URL(ogImageProp, Astro.site).href : new URL('/og-image.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -31,7 +43,7 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />
@@ -46,14 +58,23 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#fbfaff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#05060d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf8f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <ClientRouter />
 
     <!-- Apply a saved dark-mode choice before first paint. Light is the default. -->
     <script is:inline>
       try {
         if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
       } catch (e) {}
+      document.addEventListener('astro:before-swap', (event) => {
+        try {
+          if (localStorage.getItem('theme') === 'dark') event.newDocument.documentElement.dataset.theme = 'dark';
+        } catch (e) {}
+      });
+      document.addEventListener('astro:after-swap', () => {
+        document.getElementById('main')?.focus({ preventScroll: true });
+      });
     </script>
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
@@ -66,9 +87,33 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
       Skip to content
     </a>
     <Header />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
+    <CircularNav client:load />
+    <script>
+      const runReveal = () => {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach((el) => el.classList.add('is-revealed'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      };
+      runReveal();
+      document.addEventListener('astro:page-load', runReveal);
+    </script>
   </body>
 </html>

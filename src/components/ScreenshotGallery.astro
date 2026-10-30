@@ -1,0 +1,36 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Image } from 'astro:assets';
+import type { DossierScreenshot } from '../data/dossiers';
+
+interface Props {
+  screenshots: DossierScreenshot[];
+  note: string;
+}
+const { screenshots, note } = Astro.props;
+---
+<div>
+  <ul class="grid gap-5 md:grid-cols-2">
+    {
+      screenshots.map((shot, i) => (
+        <li class:list={['card overflow-hidden', i === 0 && 'md:col-span-2']}>
+          <div class:list={['overflow-hidden bg-surface-2', i === 0 ? 'aspect-[16/9]' : 'aspect-[16/10]']}>
+            <Image
+              src={shot.src}
+              alt={shot.alt}
+              widths={[480, 720, 960, 1440]}
+              sizes={i === 0 ? '(min-width: 1024px) 60rem, 100vw' : '(min-width: 1024px) 30rem, 100vw'}
+              class="h-full w-full object-cover object-top"
+              loading={i === 0 ? 'eager' : 'lazy'}
+            />
+          </div>
+          <div class="flex items-start gap-3 border-t border-line px-4 py-3.5">
+            <span class="mt-0.5 font-mono text-[0.58rem] tracking-[0.1em] text-muted">{String(i + 1).padStart(2, '0')}</span>
+            <p class="text-xs leading-relaxed text-muted">{shot.caption}</p>
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+  <p class="mt-4 font-mono text-[0.6rem] uppercase leading-relaxed tracking-[0.14em] text-muted">{note}</p>
+</div>

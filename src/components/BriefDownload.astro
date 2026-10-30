@@ -1,0 +1,49 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { existsSync, statSync } from 'node:fs';
+import { join } from 'node:path';
+import { ArrowDownToLine, FileText, Printer } from '@lucide/astro';
+
+interface Props {
+  slug: string;
+  title: string;
+}
+const { slug, title } = Astro.props;
+const pdfPath = join(process.cwd(), 'public', 'briefs', `${slug}.pdf`);
+const available = existsSync(pdfPath);
+const sizeKb = available ? Math.max(1, Math.round(statSync(pdfPath).size / 1024)) : 0;
+---
+<div class="band-ink corner-ticks relative overflow-hidden rounded-md p-6 sm:p-8">
+  <div class="grid-blueprint absolute inset-0 opacity-30" aria-hidden="true"></div>
+  <div class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between">
+    <div class="flex items-start gap-4">
+      <span class="icon-tile shrink-0" aria-hidden="true"><FileText size={19} /></span>
+      <div>
+        <p class="font-mono text-[0.6rem] uppercase tracking-[0.18em]" style="color: var(--muted)">Technical brief</p>
+        <h3 class="mt-1 text-2xl" style="color: var(--fg)">{title}</h3>
+        <p class="mt-2 max-w-md text-sm leading-relaxed" style="color: var(--muted)">
+          Two A4 pages: status, summary, architecture, decisions, stack and links.
+          {available ? ` ${sizeKb} KB PDF.` : ' Generated from the same source as this page.'}
+        </p>
+      </div>
+    </div>
+    <div class="flex flex-wrap items-center gap-3">
+      {
+        available ? (
+          <a href={`/briefs/${slug}.pdf`} download class="btn" style="background: var(--brand); color: var(--ink-bg)">
+            Download PDF <ArrowDownToLine size={16} aria-hidden="true" />
+            <span class="sr-only">{title} technical brief, PDF</span>
+          </a>
+        ) : (
+          <span class="stamp" style="color: var(--muted)">PDF in build</span>
+        )
+      }
+      <a href={`/briefs/${slug}/`} class="btn btn-ghost" style="color: var(--fg); border-color: var(--line)">
+        Read online <Printer size={15} aria-hidden="true" />
+      </a>
+    </div>
+  </div>
+  <p class="relative mt-5 font-mono text-[0.58rem] uppercase tracking-[0.14em]" style="color: var(--muted)">
+    Source: public repository · Generated from the dossier record
+  </p>
+</div>

@@ -4,40 +4,90 @@ import Base from '../layouts/Base.astro';
 import { site, contact, formEndpoint } from '../config';
 ---
 
-<Base title="Privacy" description="How K-ONE IT SOLUTIONS handles personal information on this website.">
-  <section class="section">
-    <div class="container-x max-w-3xl">
-      <p class="eyebrow">Privacy</p>
-      <h1 class="mt-3 text-4xl font-bold">Privacy notice</h1>
-      <p class="mt-4 text-muted">A short, plain-language summary of how this website treats personal information.</p>
+<Base
+  title="Privacy"
+  description="How K-ONE IT SOLUTIONS handles personal information on this website, including the contact form, technical briefs and links to external projects."
+>
+  <section class="relative overflow-hidden border-b border-line">
+    <div class="grid-blueprint absolute inset-0" aria-hidden="true"></div>
+    <div class="container-x relative py-16 md:py-20">
+      <p class="eyebrow">
+        <span class="text-brand">Note</span>
+        <span class="h-px w-8 bg-line" aria-hidden="true"></span>
+        Privacy
+      </p>
+      <h1 class="mt-4 max-w-3xl text-4xl sm:text-5xl">Privacy notice</h1>
+      <p class="mt-5 max-w-2xl text-lg text-muted">
+        A short, plain-language summary of how this website treats personal information.
+      </p>
+      <p class="mt-4 font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">Last updated 30 October 2026</p>
+    </div>
+  </section>
 
-      <div class="mt-10 space-y-8 leading-relaxed">
-        <div>
-          <h2 class="text-xl font-semibold">No tracking</h2>
-          <p class="mt-2 text-muted">This site does not use cookies, analytics or advertising trackers. The only thing stored in your browser is your light or dark theme choice, and it never leaves your device.</p>
+  <section class="section">
+    <div class="container-x grid gap-10 lg:grid-cols-[0.35fr_0.65fr]">
+      <aside class="lg:sticky lg:top-24 lg:self-start">
+        <p class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">On this page</p>
+        <ol class="mt-4 space-y-2 text-sm">
+          <li><a href="#tracking">No tracking</a></li>
+          <li><a href="#contact">If you contact me</a></li>
+          <li><a href="#downloads">Downloads and briefs</a></li>
+          <li><a href="#external">Links to other sites</a></li>
+          <li><a href="#rights">Your rights</a></li>
+        </ol>
+      </aside>
+
+      <div class="max-w-2xl space-y-10 leading-relaxed">
+        <div id="tracking" class="scroll-mt-24">
+          <h2 class="text-2xl">No tracking</h2>
+          <p class="mt-3 text-muted">
+            This site does not use analytics, advertising pixels or third-party tracking cookies. Your light or dark theme
+            choice is stored in your browser, and the page router may keep scroll positions for the current visit. Neither
+            leaves your device.
+          </p>
         </div>
-        <div>
-          <h2 class="text-xl font-semibold">If you contact me</h2>
+
+        <div id="contact" class="scroll-mt-24">
+          <h2 class="text-2xl">If you contact me</h2>
           {
             formEndpoint ? (
-              <p class="mt-2 text-muted">
-                When you send the contact form, your name, email address and message are passed to a form service that delivers them to {site.name}. They are used only to reply to you and are not sold or shared for marketing.
+              <p class="mt-3 text-muted">
+                When you send the contact form, your name, email address and message are passed to a form service that
+                delivers them to {site.name}. They are used only to reply to you and are not sold or shared for marketing.
               </p>
             ) : (
-              <p class="mt-2 text-muted">
-                The contact form opens your own email app with your message filled in, so nothing is collected by this website. If you email or phone, your details are used only to reply to you and are not sold or shared for marketing.
+              <p class="mt-3 text-muted">
+                The contact form opens your own email app with your message filled in, so nothing is collected by this
+                website. If you email or phone, your details are used only to reply to you and are not sold or shared for
+                marketing.
               </p>
             )
           }
         </div>
-        <div>
-          <h2 class="text-xl font-semibold">Links to other sites</h2>
-          <p class="mt-2 text-muted">Links to GitHub, LinkedIn and other sites lead to services with their own privacy practices.</p>
+
+        <div id="downloads" class="scroll-mt-24">
+          <h2 class="text-2xl">Downloads and briefs</h2>
+          <p class="mt-3 text-muted">
+            The technical briefs are static PDF files generated from the same project data as the dossiers. Downloading one
+            sends you a file and nothing else. This site does not record who downloads a brief or which pages you read.
+          </p>
         </div>
-        <div>
-          <h2 class="text-xl font-semibold">Your rights and questions</h2>
-          <p class="mt-2 text-muted">
-            To ask what I hold about you, or to have it deleted, email <a href={`mailto:${contact.email}`}>{contact.email}</a>.
+
+        <div id="external" class="scroll-mt-24">
+          <h2 class="text-2xl">Links to other sites</h2>
+          <p class="mt-3 text-muted">
+            This site links to GitHub, LinkedIn, the portfolio, live products such as SA-JAS and ClearCut, and other
+            services. Those sites have their own privacy practices and may collect information when you visit them. They
+            are opened as links, not embedded with tracking scripts.
+          </p>
+        </div>
+
+        <div id="rights" class="scroll-mt-24">
+          <h2 class="text-2xl">Your rights and questions</h2>
+          <p class="mt-3 text-muted">
+            To ask what I hold about you, or to have it deleted, email
+            <a href={`mailto:${contact.email}`} class="ml-1">{contact.email}</a>. This notice is updated when the site's data
+            handling changes.
           </p>
         </div>
       </div>

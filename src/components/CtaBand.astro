@@ -1,0 +1,29 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ArrowRight, Phone } from '@lucide/astro';
+import { contact } from '../config';
+
+interface Props {
+  title?: string;
+  lead?: string;
+}
+const {
+  title = 'Tell me what you are trying to build.',
+  lead = 'A short description is enough to start. You will get a straight answer about scope, cost and whether I am the right fit.',
+} = Astro.props;
+---
+
+<section class="section">
+  <div class="container-x">
+    <div class="corner-ticks border-y border-line py-14 text-center" data-reveal>
+      <p class="eyebrow justify-center">Start here</p>
+      <h2 class="mx-auto mt-5 max-w-3xl text-4xl sm:text-6xl">{title}</h2>
+      <p class="mx-auto mt-5 max-w-xl text-muted">{lead}</p>
+      <div class="mt-8 flex flex-wrap justify-center gap-3">
+        <a href="/contact/" class="btn btn-primary">Start a project <ArrowRight size={16} aria-hidden="true" /></a>
+        <a href={`mailto:${contact.email}`} class="btn btn-ghost">{contact.email}</a>
+        <a href={contact.phoneHref} class="btn btn-ghost"><Phone size={15} aria-hidden="true" /> {contact.phone}</a>
+      </div>
+    </div>
+  </div>
+</section>
