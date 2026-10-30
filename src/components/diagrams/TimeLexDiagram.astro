@@ -1,0 +1,117 @@
+---
+// Written by Kone Tshivhinda & Claude
+import DiagramFrame from './DiagramFrame.astro';
+---
+<DiagramFrame
+  label="Architecture · TimeLex"
+  caption="Clients enter through the gateway. Identity, vault and capture feed an append-only ledger, which drives billing and ClearCut for invoice maths."
+  legend={[
+    { name: 'Security surface', tone: 'brand' },
+    { name: 'Capture and billing', tone: 'muted' },
+    { name: 'Append-only ledger', tone: 'ok' },
+  ]}
+>
+  <svg class="dgm" viewBox="0 0 760 520" role="img" aria-labelledby="timelex-diagram-title">
+    <title id="timelex-diagram-title">TimeLex architecture: clients, gateway, identity, vault, capture, attribution, narrative, an append-only ledger, billing and ClearCut</title>
+    <defs>
+      <marker id="timelex-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"></path>
+      </marker>
+    </defs>
+
+    <text class="dgm-label" x="16" y="70">Clients</text>
+    <rect class="dgm-box" x="16" y="82" width="104" height="50" rx="5"></rect>
+    <text class="dgm-title" x="68" y="104" text-anchor="middle" font-size="12">Outlook</text>
+    <text class="dgm-sub" x="68" y="119" text-anchor="middle">add-in</text>
+    <rect class="dgm-box" x="16" y="144" width="104" height="50" rx="5"></rect>
+    <text class="dgm-title" x="68" y="166" text-anchor="middle" font-size="12">Web app</text>
+    <text class="dgm-sub" x="68" y="181" text-anchor="middle">TypeScript</text>
+    <rect class="dgm-box" x="16" y="206" width="104" height="50" rx="5"></rect>
+    <text class="dgm-title" x="68" y="228" text-anchor="middle" font-size="12">Claude plugin</text>
+    <text class="dgm-sub" x="68" y="243" text-anchor="middle">MCP</text>
+
+    <line class="dgm-line" x1="120" y1="107" x2="150" y2="107" marker-end="url(#timelex-arrow)"></line>
+    <line class="dgm-line" x1="120" y1="169" x2="150" y2="169" marker-end="url(#timelex-arrow)"></line>
+    <line class="dgm-line" x1="120" y1="231" x2="150" y2="231" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-accent" x="150" y="70" width="112" height="220" rx="6"></rect>
+    <text class="dgm-label" x="206" y="94" text-anchor="middle">Gateway</text>
+    <text class="dgm-title" x="206" y="120" text-anchor="middle" font-size="14">Auth + tenancy</text>
+    <text class="dgm-sub" x="206" y="140" text-anchor="middle">rate limits</text>
+    <text class="dgm-sub" x="206" y="154" text-anchor="middle">outward MCP</text>
+    <line x1="166" y1="166" x2="246" y2="166" stroke="var(--line)" stroke-width="1"></line>
+    <text class="dgm-sub" x="206" y="186" text-anchor="middle">every service</text>
+    <text class="dgm-sub" x="206" y="200" text-anchor="middle">owns its data</text>
+    <text class="dgm-sub" x="206" y="214" text-anchor="middle">and contract</text>
+
+    <line class="dgm-line" x1="262" y1="100" x2="290" y2="100" marker-end="url(#timelex-arrow)"></line>
+    <line class="dgm-line" x1="262" y1="165" x2="290" y2="165" marker-end="url(#timelex-arrow)"></line>
+    <line class="dgm-line" x1="262" y1="240" x2="290" y2="240" marker-end="url(#timelex-arrow)"></line>
+    <path class="dgm-line" d="M262 88 H276 V44 H491 V60" marker-end="url(#timelex-arrow)"></path>
+
+    <rect class="dgm-box" x="290" y="60" width="112" height="58" rx="5"></rect>
+    <text class="dgm-title" x="346" y="82" text-anchor="middle" font-size="12">Identity</text>
+    <text class="dgm-sub" x="346" y="98" text-anchor="middle">tenant context</text>
+
+    <rect class="dgm-accent" x="290" y="132" width="112" height="66" rx="5"></rect>
+    <text class="dgm-title" x="346" y="154" text-anchor="middle" font-size="12">Vault</text>
+    <text class="dgm-sub" x="346" y="170" text-anchor="middle">bring your own keys</text>
+    <text class="dgm-sub" x="346" y="184" text-anchor="middle">only decryptor</text>
+
+    <rect class="dgm-box" x="290" y="212" width="112" height="58" rx="5"></rect>
+    <text class="dgm-title" x="346" y="234" text-anchor="middle" font-size="12">mcp-host</text>
+    <text class="dgm-sub" x="346" y="250" text-anchor="middle">inward agent runtime</text>
+
+    <rect class="dgm-box" x="430" y="60" width="122" height="58" rx="5"></rect>
+    <text class="dgm-label" x="444" y="78">Capture</text>
+    <text class="dgm-title" x="444" y="98" font-size="13">M365 + Google</text>
+    <text class="dgm-sub" x="444" y="112">meetings · mail · files</text>
+
+    <line class="dgm-line" x1="491" y1="118" x2="491" y2="132" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-box" x="430" y="132" width="122" height="58" rx="5"></rect>
+    <text class="dgm-label" x="444" y="150">Attribution</text>
+    <text class="dgm-title" x="444" y="170" font-size="13">Matter cascade</text>
+    <text class="dgm-sub" x="444" y="184">evidence for the choice</text>
+
+    <line class="dgm-line" x1="491" y1="190" x2="491" y2="204" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-box" x="430" y="204" width="122" height="58" rx="5"></rect>
+    <text class="dgm-label" x="444" y="222">Narrative</text>
+    <text class="dgm-title" x="444" y="242" font-size="13">Number guard</text>
+    <text class="dgm-sub" x="444" y="256">draft from evidence</text>
+
+    <line class="dgm-line" x1="491" y1="262" x2="491" y2="286" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-ok" x="430" y="286" width="314" height="76" rx="6"></rect>
+    <text class="dgm-label" x="446" y="306">Ledger</text>
+    <text class="dgm-title" x="446" y="326" font-size="14">Append-only time ledger</text>
+    <text class="dgm-sub" x="446" y="344">Immutable events · corrections supersede · hash-chained audit</text>
+    <text class="dgm-sub" x="446" y="356">Integer cents · seven-year retention · NATS planned</text>
+
+    <line class="dgm-line" x1="491" y1="362" x2="491" y2="382" marker-end="url(#timelex-arrow)"></line>
+    <rect class="dgm-box" x="430" y="382" width="145" height="68" rx="5"></rect>
+    <text class="dgm-label" x="444" y="402">Billing</text>
+    <text class="dgm-title" x="444" y="422" font-size="13">Work in progress</text>
+    <text class="dgm-sub" x="444" y="438">pro-forma · matters · trust</text>
+
+    <line class="dgm-line" x1="575" y1="416" x2="595" y2="416" marker-end="url(#timelex-arrow)"></line>
+    <rect class="dgm-warn" x="595" y="382" width="149" height="68" rx="5"></rect>
+    <text class="dgm-label" x="609" y="402">Invoice maths</text>
+    <text class="dgm-title" x="609" y="422" font-size="13">ClearCut</text>
+    <text class="dgm-sub" x="609" y="438">VAT and line checks</text>
+
+    <line class="dgm-line" x1="346" y1="270" x2="346" y2="286" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-box" x="150" y="286" width="250" height="76" rx="6"></rect>
+    <text class="dgm-label" x="166" y="306">Storage</text>
+    <text class="dgm-title" x="166" y="326" font-size="13">PostgreSQL</text>
+    <text class="dgm-sub" x="166" y="344">One schema and database role per service</text>
+    <text class="dgm-sub" x="166" y="356">No cross-schema reads or foreign keys</text>
+
+    <line class="dgm-line" x1="400" y1="324" x2="430" y2="324" marker-end="url(#timelex-arrow)"></line>
+
+    <rect class="dgm-band" x="16" y="470" width="728" height="38" rx="5"></rect>
+    <text class="dgm-sub" x="32" y="493">Autonomy is earned. Trust money, signing, filing, legal advice and rate changes are never autonomous.</text>
+  </svg>
+</DiagramFrame>

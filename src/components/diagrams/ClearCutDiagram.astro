@@ -1,0 +1,99 @@
+---
+// Written by Kone Tshivhinda & Claude
+import DiagramFrame from './DiagramFrame.astro';
+---
+<DiagramFrame
+  label="Architecture · ClearCut"
+  caption="Clients enter through REST, MCP or the web page. Untrusted documents stay in a sandboxed worker, the pipeline reads and validates them, and the review queue keeps a person in the loop."
+  legend={[
+    { name: 'Trust boundary', tone: 'brand' },
+    { name: 'Human review', tone: 'ok' },
+    { name: 'Model calls', tone: 'warn' },
+  ]}
+>
+  <svg class="dgm" viewBox="0 0 760 520" role="img" aria-labelledby="clearcut-diagram-title">
+    <title id="clearcut-diagram-title">ClearCut architecture: clients, axum server, PostgreSQL store, job pipeline, sandboxed worker, model router and human review queue</title>
+    <defs>
+      <marker id="clearcut-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"></path>
+      </marker>
+    </defs>
+
+    <rect class="dgm-box" x="16" y="56" width="164" height="56" rx="5"></rect>
+    <text class="dgm-title" x="98" y="79" text-anchor="middle" font-size="13">Web page</text>
+    <text class="dgm-sub" x="98" y="96" text-anchor="middle">upload and review</text>
+    <rect class="dgm-box" x="196" y="56" width="164" height="56" rx="5"></rect>
+    <text class="dgm-title" x="278" y="79" text-anchor="middle" font-size="13">REST client</text>
+    <text class="dgm-sub" x="278" y="96" text-anchor="middle">ccut_ API key</text>
+    <rect class="dgm-box" x="376" y="56" width="164" height="56" rx="5"></rect>
+    <text class="dgm-title" x="458" y="79" text-anchor="middle" font-size="13">MCP + plugin</text>
+    <text class="dgm-sub" x="458" y="96" text-anchor="middle">13 tools</text>
+
+    <line class="dgm-line" x1="98" y1="112" x2="98" y2="132"></line>
+    <line class="dgm-line" x1="278" y1="112" x2="278" y2="132"></line>
+    <line class="dgm-line" x1="458" y1="112" x2="458" y2="132"></line>
+    <line class="dgm-line" x1="98" y1="132" x2="458" y2="132"></line>
+    <line class="dgm-line" x1="200" y1="132" x2="200" y2="160" marker-end="url(#clearcut-arrow)"></line>
+
+    <rect class="dgm-accent" x="16" y="160" width="284" height="112" rx="6"></rect>
+    <text class="dgm-label" x="32" y="182">Server</text>
+    <text class="dgm-title" x="32" y="206" font-size="14">clearcut-server</text>
+    <text class="dgm-sub" x="32" y="226">axum REST and web page · API keys</text>
+    <text class="dgm-sub" x="32" y="241">Rate limits · retention sweep</text>
+
+    <line class="dgm-line" x1="300" y1="200" x2="320" y2="200" marker-end="url(#clearcut-arrow)"></line>
+
+    <rect class="dgm-box" x="320" y="160" width="220" height="112" rx="6"></rect>
+    <text class="dgm-label" x="336" y="182">Jobs + pipeline</text>
+    <text class="dgm-title" x="336" y="206" font-size="14">Lease and heartbeat</text>
+    <text class="dgm-sub" x="336" y="226">Text · OCR · render</text>
+    <text class="dgm-sub" x="336" y="241">Context pack → model → validate</text>
+
+    <path class="dgm-line" d="M520 186 H548 V103 H580" marker-end="url(#clearcut-arrow)"></path>
+    <path class="dgm-line" d="M580 126 H558 V226 H520" marker-end="url(#clearcut-arrow)"></path>
+
+    <rect class="dgm-box" x="580" y="56" width="164" height="94" rx="6"></rect>
+    <text class="dgm-label" x="596" y="78">Sandbox</text>
+    <text class="dgm-title" x="596" y="102" font-size="13">Python worker</text>
+    <text class="dgm-sub" x="596" y="120">Untrusted files</text>
+    <text class="dgm-sub" x="596" y="135">No network, DB or model</text>
+
+    <line class="dgm-line" x1="520" y1="225" x2="580" y2="225" marker-end="url(#clearcut-arrow)"></line>
+
+    <rect class="dgm-warn" x="580" y="170" width="164" height="112" rx="6"></rect>
+    <text class="dgm-label" x="596" y="192">Model calls</text>
+    <text class="dgm-title" x="596" y="216" font-size="13">Router + adapter</text>
+    <text class="dgm-sub" x="596" y="234">Cheaper model first</text>
+    <text class="dgm-sub" x="596" y="249">BYO Anthropic key</text>
+    <text class="dgm-sub" x="596" y="264">Budgets before each call</text>
+
+    <line class="dgm-line" x1="158" y1="272" x2="158" y2="310" marker-end="url(#clearcut-arrow)"></line>
+    <path class="dgm-line" d="M420 272 V288 H280 V310" marker-end="url(#clearcut-arrow)"></path>
+    <path class="dgm-line" d="M662 282 V320 H520" marker-end="url(#clearcut-arrow)"></path>
+    <line class="dgm-line" x1="662" y1="282" x2="662" y2="318" marker-end="url(#clearcut-arrow)"></line>
+
+    <rect class="dgm-box" x="16" y="310" width="284" height="130" rx="6"></rect>
+    <text class="dgm-label" x="32" y="332">Store</text>
+    <text class="dgm-title" x="32" y="356" font-size="14">PostgreSQL</text>
+    <text class="dgm-sub" x="32" y="376">Forced row-level security</text>
+    <text class="dgm-sub" x="32" y="391">Append-only audit and events</text>
+    <text class="dgm-sub" x="32" y="406">Durable job queue</text>
+
+    <rect class="dgm-ok" x="320" y="310" width="220" height="130" rx="6"></rect>
+    <text class="dgm-label" x="336" y="332">Human review</text>
+    <text class="dgm-title" x="336" y="356" font-size="14">Review queue</text>
+    <text class="dgm-sub" x="336" y="376">A person corrects and confirms</text>
+    <text class="dgm-sub" x="336" y="391">Recorded as human extractor</text>
+    <text class="dgm-sub" x="336" y="406">No model call</text>
+
+    <line class="dgm-line" x1="320" y1="390" x2="300" y2="390" marker-end="url(#clearcut-arrow)"></line>
+
+    <rect class="dgm-box" x="580" y="318" width="164" height="80" rx="6"></rect>
+    <text class="dgm-label" x="596" y="340">Evaluation</text>
+    <text class="dgm-title" x="596" y="364" font-size="13">Gold-set scoring</text>
+    <text class="dgm-sub" x="596" y="382">Measured before release</text>
+
+    <rect class="dgm-band" x="16" y="462" width="728" height="40" rx="5"></rect>
+    <text class="dgm-sub" x="32" y="486">Public demo: prepared fixtures, no model call, nothing saved. Live alpha accounts are invite only.</text>
+  </svg>
+</DiagramFrame>

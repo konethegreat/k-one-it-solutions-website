@@ -339,6 +339,80 @@
     box-shadow: 0 0 0 3px color-mix(in oklab, var(--ok) 18%, transparent);
   }
 
+  .dgm {
+    display: block;
+    width: 100%;
+    height: auto;
+    font-family: var(--font-sans);
+  }
+  .dgm-box {
+    fill: var(--surface);
+    stroke: var(--line);
+    stroke-width: 1;
+  }
+  .dgm-accent {
+    fill: color-mix(in oklab, var(--brand) 7%, var(--surface));
+    stroke: var(--brand);
+    stroke-width: 1.2;
+  }
+  .dgm-warn {
+    fill: color-mix(in oklab, var(--warn) 8%, var(--surface));
+    stroke: var(--warn);
+    stroke-width: 1.2;
+  }
+  .dgm-ok {
+    fill: color-mix(in oklab, var(--ok) 8%, var(--surface));
+    stroke: var(--ok);
+    stroke-width: 1.2;
+  }
+  .dgm-ink {
+    fill: var(--ink-bg);
+    stroke: var(--ink-line);
+    stroke-width: 1;
+  }
+  .dgm-label {
+    fill: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 8.5px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+  }
+  .dgm-title {
+    fill: var(--fg);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .dgm-title-inv {
+    fill: var(--ink-fg);
+    font-size: 13px;
+    font-weight: 600;
+  }
+  .dgm-sub {
+    fill: var(--muted);
+    font-size: 9.5px;
+  }
+  .dgm-sub-inv {
+    fill: var(--ink-muted);
+    font-size: 9.5px;
+  }
+  .dgm-line {
+    fill: none;
+    stroke: var(--muted);
+    stroke-width: 1.1;
+    opacity: 0.55;
+  }
+  .dgm-line-accent {
+    fill: none;
+    stroke: var(--brand);
+    stroke-width: 1.4;
+    opacity: 0.85;
+  }
+  .dgm-band {
+    fill: color-mix(in oklab, var(--fg) 3%, transparent);
+    stroke: var(--line);
+    stroke-dasharray: 3 4;
+  }
+
   .corner-ticks {
     position: relative;
   }

@@ -1,0 +1,103 @@
+---
+// Written by Kone Tshivhinda & Claude
+import DiagramFrame from './DiagramFrame.astro';
+---
+<DiagramFrame
+  label="Architecture · SA-JAS"
+  caption="The web shell and desktop shell share one core. Three agents call Claude and job feeds, write to local storage, and hand the final submission back to the person."
+  legend={[
+    { name: 'Shared core', tone: 'brand' },
+    { name: 'Human gate', tone: 'ok' },
+    { name: 'External services', tone: 'muted' },
+  ]}
+>
+  <svg class="dgm" viewBox="0 0 760 520" role="img" aria-labelledby="sajas-diagram-title">
+    <title id="sajas-diagram-title">SA-JAS architecture: hosted web and Electron shells, shared core, three agents, job boards, Claude, a visible browser and human submission</title>
+    <defs>
+      <marker id="sajas-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"></path>
+      </marker>
+    </defs>
+
+    <rect class="dgm-box" x="16" y="56" width="184" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="76">Hosted</text>
+    <text class="dgm-title" x="32" y="96" font-size="13">Web shell</text>
+    <text class="dgm-sub" x="32" y="108" text-anchor="start">Cloudflare Pages · API work</text>
+    <rect class="dgm-box" x="16" y="126" width="184" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="146">Desktop</text>
+    <text class="dgm-title" x="32" y="166" font-size="13">Electron shell</text>
+    <text class="dgm-sub" x="32" y="178">Chromium · persistent sessions</text>
+
+    <line class="dgm-line" x1="200" y1="84" x2="230" y2="84" marker-end="url(#sajas-arrow)"></line>
+    <line class="dgm-line" x1="200" y1="154" x2="230" y2="154" marker-end="url(#sajas-arrow)"></line>
+
+    <rect class="dgm-accent" x="230" y="56" width="170" height="126" rx="6"></rect>
+    <text class="dgm-label" x="246" y="78">Shared core</text>
+    <text class="dgm-title" x="246" y="104" font-size="14">@sajas/core</text>
+    <text class="dgm-sub" x="246" y="124">Models · Claude calls · costs</text>
+    <text class="dgm-sub" x="246" y="139">Secrets · job feeds</text>
+    <text class="dgm-sub" x="246" y="154">Express API · polling agents</text>
+
+    <line class="dgm-line" x1="400" y1="84" x2="430" y2="84" marker-end="url(#sajas-arrow)"></line>
+    <line class="dgm-line" x1="400" y1="140" x2="430" y2="140" marker-end="url(#sajas-arrow)"></line>
+    <path class="dgm-line" d="M400 168 H415 V214 H430" marker-end="url(#sajas-arrow)"></path>
+
+    <rect class="dgm-box" x="430" y="46" width="150" height="66" rx="5"></rect>
+    <text class="dgm-label" x="444" y="66">Agent 1</text>
+    <text class="dgm-title" x="444" y="86" font-size="13">Job Hunter</text>
+    <text class="dgm-sub" x="444" y="101">grounded search</text>
+    <rect class="dgm-box" x="430" y="118" width="150" height="66" rx="5"></rect>
+    <text class="dgm-label" x="444" y="138">Agent 2</text>
+    <text class="dgm-title" x="444" y="158" font-size="13">Document Tailor</text>
+    <text class="dgm-sub" x="444" y="173">CV + 300 to 400 word letter</text>
+    <rect class="dgm-box" x="430" y="190" width="150" height="66" rx="5"></rect>
+    <text class="dgm-label" x="444" y="210">Agent 3</text>
+    <text class="dgm-title" x="444" y="230" font-size="13">Apply Copilot</text>
+    <text class="dgm-sub" x="444" y="245">page brain · smart fill</text>
+
+    <line class="dgm-line" x1="580" y1="79" x2="610" y2="79" marker-end="url(#sajas-arrow)"></line>
+    <line class="dgm-line" x1="580" y1="151" x2="610" y2="151" marker-end="url(#sajas-arrow)"></line>
+    <line class="dgm-line" x1="580" y1="223" x2="610" y2="223" marker-end="url(#sajas-arrow)"></line>
+
+    <rect class="dgm-box" x="610" y="46" width="134" height="66" rx="5"></rect>
+    <text class="dgm-title" x="626" y="70" font-size="13">12 SA job boards</text>
+    <text class="dgm-sub" x="626" y="86">fallback feeds</text>
+    <text class="dgm-sub" x="626" y="99">15-minute refresh</text>
+
+    <rect class="dgm-box" x="610" y="118" width="134" height="66" rx="5"></rect>
+    <text class="dgm-title" x="626" y="142" font-size="13">Claude API</text>
+    <text class="dgm-sub" x="626" y="158">Anthropic</text>
+    <text class="dgm-sub" x="626" y="171">key from the browser</text>
+
+    <rect class="dgm-box" x="610" y="190" width="134" height="70" rx="5"></rect>
+    <text class="dgm-title" x="626" y="214" font-size="13">Chromium</text>
+    <text class="dgm-sub" x="626" y="230">visible browser</text>
+    <text class="dgm-sub" x="626" y="243">planner · three-pass fill</text>
+
+    <line class="dgm-line-accent" x1="677" y1="260" x2="677" y2="292" marker-end="url(#sajas-arrow)"></line>
+
+    <rect class="dgm-ok" x="610" y="292" width="134" height="68" rx="5"></rect>
+    <text class="dgm-label" x="626" y="312">Human gate</text>
+    <text class="dgm-title" x="626" y="332" font-size="13">Person submits</text>
+    <text class="dgm-sub" x="626" y="348">60-second window</text>
+
+    <line class="dgm-line" x1="315" y1="182" x2="315" y2="300" marker-end="url(#sajas-arrow)"></line>
+    <line class="dgm-line" x1="331" y1="300" x2="331" y2="182" marker-end="url(#sajas-arrow)"></line>
+
+    <rect class="dgm-box" x="230" y="300" width="200" height="66" rx="5"></rect>
+    <text class="dgm-label" x="246" y="320">Storage</text>
+    <text class="dgm-title" x="246" y="340" font-size="13">Local JSON or IndexedDB</text>
+    <text class="dgm-sub" x="246" y="356">host stores nothing personal</text>
+
+    <rect class="dgm-box" x="230" y="384" width="200" height="66" rx="5"></rect>
+    <text class="dgm-label" x="246" y="404">Key handling</text>
+    <text class="dgm-title" x="246" y="424" font-size="13">Zero knowledge</text>
+    <text class="dgm-sub" x="246" y="440">browser to Anthropic only</text>
+
+    <path class="dgm-line" stroke-dasharray="4 4" d="M430 417 H560 V160 H610" marker-end="url(#sajas-arrow)"></path>
+    <text class="dgm-label" x="470" y="408">Key path</text>
+
+    <rect class="dgm-band" x="16" y="466" width="728" height="38" rx="5"></rect>
+    <text class="dgm-sub" x="32" y="489">The copilot refuses submit, send, finish, confirm and pay wording. CAPTCHAs are handed off, never solved.</text>
+  </svg>
+</DiagramFrame>

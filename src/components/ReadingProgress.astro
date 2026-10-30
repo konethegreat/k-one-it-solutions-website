@@ -1,0 +1,55 @@
+---
+// Written by Kone Tshivhinda & Claude
+---
+<div class="reading-progress no-print" aria-hidden="true"><span data-reading-bar></span></div>
+
+<style>
+  .reading-progress {
+    position: fixed;
+    inset: 0 0 auto;
+    height: 2px;
+    z-index: 50;
+    pointer-events: none;
+  }
+  .reading-progress span {
+    display: block;
+    height: 100%;
+    background: var(--brand);
+    transform: scaleX(var(--p, 0));
+    transform-origin: 0 50%;
+  }
+  @supports (animation-timeline: scroll()) {
+    .reading-progress span {
+      animation: reading-grow linear both;
+      animation-timeline: scroll(root block);
+    }
+  }
+  @keyframes reading-grow {
+    from {
+      transform: scaleX(0);
+    }
+    to {
+      transform: scaleX(1);
+    }
+  }
+</style>
+
+<script>
+  const bar = document.querySelector<HTMLElement>('[data-reading-bar]');
+  const supportsCss = CSS.supports('animation-timeline', 'scroll()');
+  if (bar && !supportsCss) {
+    let frame = 0;
+    const update = () => {
+      frame = 0;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = max > 0 ? Math.min(1, window.scrollY / max) : 0;
+      bar.style.setProperty('--p', progress.toFixed(3));
+    };
+    const onScroll = () => {
+      if (!frame) frame = requestAnimationFrame(update);
+    };
+    update();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+  }
+</script>
