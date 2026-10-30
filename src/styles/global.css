@@ -5,39 +5,51 @@
 @custom-variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
 
 :root {
-  --bg: #fbfaff;
+  --bg: #faf8f2;
   --surface: #ffffff;
-  --surface-2: #f3f0ff;
-  --fg: #0e1024;
-  --muted: #55587a;
-  --line: #e3def5;
-  --brand: #6d28d9;
-  --link: #6d28d9;
-  /* gradient for text: violet to pink, AA contrast on light */
-  --g1: #5b21b6;
-  --g2: #7c3aed;
-  --g3: #be185d;
-  /* decorative gradient: cyan to violet to pink */
-  --d1: #22d3ee;
-  --d2: #8b5cf6;
-  --d3: #f472b6;
-  --shadow: 0 1px 2px rgb(20 16 60 / 0.06), 0 10px 32px rgb(80 50 160 / 0.09);
+  --surface-2: #f2eee3;
+  --fg: #14151c;
+  --muted: #5c5a52;
+  --line: #ded8c9;
+  --brand: #2b4eff;
+  --link: #1a2fa8;
+  --g1: #2b4eff;
+  --g2: #1a2fa8;
+  --g3: #14151c;
+  --d1: #4de1e6;
+  --d2: #8b7bff;
+  --d3: #c6f24e;
+  --ink-bg: #0b0c10;
+  --ink-surface: #14161f;
+  --ink-fg: #f4f1e8;
+  --ink-muted: #a9a69b;
+  --ink-line: #2a2c38;
+  --lime: #c6f24e;
+  --cyan: #4de1e6;
+  --violet: #8b7bff;
+  --ok: #0f7b4f;
+  --warn: #9a5b00;
+  --danger: #b42318;
+  --shadow: 0 1px 2px rgb(20 21 28 / 0.05), 0 12px 32px rgb(20 21 28 / 0.06);
   color-scheme: light;
 }
 
 :root[data-theme="dark"] {
-  --bg: #05060d;
-  --surface: #0c0e1a;
-  --surface-2: #121528;
-  --fg: #eef0ff;
-  --muted: #a3a9d0;
-  --line: #1f2342;
-  --brand: #8b5cf6;
-  --link: #a78bfa;
-  --g1: #22d3ee;
-  --g2: #a78bfa;
-  --g3: #f472b6;
-  --shadow: 0 1px 2px rgb(0 0 0 / 0.45), 0 10px 32px rgb(0 0 0 / 0.5);
+  --bg: #0b0c10;
+  --surface: #14161f;
+  --surface-2: #1b1e29;
+  --fg: #f4f1e8;
+  --muted: #a9a69b;
+  --line: #2a2c38;
+  --brand: #8b7bff;
+  --link: #c6bfff;
+  --g1: #4de1e6;
+  --g2: #8b7bff;
+  --g3: #c6f24e;
+  --ok: #6ee7b7;
+  --warn: #fbbf24;
+  --danger: #fda29b;
+  --shadow: 0 1px 2px rgb(0 0 0 / 0.4), 0 12px 32px rgb(0 0 0 / 0.45);
   color-scheme: dark;
 }
 
@@ -50,8 +62,21 @@
   --color-line: var(--line);
   --color-brand: var(--brand);
   --color-link: var(--link);
+  --color-paper: var(--bg);
+  --color-ink: var(--fg);
+  --color-ink-bg: var(--ink-bg);
+  --color-ink-surface: var(--ink-surface);
+  --color-ink-fg: var(--ink-fg);
+  --color-ink-muted: var(--ink-muted);
+  --color-ink-line: var(--ink-line);
+  --color-lime: var(--lime);
+  --color-cyan: var(--cyan);
+  --color-violet: var(--violet);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+  --color-danger: var(--danger);
   --font-sans: "Inter Variable", ui-sans-serif, system-ui, sans-serif;
-  --font-display: "Space Grotesk Variable", "Inter Variable", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Instrument Serif", Georgia, "Times New Roman", serif;
   --font-mono: "JetBrains Mono Variable", ui-monospace, SFMono-Regular, Menlo, monospace;
 }
 
@@ -68,22 +93,34 @@
     line-height: 1.6;
   }
   h1,
-  h2,
-  h3 {
+  h2 {
     font-family: var(--font-display);
-    letter-spacing: -0.02em;
-    line-height: 1.12;
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    line-height: 1.02;
+    text-wrap: balance;
+  }
+  h3 {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+    line-height: 1.2;
+    text-wrap: balance;
   }
   a {
     color: var(--link);
+    text-underline-offset: 0.18em;
   }
   :focus-visible {
     outline: 2px solid var(--brand);
     outline-offset: 3px;
-    border-radius: 6px;
+    border-radius: 2px;
   }
   ::selection {
-    background: color-mix(in oklab, var(--brand) 30%, transparent);
+    background: color-mix(in oklab, var(--brand) 24%, transparent);
+  }
+  img {
+    max-width: 100%;
+    height: auto;
   }
 }
 
@@ -91,7 +128,7 @@
   .container-x {
     margin-inline: auto;
     width: 100%;
-    max-width: 72rem;
+    max-width: 74rem;
     padding-inline: 1.25rem;
   }
   @media (min-width: 640px) {
@@ -105,22 +142,22 @@
   }
   @media (min-width: 768px) {
     .section {
-      padding-block: 6rem;
+      padding-block: 6.5rem;
     }
   }
 
   .card {
-    border-radius: 1.25rem;
+    border-radius: 0.6rem;
     border: 1px solid var(--line);
     background: var(--surface);
     box-shadow: var(--shadow);
   }
   .card-hover {
-    transition: transform 0.2s ease, border-color 0.2s ease;
+    transition: transform 0.2s ease, border-color 0.2s ease, box-shadow 0.2s ease;
   }
   .card-hover:hover {
-    transform: translateY(-3px);
-    border-color: color-mix(in oklab, var(--brand) 55%, var(--line));
+    transform: translateY(-2px);
+    border-color: color-mix(in oklab, var(--fg) 30%, var(--line));
   }
 
   .btn {
@@ -128,41 +165,53 @@
     align-items: center;
     justify-content: center;
     gap: 0.5rem;
-    border-radius: 9999px;
-    padding: 0.8rem 1.5rem;
-    font-size: 0.9rem;
+    border-radius: 0.5rem;
+    padding: 0.8rem 1.35rem;
+    font-size: 0.85rem;
     font-weight: 600;
     line-height: 1;
     text-decoration: none;
-    transition: transform 0.15s ease, filter 0.15s ease, border-color 0.15s ease;
+    transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
   }
   .btn-primary {
-    background-image: linear-gradient(135deg, #6d28d9, #db2777);
+    background: var(--brand);
     color: #fff;
-    box-shadow: 0 10px 28px rgb(109 40 217 / 0.32);
   }
   .btn-primary:hover {
-    filter: brightness(1.08);
+    background: #1a2fa8;
     transform: translateY(-1px);
+  }
+  :root[data-theme="dark"] .btn-primary:hover {
+    background: #a99dff;
   }
   .btn-ghost {
     border: 1px solid var(--line);
-    background: var(--surface);
+    background: transparent;
     color: var(--fg);
   }
   .btn-ghost:hover {
-    border-color: var(--brand);
+    border-color: var(--fg);
+  }
+  .btn-ink {
+    background: var(--ink-bg);
+    color: var(--ink-fg);
+  }
+  .btn-ink:hover {
+    background: #1a1d29;
   }
 
   .eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-family: var(--font-mono);
-    font-size: 0.72rem;
-    letter-spacing: 0.2em;
+    font-size: 0.7rem;
+    letter-spacing: 0.18em;
     text-transform: uppercase;
     color: var(--muted);
   }
   .grad-text {
-    background-image: linear-gradient(100deg, var(--g1), var(--g2) 50%, var(--g3));
+    background-image: linear-gradient(100deg, var(--g1), var(--g2) 55%, var(--g3));
     -webkit-background-clip: text;
     background-clip: text;
     color: transparent;
@@ -170,11 +219,12 @@
   .chip {
     display: inline-flex;
     align-items: center;
-    border-radius: 9999px;
+    border-radius: 0.3rem;
     border: 1px solid var(--line);
-    background: var(--surface-2);
-    padding: 0.2rem 0.65rem;
-    font-size: 0.75rem;
+    background: transparent;
+    padding: 0.2rem 0.55rem;
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
     font-weight: 500;
     color: var(--muted);
   }
@@ -182,60 +232,222 @@
     display: inline-flex;
     align-items: center;
     gap: 0.4rem;
-    border-radius: 9999px;
+    border-radius: 0.4rem;
     border: 1px solid var(--line);
-    background: var(--surface);
-    padding: 0.5rem 0.95rem;
-    font-size: 0.85rem;
+    background: transparent;
+    padding: 0.45rem 0.8rem;
+    font-size: 0.8rem;
     font-weight: 500;
     color: var(--fg);
     text-decoration: none;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, background-color 0.15s ease;
   }
   .pill-link:hover {
     border-color: var(--brand);
+    background: color-mix(in oklab, var(--brand) 6%, transparent);
   }
 
-  .bg-aurora {
-    background:
-      radial-gradient(60rem 28rem at 88% -12%, color-mix(in oklab, var(--d2) 24%, transparent), transparent 62%),
-      radial-gradient(42rem 24rem at -6% 8%, color-mix(in oklab, var(--d1) 18%, transparent), transparent 62%),
-      radial-gradient(38rem 22rem at 55% 105%, color-mix(in oklab, var(--d3) 14%, transparent), transparent 62%);
+  .link-arrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    font-weight: 600;
+    text-decoration: none;
   }
-  .bg-grid {
+  .link-arrow:hover {
+    text-decoration: underline;
+  }
+
+  .band-ink {
+    --bg: var(--ink-bg);
+    --surface: var(--ink-surface);
+    --surface-2: #1b1e29;
+    --fg: var(--ink-fg);
+    --muted: var(--ink-muted);
+    --line: var(--ink-line);
+    --brand: var(--lime);
+    --link: var(--lime);
+    background: var(--ink-bg);
+    color: var(--ink-fg);
+  }
+  .band-paper {
+    background: var(--bg);
+  }
+
+  .grid-blueprint {
     background-image:
       linear-gradient(var(--line) 1px, transparent 1px),
       linear-gradient(90deg, var(--line) 1px, transparent 1px);
-    background-size: 46px 46px;
-    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
-    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 72%);
-    opacity: 0.55;
+    background-size: 44px 44px;
+    -webkit-mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 78%);
+    mask-image: radial-gradient(ellipse at 50% 0%, #000 0%, transparent 78%);
+    opacity: 0.5;
   }
-  .grad-line {
-    height: 3px;
-    border-radius: 9999px;
-    background-image: linear-gradient(90deg, var(--d1), var(--d2), var(--d3));
+  .rule {
+    height: 1px;
+    background: var(--line);
+    border: 0;
   }
+  .stamp {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.35rem;
+    border: 1px solid currentColor;
+    border-radius: 0.25rem;
+    padding: 0.15rem 0.45rem;
+    font-family: var(--font-mono);
+    font-size: 0.62rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+  .stamp-ok {
+    color: var(--ok);
+  }
+  .stamp-warn {
+    color: var(--warn);
+  }
+  .stamp-neutral {
+    color: var(--muted);
+  }
+
   .icon-tile {
     display: grid;
     place-items: center;
-    height: 2.75rem;
-    width: 2.75rem;
-    border-radius: 0.9rem;
+    height: 2.6rem;
+    width: 2.6rem;
+    border-radius: 0.4rem;
     color: #fff;
-    background-image: linear-gradient(135deg, #6d28d9, #db2777);
-    box-shadow: 0 8px 20px rgb(109 40 217 / 0.28);
+    background: var(--brand);
   }
+
+  .prose-dossier {
+    font-size: 1.02rem;
+    line-height: 1.75;
+    color: var(--muted);
+  }
+  .prose-dossier p + p {
+    margin-top: 1rem;
+  }
+
+  .status-dot {
+    display: inline-block;
+    height: 0.45rem;
+    width: 0.45rem;
+    border-radius: 9999px;
+    background: var(--ok);
+    box-shadow: 0 0 0 3px color-mix(in oklab, var(--ok) 18%, transparent);
+  }
+
+  .corner-ticks {
+    position: relative;
+  }
+  .corner-ticks::before,
+  .corner-ticks::after {
+    content: "";
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-color: var(--line);
+    border-style: solid;
+    pointer-events: none;
+  }
+  .corner-ticks::before {
+    top: -1px;
+    left: -1px;
+    border-width: 1px 0 0 1px;
+  }
+  .corner-ticks::after {
+    bottom: -1px;
+    right: -1px;
+    border-width: 0 1px 1px 0;
+  }
+
+  .marquee {
+    display: flex;
+    overflow: hidden;
+    gap: 0;
+    -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+    mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+  }
+  .marquee-track {
+    display: flex;
+    flex-shrink: 0;
+    align-items: center;
+    gap: 2rem;
+    padding-right: 2rem;
+    animation: marquee 42s linear infinite;
+  }
+  .marquee:hover .marquee-track,
+  .marquee:focus-within .marquee-track {
+    animation-play-state: paused;
+  }
+  @keyframes marquee {
+    to {
+      transform: translateX(-100%);
+    }
+  }
+
+  .spotlight {
+    position: relative;
+  }
+  .spotlight::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      240px circle at var(--mx, 50%) var(--my, 0%),
+      color-mix(in oklab, var(--brand) 10%, transparent),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+  .spotlight:hover::after {
+    opacity: 1;
+  }
+}
+
+[data-reveal] {
+  opacity: 0;
+  transform: translateY(14px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s cubic-bezier(0.2, 0.7, 0.2, 1);
+  transition-delay: calc(var(--i, 0) * 70ms);
+}
+[data-reveal].is-revealed {
+  opacity: 1;
+  transform: none;
 }
 
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
   }
+  [data-reveal] {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+  .marquee-track {
+    animation: none;
+  }
+  .spotlight::after {
+    display: none;
+  }
   *,
   *::before,
   *::after {
     animation-duration: 0.01ms !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+@media print {
+  .no-print {
+    display: none !important;
   }
 }

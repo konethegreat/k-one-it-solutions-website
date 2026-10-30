@@ -24,6 +24,11 @@ export const links = {
   facebook: 'https://www.facebook.com/share/1A4q81U8vX/',
   tiktok: 'https://www.tiktok.com/@kone.tshivhinda',
   portfolio: 'https://konethegreat.github.io',
+  vault: 'https://konethegreat.github.io/ui-vault/',
+  sajas: 'https://sajas.pages.dev/',
+  clearcut: 'https://145-241-100-85.sslip.io/',
+  munisolve: 'https://munisolve-za.vercel.app/',
+  liveSite: 'https://k-one-it-solutions-website.erictshivhinda.workers.dev/',
   ibmCertificate: 'https://coursera.org/account/accomplishments/specialization/ESSIQ8HCQBA6',
 };
 

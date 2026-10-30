@@ -1,9 +1,10 @@
 ---
 // Written by Kone Tshivhinda & Claude
 import '@fontsource-variable/inter';
-import '@fontsource-variable/space-grotesk';
+import '@fontsource/instrument-serif';
 import '@fontsource-variable/jetbrains-mono';
 import '../styles/global.css';
+import { ClientRouter } from 'astro:transitions';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { site } from '../config';
@@ -46,8 +47,9 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
-    <meta name="theme-color" content="#fbfaff" media="(prefers-color-scheme: light)" />
-    <meta name="theme-color" content="#05060d" media="(prefers-color-scheme: dark)" />
+    <meta name="theme-color" content="#faf8f2" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0b0c10" media="(prefers-color-scheme: dark)" />
+    <ClientRouter />
 
     <!-- Apply a saved dark-mode choice before first paint. Light is the default. -->
     <script is:inline>
@@ -70,5 +72,28 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
       <slot />
     </main>
     <Footer />
+    <script>
+      const runReveal = () => {
+        const els = document.querySelectorAll<HTMLElement>('[data-reveal]');
+        if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+          els.forEach((el) => el.classList.add('is-revealed'));
+          return;
+        }
+        const io = new IntersectionObserver(
+          (entries) => {
+            entries.forEach((entry) => {
+              if (entry.isIntersecting) {
+                entry.target.classList.add('is-revealed');
+                io.unobserve(entry.target);
+              }
+            });
+          },
+          { threshold: 0.12, rootMargin: '0px 0px -8% 0px' },
+        );
+        els.forEach((el) => io.observe(el));
+      };
+      runReveal();
+      document.addEventListener('astro:page-load', runReveal);
+    </script>
   </body>
 </html>

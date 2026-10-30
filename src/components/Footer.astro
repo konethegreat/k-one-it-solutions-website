@@ -1,18 +1,31 @@
 ---
 // Written by Kone Tshivhinda & Claude
-import { Mail, Phone, MapPin } from '@lucide/astro';
+import { ArrowUpRight, Mail, MapPin, Phone } from '@lucide/astro';
 import Logo from './Logo.astro';
 import SocialLinks from './SocialLinks.astro';
-import { site, contact, nav } from '../config';
+import { contact, links, nav, site } from '../config';
 
 const year = new Date().getFullYear();
+const liveWork = [
+  { label: 'SA-JAS', href: links.sajas, note: 'Hosted alpha' },
+  { label: 'ClearCut', href: links.clearcut, note: 'Live alpha' },
+  { label: 'MuniSolve ZA', href: links.munisolve, note: 'Live demo' },
+  { label: 'Portfolio', href: links.portfolio, note: 'Personal site' },
+  { label: 'UI Vault', href: links.vault, note: 'Reference index' },
+];
 ---
 
-<footer class="mt-8 border-t border-line bg-surface-2/60">
-  <div class="container-x grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1.2fr]">
+<footer class="mt-8 border-t border-line bg-surface-2/40">
+  <div class="container-x grid gap-10 py-14 md:grid-cols-2 lg:grid-cols-[1.5fr_0.8fr_1fr_1.1fr]">
     <div class="space-y-4">
       <Logo />
-      <p class="max-w-sm text-sm text-muted">{site.tagline} An independent software studio building AI systems, apps and infrastructure.</p>
+      <p class="max-w-sm text-sm leading-relaxed text-muted">
+        {site.tagline} An independent software studio building AI systems, apps and infrastructure that show their working.
+      </p>
+      <p class="flex items-center gap-2 font-mono text-[0.62rem] uppercase tracking-[0.14em] text-muted">
+        <span class="status-dot" aria-hidden="true"></span>
+        Available for new work
+      </p>
       <SocialLinks />
     </div>
 
@@ -26,24 +39,53 @@ const year = new Date().getFullYear();
     </nav>
 
     <div class="space-y-3">
+      <p class="eyebrow">Live work</p>
+      <ul class="space-y-2 text-sm">
+        {
+          liveWork.map((item) => (
+            <li>
+              <a
+                href={item.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                class="group inline-flex items-center gap-1.5 text-fg no-underline hover:underline"
+              >
+                {item.label}
+                <span class="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted">{item.note}</span>
+                <ArrowUpRight size={12} class="text-muted" aria-hidden="true" />
+                <span class="sr-only">(opens in a new tab)</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+
+    <div class="space-y-3">
       <p class="eyebrow">Get in touch</p>
       <ul class="space-y-3 text-sm">
         <li class="flex items-center gap-2.5">
-          <Mail size={16} class="text-muted" aria-hidden="true" />
+          <Mail size={15} class="text-muted" aria-hidden="true" />
           <a href={`mailto:${contact.email}`} class="text-fg no-underline hover:underline">{contact.email}</a>
         </li>
         <li class="flex items-center gap-2.5">
-          <Phone size={16} class="text-muted" aria-hidden="true" />
+          <Phone size={15} class="text-muted" aria-hidden="true" />
           <a href={contact.phoneHref} class="text-fg no-underline hover:underline">{contact.phone}</a>
         </li>
         <li class="flex items-center gap-2.5 text-muted">
-          <MapPin size={16} aria-hidden="true" />
+          <MapPin size={15} aria-hidden="true" />
           {site.location}
         </li>
       </ul>
     </div>
   </div>
+
   <div class="border-t border-line py-5">
-    <p class="container-x text-xs text-muted">&copy; {year} {site.name}. All rights reserved.</p>
+    <div class="container-x flex flex-col gap-2 text-xs text-muted sm:flex-row sm:items-center sm:justify-between">
+      <p>&copy; {year} {site.name}. All rights reserved.</p>
+      <p class="max-w-xl sm:text-right">
+        Built with Astro. Circular navigation inspired by Kaif UI on 21st.dev, implemented from scratch.
+      </p>
+    </div>
   </div>
 </footer>
