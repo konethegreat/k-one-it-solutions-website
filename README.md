@@ -17,12 +17,13 @@ An independent software studio in Johannesburg, South Africa, building AI system
 
 | Page | Purpose |
 | --- | --- |
-| Home | Who we are, the proof points, services at a glance, featured work |
+| Home | Who we are, the live proof, services at a glance, featured work |
 | Services | Six service lines, the four working rules and the four-step process |
-| Work | Every public repository on the [GitHub profile](https://github.com/konethegreat), searchable and filterable, with honest status labels |
-| About | The founder, skills, certifications and timeline |
-| Contact | Phone, email and an enquiry form |
+| Work | Four evidence dossiers, the live products, and every public repository, searchable and filterable with honest status labels |
+| About | The founder, working principles, timeline, current builds, skills and credentials |
+| Contact | Direct lines, what happens next and an enquiry form |
 | Privacy | Plain-language notice (no cookies, no analytics, no ad scripts) |
+| Briefs | Two-page A4 technical PDFs for each dossier at `/briefs/<slug>.pdf` |
 
 ### Services
 
@@ -37,9 +38,10 @@ An independent software studio in Johannesburg, South Africa, building AI system
 
 - [Astro](https://astro.build) 7, static output, with React islands where the page needs interactivity
 - [Tailwind CSS](https://tailwindcss.com) v4 with CSS-variable theme tokens
-- [Framer Motion](https://www.framer.com/motion/) for the hero animation (respects reduced-motion settings)
+- [Framer Motion](https://www.framer.com/motion/) for the hero system map, stat ticker and circular navigation (all respect reduced-motion settings)
 - Light theme by default with a dark-mode toggle that remembers the choice
-- Self-hosted fonts (Inter, Space Grotesk, JetBrains Mono), no third-party requests
+- Self-hosted fonts (Inter Variable, Instrument Serif and its italic, JetBrains Mono), no third-party requests
+- [Sharp](https://sharp.pixelplumbing.com/) optimises screenshots and the portrait at build time
 - Hosted on [Cloudflare Workers Static Assets](https://developers.cloudflare.com/workers/static-assets/) (free plan)
 - GitHub Actions build check on every push and pull request
 
@@ -49,15 +51,17 @@ No PHP, no database, no server code. The site builds to plain files in `dist/`.
 
 ```
 .
-├── public/                 favicons, social image, web manifest, Cloudflare _headers
+├── public/
+│   ├── briefs/             generated A4 technical brief PDFs
+│   └── ...                 favicons, social image, web manifest, Cloudflare _headers
 ├── scripts/
 │   └── sync-repos.mjs      refreshes the public repository snapshot at build time
 ├── src/
-│   ├── assets/             logo files
-│   ├── components/         Header, Footer, Logo, cards, project explorer, hero visual
-│   ├── data/               content.ts, projects.ts, repos.json
+│   ├── assets/             logo, portrait and dossier screenshots, optimised by Astro
+│   ├── components/         header, footer, circular nav, cards, explorer, diagrams
+│   ├── data/               content, services, dossiers, projects, about, repos.json
 │   ├── layouts/Base.astro  SEO tags, theme script, page shell
-│   ├── pages/              index, services, work, about, contact, privacy, 404, robots.txt
+│   ├── pages/              home, services, work, briefs, about, contact, privacy, 404
 │   ├── styles/global.css   design tokens and shared classes
 │   └── config.ts           company details, contact info and links
 ├── astro.config.mjs
@@ -81,14 +85,34 @@ npm run preview    # serve the built site locally
 | To change | Edit |
 | --- | --- |
 | Phone, email, links, company details | `src/config.ts` |
-| Services, principles, process, skills, About timeline | `src/data/content.ts` |
-| Project titles, summaries, categories and the featured projects | `src/data/projects.ts` |
+| Services and process | `src/data/services.ts` and `src/data/content.ts` |
+| Dossier copy, screenshots and PDF content | `src/data/dossiers.ts` and `src/components/diagrams/` |
+| About intro, principles, timeline, credentials | `src/data/about.ts` and `src/data/content.ts` |
+| Project titles, summaries, categories and featured projects | `src/data/projects.ts` |
 | Colours, fonts, spacing | `src/styles/global.css` |
 | Public site address (sitemap, canonical links, social image) | `SITE_URL` in `astro.config.mjs`, or the `SITE_URL` environment variable at build time |
 
-### The project list
+### Work, dossiers and live links
 
-`npm run build` first runs `scripts/sync-repos.mjs`, which reads the public repositories of the GitHub profile and updates `src/data/repos.json`. If GitHub is unreachable or rate-limited, the committed snapshot is used and the build continues. Only public repositories are ever listed. A new public repository appears on the Work page automatically; add an entry to `curated` in `src/data/projects.ts` to give it a title, summary and category.
+The Work page leads with four dossiers: Vigil, SA-JAS, ClearCut and TimeLex. Each has its own page with screenshots, architecture, decisions and an honest status. Below the dossiers is the live products band and the searchable archive of every public repository.
+
+`npm run build` first runs `scripts/sync-repos.mjs`, which reads the public repositories of the GitHub profile and updates `src/data/repos.json`. If GitHub is unreachable or rate-limited, the committed snapshot is used and the build continues. Only public repositories are ever listed. A new public repository appears in the archive automatically; add an entry to `curated` in `src/data/projects.ts` to give it a title, summary, category, `status`, `liveUrl` and `highlights`.
+
+### Technical briefs
+
+`/briefs/<slug>/` is a print-first A4 layout. It is `noindex` and points its canonical at the matching dossier. The committed PDFs in `public/briefs/` are generated from those pages with headless Chrome:
+
+```sh
+npm run build
+npm run preview
+"/c/Program Files/Google/Chrome/Application/chrome.exe" \
+  --headless=new --disable-gpu --no-pdf-header-footer \
+  --virtual-time-budget=6000 \
+  --print-to-pdf=public/briefs/vigil.pdf \
+  http://localhost:4321/briefs/vigil/
+```
+
+Repeat for `sajas`, `clearcut` and `timelex`, using the Chrome path for your operating system. Each brief must stay exactly two A4 pages; check the page count and inspect page two after regenerating.
 
 ### The contact form
 
