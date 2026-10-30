@@ -71,8 +71,17 @@ const jsonLd = {
   codeRepository: dossier.repoUrl,
   ...(licenceUrl ? { license: licenceUrl } : {}),
 };
+
+const cover = dossier.screenshots[0];
+const coverImage = cover ? new URL(cover.src.src, Astro.site).href : undefined;
 ---
-<Base title={`${dossier.title} dossier`} description={dossier.summary} jsonLd={jsonLd}>
+<Base
+  title={`${dossier.title} dossier`}
+  description={dossier.summary}
+  jsonLd={jsonLd}
+  type="article"
+  ogImage={coverImage}
+>
   <ReadingProgress />
 
   <header class="relative overflow-hidden border-b border-line">

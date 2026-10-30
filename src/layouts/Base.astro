@@ -16,12 +16,21 @@ interface Props {
   description?: string;
   jsonLd?: Record<string, unknown>;
   noindex?: boolean;
+  type?: 'website' | 'article';
+  ogImage?: string;
 }
 
-const { title, description = site.description, jsonLd, noindex = false } = Astro.props;
+const {
+  title,
+  description = site.description,
+  jsonLd,
+  noindex = false,
+  type = 'website',
+  ogImage: ogImageProp,
+} = Astro.props;
 const fullTitle = title === site.name ? `${site.name} | Software & AI studio, Johannesburg` : `${title} | ${site.name}`;
 const canonical = new URL(Astro.url.pathname, Astro.site).href;
-const ogImage = new URL('/og-image.png', Astro.site).href;
+const ogImage = ogImageProp ? new URL(ogImageProp, Astro.site).href : new URL('/og-image.png', Astro.site).href;
 ---
 
 <!doctype html>
@@ -34,7 +43,7 @@ const ogImage = new URL('/og-image.png', Astro.site).href;
     <link rel="canonical" href={canonical} />
     {noindex && <meta name="robots" content="noindex" />}
 
-    <meta property="og:type" content="website" />
+    <meta property="og:type" content={type} />
     <meta property="og:site_name" content={site.name} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={description} />

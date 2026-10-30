@@ -1,60 +1,112 @@
 ---
 // Written by Kone Tshivhinda & Claude
-import { Mail, Phone, MapPin } from '@lucide/astro';
+import { ArrowRight, Clock, Mail, MapPin, Phone } from '@lucide/astro';
 import Base from '../layouts/Base.astro';
+import PageHero from '../components/PageHero.astro';
+import SectionHeading from '../components/SectionHeading.astro';
 import SocialLinks from '../components/SocialLinks.astro';
 import { site, contact, formEndpoint } from '../config';
+
+const steps = [
+  {
+    title: 'Send the problem',
+    body: 'A paragraph is enough: what is slow, risky, manual or missing, and who it affects.',
+  },
+  {
+    title: 'Get a reply',
+    body: 'Expect a reply within two business days, usually with a question or two and a suggested next step.',
+  },
+  {
+    title: 'Scope it in writing',
+    body: 'If it fits, the approach, deliverables and a fixed or capped estimate arrive before any code is written.',
+  },
+];
 ---
 
 <Base
   title="Contact"
-  description="Contact K-ONE IT SOLUTIONS in Johannesburg by email, phone or the contact form to discuss your project."
+  description="Contact K-ONE IT SOLUTIONS in Johannesburg by email, phone or the contact form. Replies usually within two business days."
 >
-  <section class="relative overflow-hidden border-b border-line">
-    <div class="bg-aurora absolute inset-0" aria-hidden="true"></div>
-    <div class="container-x relative py-16 md:py-20">
-      <p class="eyebrow">Contact</p>
-      <h1 class="mt-3 max-w-3xl text-4xl font-bold sm:text-5xl">
-        Let&rsquo;s talk about <span class="grad-text">your project</span>.
-      </h1>
-      <p class="mt-5 max-w-2xl text-lg text-muted">Send a message, or reach out directly. A short description of the problem is plenty to start.</p>
+  <PageHero
+    number="04"
+    label="Contact"
+    title="Tell me what is slow, risky or missing."
+    lead="A short description of the problem is plenty to start. I read every message and reply personally, usually within two business days."
+  >
+    <div class="mt-8 flex flex-wrap gap-3">
+      <a href={`mailto:${contact.email}`} class="btn btn-primary">Email directly <Mail size={16} aria-hidden="true" /></a>
+      <a href={contact.phoneHref} class="btn btn-ghost">Call {contact.phone}</a>
     </div>
-  </section>
+
+    <aside slot="aside" class="corner-ticks border border-line bg-surface/75 p-5 backdrop-blur-sm">
+      <p class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">Direct lines</p>
+      <ul class="mt-4 space-y-4 text-sm">
+        <li>
+          <p class="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">
+            <Mail size={13} aria-hidden="true" /> Email
+          </p>
+          <a href={`mailto:${contact.email}`} class="mt-1 block break-all font-medium">{contact.email}</a>
+        </li>
+        <li>
+          <p class="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">
+            <Phone size={13} aria-hidden="true" /> Phone
+          </p>
+          <a href={contact.phoneHref} class="mt-1 block font-medium">{contact.phone}</a>
+        </li>
+        <li>
+          <p class="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">
+            <Clock size={13} aria-hidden="true" /> Response
+          </p>
+          <p class="mt-1">Within two business days</p>
+        </li>
+        <li>
+          <p class="flex items-center gap-2 font-mono text-[0.58rem] uppercase tracking-[0.14em] text-muted">
+            <MapPin size={13} aria-hidden="true" /> Time zone
+          </p>
+          <p class="mt-1">SAST, UTC+2</p>
+        </li>
+      </ul>
+    </aside>
+  </PageHero>
 
   <section class="section">
-    <div class="container-x grid gap-10 lg:grid-cols-[1fr_1.15fr]">
-      <div class="space-y-6">
-        <ul class="space-y-4">
-          <li class="card flex items-center gap-4 p-5">
-            <span class="icon-tile"><Mail size={20} aria-hidden="true" /></span>
-            <div>
-              <p class="eyebrow">Email</p>
-              <a href={`mailto:${contact.email}`} class="font-medium">{contact.email}</a>
-            </div>
-          </li>
-          <li class="card flex items-center gap-4 p-5">
-            <span class="icon-tile"><Phone size={20} aria-hidden="true" /></span>
-            <div>
-              <p class="eyebrow">Phone</p>
-              <a href={contact.phoneHref} class="font-medium">{contact.phone}</a>
-            </div>
-          </li>
-          <li class="card flex items-center gap-4 p-5">
-            <span class="icon-tile"><MapPin size={20} aria-hidden="true" /></span>
-            <div>
-              <p class="eyebrow">Based in</p>
-              <p class="font-medium">{site.location}</p>
-            </div>
-          </li>
-        </ul>
-        <div>
-          <p class="eyebrow mb-3">Elsewhere</p>
-          <SocialLinks />
+    <div class="container-x grid gap-10 lg:grid-cols-[0.85fr_1.15fr]">
+      <div>
+        <SectionHeading number="02" title="What happens next." />
+        <ol class="mt-8 divide-y divide-line border-y border-line">
+          {
+            steps.map((step, i) => (
+              <li class="flex gap-5 py-5">
+                <span class="font-display text-3xl leading-none text-brand">{String(i + 1).padStart(2, '0')}</span>
+                <div>
+                  <h3 class="text-lg">{step.title}</h3>
+                  <p class="mt-1.5 text-sm leading-relaxed text-muted">{step.body}</p>
+                </div>
+              </li>
+            ))
+          }
+        </ol>
+
+        <div class="card mt-8 p-6">
+          <p class="flex items-center gap-2 text-lg">
+            <MapPin size={17} class="text-brand" aria-hidden="true" />
+            {site.location}
+          </p>
+          <p class="mt-2 text-sm text-muted">
+            In-person meetings are possible in Johannesburg. Everything else runs remotely, with written updates.
+          </p>
+          <div class="mt-5 border-t border-line pt-4">
+            <p class="eyebrow mb-3">Elsewhere</p>
+            <SocialLinks />
+          </div>
         </div>
       </div>
 
       <div class="card p-6 sm:p-8">
-        <h2 class="text-2xl font-semibold">Send a message</h2>
+        <div class="flex flex-wrap items-baseline justify-between gap-3 border-b border-line pb-5">
+          <h2 class="text-2xl">Send a message.</h2>
+          <span class="stamp stamp-ok">Open for work</span>
+        </div>
         <form
           id="contact-form"
           class="mt-6 space-y-5"
@@ -63,17 +115,46 @@ import { site, contact, formEndpoint } from '../config';
           data-email={contact.email}
           novalidate
         >
-          <div>
-            <label for="name" class="mb-1.5 block text-sm font-medium">Name</label>
-            <input id="name" name="name" type="text" required autocomplete="name" class="w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm focus:border-brand" />
+          <div class="grid gap-5 sm:grid-cols-2">
+            <div>
+              <label for="name" class="mb-1.5 block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">
+                Name
+              </label>
+              <input
+                id="name"
+                name="name"
+                type="text"
+                required
+                autocomplete="name"
+                class="w-full rounded-[0.3rem] border border-line bg-bg px-4 py-3 text-sm focus:border-brand"
+              />
+            </div>
+            <div>
+              <label for="email" class="mb-1.5 block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">
+                Email
+              </label>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                required
+                autocomplete="email"
+                class="w-full rounded-[0.3rem] border border-line bg-bg px-4 py-3 text-sm focus:border-brand"
+              />
+            </div>
           </div>
           <div>
-            <label for="email" class="mb-1.5 block text-sm font-medium">Email</label>
-            <input id="email" name="email" type="email" required autocomplete="email" class="w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm focus:border-brand" />
-          </div>
-          <div>
-            <label for="message" class="mb-1.5 block text-sm font-medium">How can I help?</label>
-            <textarea id="message" name="message" rows="6" required class="w-full rounded-xl border border-line bg-bg px-4 py-3 text-sm focus:border-brand"></textarea>
+            <label for="message" class="mb-1.5 block font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">
+              How can I help?
+            </label>
+            <textarea
+              id="message"
+              name="message"
+              rows="8"
+              required
+              placeholder="The problem, the people involved and any deadline. A paragraph is enough."
+              class="w-full rounded-[0.3rem] border border-line bg-bg px-4 py-3 text-sm placeholder:text-muted focus:border-brand"
+            ></textarea>
           </div>
           <!-- Honeypot: hidden from people, tempting to bots -->
           <div class="absolute -left-[9999px]" aria-hidden="true">
@@ -81,10 +162,14 @@ import { site, contact, formEndpoint } from '../config';
             <input id="_gotcha" name="_gotcha" type="text" tabindex="-1" autocomplete="off" />
           </div>
           <div class="flex flex-wrap items-center gap-4">
-            <button type="submit" class="btn btn-primary">Send message</button>
+            <button type="submit" class="btn btn-primary">
+              Send message <ArrowRight size={16} aria-hidden="true" />
+            </button>
             <p id="form-status" role="status" aria-live="polite" class="text-sm text-muted"></p>
           </div>
-          <p class="text-xs text-muted">See the <a href="/privacy/">privacy notice</a> for how your details are used.</p>
+          <p class="border-t border-line pt-4 text-xs text-muted">
+            No tracking and no newsletter. See the <a href="/privacy/">privacy notice</a> for how your details are used.
+          </p>
         </form>
       </div>
     </div>
