@@ -1,0 +1,31 @@
+---
+// Written by Kone Tshivhinda & Claude
+interface Props {
+  items: string[];
+  label: string;
+}
+const { items, label } = Astro.props;
+---
+
+<div class="border-y border-line bg-surface/50">
+  <div class="container-x flex items-center gap-5 overflow-hidden py-4 sm:gap-8">
+    <p class="shrink-0 font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted">{label}</p>
+    <ul class="sr-only">
+      {items.map((item) => <li>{item}</li>)}
+    </ul>
+    <div class="marquee min-w-0 flex-1" aria-hidden="true">
+      {
+        [0, 1].map(() => (
+          <div class="marquee-track">
+            {items.map((item) => (
+              <span class="flex items-center gap-6 font-mono text-xs uppercase tracking-[0.12em] text-muted">
+                {item}
+                <span class="h-1 w-1 rounded-full bg-line" />
+              </span>
+            ))}
+          </div>
+        ))
+      }
+    </div>
+  </div>
+</div>

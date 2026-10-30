@@ -12,4 +12,5 @@ export default defineConfig({
   integrations: [react(), sitemap()],
   vite: { plugins: [tailwindcss()] },
   build: { format: 'directory' },
+  devToolbar: { enabled: false },
 });

@@ -1,0 +1,104 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { Image } from 'astro:assets';
+import type { ImageMetadata } from 'astro';
+import { ArrowRight, ExternalLink } from '@lucide/astro';
+
+interface Props {
+  index: string;
+  title: string;
+  status: string;
+  summary: string;
+  href: string;
+  meta?: string[];
+  liveUrl?: string;
+  image?: ImageMetadata;
+  imageAlt?: string;
+  layers?: string[];
+  accent?: 'brand' | 'cyan' | 'violet' | 'ok';
+  revealIndex?: number;
+}
+const {
+  index,
+  title,
+  status,
+  summary,
+  href,
+  meta = [],
+  liveUrl,
+  image,
+  imageAlt = '',
+  layers = [],
+  accent = 'brand',
+  revealIndex = 0,
+} = Astro.props;
+const accentVar = `var(--${accent})`;
+---
+
+<article class="card card-hover group flex h-full flex-col overflow-hidden" data-reveal style={`--i:${revealIndex}`}>
+  <div class="relative aspect-[16/10] overflow-hidden border-b border-line bg-surface-2">
+    <a href={href} class="block h-full w-full" tabindex="-1" aria-hidden="true">
+      {
+        image ? (
+          <Image
+            src={image}
+            alt={imageAlt}
+            widths={[480, 720, 960]}
+            sizes="(min-width: 1024px) 34rem, 100vw"
+            class="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.02]"
+          />
+        ) : (
+          <div class="relative flex h-full flex-col justify-center gap-1.5 overflow-hidden bg-surface-2 px-5 py-6">
+            <div class="grid-blueprint absolute inset-0 opacity-40" aria-hidden="true"></div>
+            {layers.map((layer, i) => (
+              <div class="relative flex items-center gap-2.5">
+                <span class="w-5 shrink-0 font-mono text-[0.6rem] text-muted">{String(i + 1).padStart(2, '0')}</span>
+                <span
+                  class="flex-1 rounded-sm border border-line bg-surface px-2.5 py-1.5 font-mono text-[0.66rem] uppercase tracking-[0.1em] text-fg"
+                  style={i === layers.length - 1 ? `border-left: 2px solid ${accentVar}` : undefined}
+                >
+                  {layer}
+                </span>
+              </div>
+            ))}
+            <p class="relative mt-2 pl-7 font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted">Architecture, at a glance</p>
+          </div>
+        )
+      }
+    </a>
+    <span class="stamp stamp-neutral absolute left-3 top-3 border-line bg-surface/95 backdrop-blur-sm">{status}</span>
+    <span class="absolute bottom-3 right-3 h-2 w-2 rounded-full" style={`background:${accentVar}`} aria-hidden="true"></span>
+  </div>
+
+  <div class="flex flex-1 flex-col p-5 sm:p-6">
+    <p class="font-mono text-[0.62rem] uppercase tracking-[0.18em] text-muted">Dossier {index}</p>
+    <h3 class="mt-2 text-2xl">
+      <a href={href} class="text-fg no-underline">{title}</a>
+    </h3>
+    <p class="mt-2 flex-1 text-sm leading-relaxed text-muted">{summary}</p>
+
+    {
+      meta.length > 0 && (
+        <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies">
+          {meta.map((item) => (
+            <li class="chip">{item}</li>
+          ))}
+        </ul>
+      )
+    }
+
+    <div class="mt-5 flex flex-wrap items-center gap-x-5 gap-y-2 border-t border-line pt-4">
+      <a href={href} class="link-arrow text-sm">
+        Read the dossier <ArrowRight size={15} aria-hidden="true" />
+      </a>
+      {
+        liveUrl && (
+          <a href={liveUrl} target="_blank" rel="noopener noreferrer" class="inline-flex items-center gap-1.5 text-sm font-medium no-underline">
+            Live <ExternalLink size={14} aria-hidden="true" />
+            <span class="sr-only">site for {title} (opens in a new tab)</span>
+          </a>
+        )
+      }
+    </div>
+  </div>
+</article>
