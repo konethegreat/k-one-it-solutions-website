@@ -1,0 +1,180 @@
+---
+// Written by Kone Tshivhinda & Claude
+import { ArrowLeft, ArrowRight, ChevronDown, CircleCheck } from '@lucide/astro';
+import Base from '../../layouts/Base.astro';
+import PageHero from '../../components/PageHero.astro';
+import SectionHeading from '../../components/SectionHeading.astro';
+import EngagementCard from '../../components/EngagementCard.astro';
+import EvidenceLink from '../../components/EvidenceLink.astro';
+import CtaBand from '../../components/CtaBand.astro';
+import { serviceDetails, engagements, type ServiceDetail } from '../../data/services';
+import { site } from '../../config';
+
+export function getStaticPaths() {
+  return serviceDetails.map((service, index) => ({
+    params: { slug: service.id },
+    props: { service, next: serviceDetails[(index + 1) % serviceDetails.length] },
+  }));
+}
+
+const { service, next } = Astro.props as { service: ServiceDetail; next: ServiceDetail };
+const models = service.engagements.map((id) => ({ id, ...engagements[id] }));
+const kindLabel = { dossier: 'Dossier', live: 'Live', source: 'Source', docs: 'Docs' } as const;
+
+const jsonLd = {
+  '@context': 'https://schema.org',
+  '@type': 'Service',
+  name: service.title,
+  serviceType: service.title,
+  description: service.summary,
+  url: Astro.url.href,
+  provider: { '@type': 'Organization', name: site.name, url: Astro.site?.href },
+  areaServed: { '@type': 'Country', name: 'South Africa' },
+};
+---
+
+<Base title={service.title} description={service.summary} jsonLd={jsonLd}>
+  <PageHero number={`S${service.number} / 06`} label="Service" title={service.title} lead={service.promise}>
+    <p class="mt-5 max-w-2xl text-muted">{service.summary}</p>
+    <div class="mt-8 flex flex-wrap items-center gap-3">
+      <a href="/contact/" class="btn btn-primary">Discuss this service <ArrowRight size={16} aria-hidden="true" /></a>
+      {service.proof.map((item) => <EvidenceLink href={item.href} kind={item.kind}>{item.label}</EvidenceLink>)}
+    </div>
+  </PageHero>
+
+  <!-- Outcomes -->
+  <section class="section">
+    <div class="container-x">
+      <SectionHeading
+        number="01"
+        title="What this looks like in practice."
+        lead="Three outcomes that decide whether the work is doing its job."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          service.outcomes.map((outcome, i) => (
+            <div class="card flex h-full flex-col p-6 sm:p-7" data-reveal style={`--i:${i}`}>
+              <span class="font-display text-3xl text-brand">{String(i + 1).padStart(2, '0')}</span>
+              <h3 class="mt-3 text-xl">{outcome.title}</h3>
+              <p class="mt-2 text-sm leading-relaxed text-muted">{outcome.body}</p>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Included -->
+  <section class="section border-y border-line bg-surface-2/40">
+    <div class="container-x">
+      <SectionHeading
+        number="02"
+        title="What is included."
+        lead="Discovery shapes the scope, the build delivers it, and handover leaves you able to run it."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        {
+          service.included.map((group, i) => (
+            <div class="card p-6 sm:p-7" data-reveal style={`--i:${i}`}>
+              <h3 class="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-muted">{group.group}</h3>
+              <ul class="mt-5 space-y-3 text-sm">
+                {group.items.map((item) => (
+                  <li class="flex items-start gap-2.5">
+                    <CircleCheck size={16} class="mt-0.5 shrink-0 text-brand" aria-hidden="true" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))
+        }
+      </div>
+    </div>
+  </section>
+
+  <!-- Engagements -->
+  <section class="section">
+    <div class="container-x">
+      <SectionHeading
+        number="03"
+        title="How an engagement runs."
+        lead="The models below apply to this service. Scope and cost are agreed in writing before work starts."
+      />
+      <div class="mt-10 grid gap-5 md:grid-cols-3">
+        {models.map((model, i) => <EngagementCard engagement={model.id} index={String(i + 1).padStart(2, '0')} />)}
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof -->
+  <section class="section border-y border-line bg-surface-2/40">
+    <div class="container-x">
+      <SectionHeading
+        number="04"
+        title="Proof you can open."
+        lead="Real work, linked to the live site, the source or the dossier that explains it."
+      />
+      <ul class="mt-8 border-t border-line">
+        {
+          service.proof.map((item) => (
+            <li class="flex flex-wrap items-center justify-between gap-4 border-b border-line py-5">
+              <div>
+                <p class="font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">{kindLabel[item.kind]}</p>
+                <p class="mt-1 text-lg">{item.label}</p>
+              </div>
+              <EvidenceLink href={item.href} kind={item.kind}>Open</EvidenceLink>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <!-- FAQ and stack -->
+  <section class="section">
+    <div class="container-x grid gap-12 lg:grid-cols-[1.25fr_0.75fr]">
+      <div>
+        <SectionHeading number="05" title="Questions, answered." lead="The ones that come up before a project starts." />
+        <div class="mt-6 divide-y divide-line border-y border-line">
+          {
+            service.faq.map((item) => (
+              <details class="group py-5">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-4 font-medium [&::-webkit-details-marker]:hidden">
+                  {item.q}
+                  <ChevronDown size={17} class="shrink-0 text-muted transition-transform group-open:rotate-180" aria-hidden="true" />
+                </summary>
+                <p class="mt-3 max-w-2xl text-sm leading-relaxed text-muted">{item.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </div>
+
+      <aside class="card h-fit p-6 sm:p-7">
+        <h3 class="font-mono text-[0.64rem] uppercase tracking-[0.16em] text-muted">Stack for this service</h3>
+        <ul class="mt-4 flex flex-wrap gap-1.5" aria-label="Technologies">
+          {service.stack.map((item) => <li class="chip">{item}</li>)}
+        </ul>
+        <hr class="my-6 border-line" />
+        <p class="text-sm text-muted">
+          Not sure whether this fits? Describe the problem and the closest track will be suggested in the reply.
+        </p>
+        <a href="/contact/" class="link-arrow mt-4 text-sm">Start a conversation <ArrowRight size={15} aria-hidden="true" /></a>
+      </aside>
+    </div>
+  </section>
+
+  <nav aria-label="Other services" class="border-t border-line">
+    <div class="container-x flex flex-wrap items-center justify-between gap-4 py-8">
+      <a href="/services/" class="link-arrow text-sm"><ArrowLeft size={15} aria-hidden="true" /> All services</a>
+      <a href={`/services/${next.id}/`} class="group text-right no-underline">
+        <span class="block font-mono text-[0.6rem] uppercase tracking-[0.16em] text-muted">Next service</span>
+        <span class="mt-1 flex items-center gap-2 text-xl text-fg transition-colors group-hover:text-brand">
+          {next.title} <ArrowRight size={17} aria-hidden="true" />
+        </span>
+      </a>
+    </div>
+  </nav>
+
+  <CtaBand />
+</Base>

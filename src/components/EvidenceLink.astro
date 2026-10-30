@@ -4,12 +4,12 @@ import { ArrowUpRight, BookOpen, Code, ExternalLink, FileText } from '@lucide/as
 
 interface Props {
   href: string;
-  kind?: 'source' | 'live' | 'docs' | 'pdf' | 'proof';
+  kind?: 'source' | 'live' | 'docs' | 'pdf' | 'proof' | 'dossier';
   class?: string;
 }
 const { href, kind = 'proof', class: className } = Astro.props;
 const external = href.startsWith('http');
-const icons = { source: Code, live: ExternalLink, docs: BookOpen, pdf: FileText, proof: ArrowUpRight };
+const icons = { source: Code, live: ExternalLink, docs: BookOpen, pdf: FileText, proof: ArrowUpRight, dossier: FileText };
 const Icon = icons[kind];
 ---
 
