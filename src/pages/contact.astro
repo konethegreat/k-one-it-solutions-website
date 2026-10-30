@@ -111,6 +111,8 @@ const steps = [
           id="contact-form"
           class="mt-6 space-y-5"
           method="post"
+          enctype="text/plain"
+          action={`mailto:${contact.email}`}
           data-endpoint={formEndpoint}
           data-email={contact.email}
           novalidate
@@ -167,6 +169,12 @@ const steps = [
             </button>
             <p id="form-status" role="status" aria-live="polite" class="text-sm text-muted"></p>
           </div>
+          <noscript>
+            <p class="text-sm text-muted">
+              JavaScript is off, so submitting the form opens your email app. You can also email
+              <a href={`mailto:${contact.email}`}>{contact.email}</a> directly.
+            </p>
+          </noscript>
           <p class="border-t border-line pt-4 text-xs text-muted">
             No tracking and no newsletter. See the <a href="/privacy/">privacy notice</a> for how your details are used.
           </p>

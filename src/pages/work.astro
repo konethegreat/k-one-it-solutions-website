@@ -49,7 +49,7 @@ const jsonLd = {
   '@context': 'https://schema.org',
   '@type': 'CollectionPage',
   name: 'Work',
-  description: 'Public projects, technical dossiers and live products from K-ONE IT SOLUTIONS.',
+  description: 'Public projects, technical dossiers and live deployments from K-ONE IT SOLUTIONS.',
   url: new URL('/work/', Astro.site).href,
   hasPart: dossiers.map((d) => ({
     '@type': 'CreativeWork',
@@ -61,14 +61,14 @@ const jsonLd = {
 
 <Base
   title="Work"
-  description="Four technical dossiers and every public project from K-ONE IT SOLUTIONS: AI agents, legal and civic tech, live products, source code and architecture decisions."
+  description={`${dossiers.length} technical dossiers and every public project from K-ONE IT SOLUTIONS: AI agents, legal and civic tech, live deployments, source code and architecture decisions.`}
   jsonLd={jsonLd}
 >
   <PageHero
     number="02"
     label="Work"
     title="Everything built in the open, in one place."
-    lead="Four projects get a full technical dossier: the problem, the architecture, the decisions and what is honestly working today. Below that, every public repository and every live product."
+    lead={`${dossiers.length} projects get a full technical dossier: the problem, the architecture, the decisions and what is honestly working today. Below that, every public repository and every live deployment.`}
   >
     <div class="mt-8 flex flex-wrap gap-3">
       <a href="#dossiers" class="btn btn-primary">Open the dossiers <ArrowRight size={16} aria-hidden="true" /></a>
@@ -83,7 +83,7 @@ const jsonLd = {
           <dd class="font-display text-2xl text-brand">{dossiers.length}</dd>
         </div>
         <div class="flex items-baseline justify-between gap-4 py-2.5">
-          <dt class="text-sm text-muted">Live products</dt>
+          <dt class="text-sm text-muted">Live deployments</dt>
           <dd class="font-display text-2xl text-brand">{liveProducts.length}</dd>
         </div>
         <div class="flex items-baseline justify-between gap-4 py-2.5">
@@ -102,7 +102,7 @@ const jsonLd = {
     <div class="container-x">
       <SectionHeading
         number="02"
-        title="Four projects, opened up."
+        title={`${dossiers.length} projects, opened up.`}
         lead="Each dossier names the real components, quotes the architecture decisions and separates what is built from what is still a plan."
       />
 
@@ -193,7 +193,7 @@ const jsonLd = {
       <SectionHeading
         number="03"
         title="Live, right now."
-        lead="Five addresses you can open today. ClearCut needs an invite, so its demo is the public door."
+        lead="Every live address you can open today. ClearCut needs an invite, so its demo is the public door."
       />
 
       <div class="mt-10 grid gap-px border border-line bg-line sm:grid-cols-2 xl:grid-cols-5">

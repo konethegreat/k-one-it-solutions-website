@@ -66,7 +66,10 @@ export default function CircularNav() {
     if (restoreFocus) triggerRef.current?.focus();
   };
 
-  const focusables = () => [triggerRef.current, ...itemRefs.current].filter(Boolean) as HTMLElement[];
+  const focusables = (): (HTMLAnchorElement | HTMLButtonElement)[] =>
+    [...itemRefs.current.filter((el): el is HTMLAnchorElement => Boolean(el)), triggerRef.current].filter(
+      (el): el is HTMLAnchorElement | HTMLButtonElement => Boolean(el),
+    );
 
   const onKeyDown = (event: KeyboardEvent<HTMLDivElement>) => {
     if (event.key === 'Escape' && open) {
@@ -77,7 +80,8 @@ export default function CircularNav() {
     if (event.key === 'Tab' && open) {
       const list = focusables();
       const first = list[0];
-      const last = list[list.length - 1];
+      const last = list.at(-1);
+      if (!first || !last) return;
       if (event.shiftKey && document.activeElement === first) {
         event.preventDefault();
         last.focus();
@@ -181,7 +185,7 @@ export default function CircularNav() {
           ref={triggerRef}
           type="button"
           aria-expanded={open}
-          aria-controls="quick-nav"
+          aria-controls={open ? 'quick-nav' : undefined}
           aria-label={open ? 'Close quick navigation' : 'Open quick navigation'}
           onClick={() => setOpen((value) => !value)}
           className="relative z-10 grid h-16 w-16 place-items-center rounded-full bg-ink-bg text-lime shadow-2xl ring-1 ring-white/15 transition hover:scale-[1.03]"

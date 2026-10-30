@@ -115,6 +115,9 @@
     outline-offset: 3px;
     border-radius: 2px;
   }
+  #main:focus {
+    outline: none;
+  }
   ::selection {
     background: color-mix(in oklab, var(--brand) 24%, transparent);
   }
@@ -180,6 +183,9 @@
   .btn-primary:hover {
     background: #1a2fa8;
     transform: translateY(-1px);
+  }
+  :root[data-theme="dark"] .btn-primary {
+    color: var(--ink-bg);
   }
   :root[data-theme="dark"] .btn-primary:hover {
     background: #a99dff;

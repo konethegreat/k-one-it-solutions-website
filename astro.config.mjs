@@ -9,7 +9,10 @@ const SITE_URL = process.env.SITE_URL ?? 'https://k-one-it-solutions-website.eri
 
 export default defineConfig({
   site: SITE_URL,
-  integrations: [react(), sitemap()],
+  integrations: [
+    react(),
+    sitemap({ filter: (page) => !new URL(page).pathname.startsWith('/briefs/') }),
+  ],
   vite: { plugins: [tailwindcss()] },
   build: { format: 'directory' },
   devToolbar: { enabled: false },

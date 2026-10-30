@@ -93,36 +93,69 @@ const isActive = (href: string) => path === href || path.startsWith(href);
 
 <script>
   const root = document.documentElement;
+  let controller: AbortController | undefined;
 
-  const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
-  const syncTheme = () => themeBtn?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
-  syncTheme();
-  themeBtn?.addEventListener('click', () => {
-    const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
-    if (next === 'dark') root.dataset.theme = 'dark';
-    else root.removeAttribute('data-theme');
+  const applyTheme = () => {
+    let saved: string | null = null;
     try {
-      localStorage.setItem('theme', next);
+      saved = localStorage.getItem('theme');
     } catch {}
-    syncTheme();
-  });
-
-  const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
-  const panel = document.getElementById('mobile-nav');
-  const setMenu = (open: boolean) => {
-    if (!menuBtn || !panel) return;
-    panel.classList.toggle('hidden', !open);
-    menuBtn.setAttribute('aria-expanded', String(open));
-    menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-    menuBtn.querySelector('.menu-open')?.classList.toggle('hidden', open);
-    menuBtn.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+    if (saved === 'dark') root.dataset.theme = 'dark';
+    else if (saved === 'light') root.removeAttribute('data-theme');
   };
-  menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'));
-  panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false)));
-  document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') setMenu(false);
-  });
-  window.matchMedia('(min-width: 768px)').addEventListener('change', (e) => {
-    if (e.matches) setMenu(false);
-  });
+
+  const init = () => {
+    controller?.abort();
+    controller = new AbortController();
+    const { signal } = controller;
+
+    applyTheme();
+
+    const themeBtn = document.querySelector<HTMLButtonElement>('[data-theme-toggle]');
+    const syncTheme = () => themeBtn?.setAttribute('aria-pressed', String(root.dataset.theme === 'dark'));
+    syncTheme();
+    themeBtn?.addEventListener(
+      'click',
+      () => {
+        const next = root.dataset.theme === 'dark' ? 'light' : 'dark';
+        if (next === 'dark') root.dataset.theme = 'dark';
+        else root.removeAttribute('data-theme');
+        try {
+          localStorage.setItem('theme', next);
+        } catch {}
+        syncTheme();
+      },
+      { signal },
+    );
+
+    const menuBtn = document.querySelector<HTMLButtonElement>('[data-menu-btn]');
+    const panel = document.getElementById('mobile-nav');
+    const setMenu = (open: boolean) => {
+      if (!menuBtn || !panel) return;
+      panel.classList.toggle('hidden', !open);
+      menuBtn.setAttribute('aria-expanded', String(open));
+      menuBtn.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      menuBtn.querySelector('.menu-open')?.classList.toggle('hidden', open);
+      menuBtn.querySelector('.menu-close')?.classList.toggle('hidden', !open);
+    };
+    menuBtn?.addEventListener('click', () => setMenu(menuBtn.getAttribute('aria-expanded') !== 'true'), { signal });
+    panel?.querySelectorAll('a').forEach((a) => a.addEventListener('click', () => setMenu(false), { signal }));
+    document.addEventListener(
+      'keydown',
+      (e) => {
+        if (e.key === 'Escape') setMenu(false);
+      },
+      { signal },
+    );
+    window.matchMedia('(min-width: 768px)').addEventListener(
+      'change',
+      (e) => {
+        if (e.matches) setMenu(false);
+      },
+      { signal },
+    );
+  };
+
+  init();
+  document.addEventListener('astro:page-load', init);
 </script>

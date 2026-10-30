@@ -34,7 +34,12 @@ const jsonLd = {
 ---
 
 <Base title={service.title} description={service.summary} jsonLd={jsonLd}>
-  <PageHero number={`S${service.number} / 06`} label="Service" title={service.title} lead={service.promise}>
+  <PageHero
+    number={`S${service.number} / ${String(serviceDetails.length).padStart(2, '0')}`}
+    label="Service"
+    title={service.title}
+    lead={service.promise}
+  >
     <p class="mt-5 max-w-2xl text-muted">{service.summary}</p>
     <div class="mt-8 flex flex-wrap items-center gap-3">
       <a href="/contact/" class="btn btn-primary">Discuss this service <ArrowRight size={16} aria-hidden="true" /></a>

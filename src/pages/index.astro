@@ -30,13 +30,6 @@ const jsonLd = {
   sameAs: [links.github, links.linkedin, links.portfolio],
 };
 
-const proof = [
-  { value: projects.length, label: 'public repositories' },
-  { value: 3, label: 'live products' },
-  { value: 46, label: 'architecture decisions' },
-  { value: services.length, label: 'services offered' },
-];
-
 const stack = ['Python', 'TypeScript', 'Rust', 'Java', 'PostgreSQL', 'MCP', 'AWS', 'Astro', 'Playwright', 'Docker'];
 
 const dossiers = [
@@ -96,6 +89,13 @@ const liveNow = [
   { name: 'MuniSolve ZA', note: 'Municipal issue reporting', href: links.munisolve, status: 'Live' },
   { name: 'Portfolio', note: 'Personal site and notes', href: links.portfolio, status: 'Live' },
   { name: 'UI Vault', note: 'Interface reference gallery', href: links.vault, status: 'Live' },
+];
+
+const proof = [
+  { value: projects.length, label: 'public repositories' },
+  { value: liveNow.length, label: 'live deployments' },
+  { value: dossiers.length, label: 'technical dossiers' },
+  { value: services.length, label: 'services offered' },
 ];
 ---
 

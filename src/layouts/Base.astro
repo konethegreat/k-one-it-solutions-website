@@ -67,6 +67,14 @@ const ogImage = ogImageProp ? new URL(ogImageProp, Astro.site).href : new URL('/
       try {
         if (localStorage.getItem('theme') === 'dark') document.documentElement.dataset.theme = 'dark';
       } catch (e) {}
+      document.addEventListener('astro:before-swap', (event) => {
+        try {
+          if (localStorage.getItem('theme') === 'dark') event.newDocument.documentElement.dataset.theme = 'dark';
+        } catch (e) {}
+      });
+      document.addEventListener('astro:after-swap', () => {
+        document.getElementById('main')?.focus({ preventScroll: true });
+      });
     </script>
 
     {jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
@@ -79,7 +87,7 @@ const ogImage = ogImageProp ? new URL(ogImageProp, Astro.site).href : new URL('/
       Skip to content
     </a>
     <Header />
-    <main id="main">
+    <main id="main" tabindex="-1">
       <slot />
     </main>
     <Footer />
