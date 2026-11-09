@@ -1,0 +1,98 @@
+---
+// Written by Kone Tshivhinda & Claude
+import DiagramFrame from './DiagramFrame.astro';
+---
+<DiagramFrame
+  label="Architecture · AgentOS Studio"
+  caption="Agents reach the same hub as the desktop app because both run inside one binary. Memory, worktrees, releases and checks stay on the machine or in the repository."
+  legend={[
+    { name: 'One binary', tone: 'brand' },
+    { name: 'Local record', tone: 'ok' },
+    { name: 'External services', tone: 'muted' },
+  ]}
+>
+  <svg class="dgm" viewBox="0 0 760 520" role="img" aria-labelledby="agentos-diagram-title">
+    <title id="agentos-diagram-title">AgentOS Studio architecture: four agents, one Rust binary that is both the desktop app and the hub MCP server, a local vault and database, mission worktrees, GitHub releases and CI checks</title>
+    <defs>
+      <marker id="agentos-arrow" viewBox="0 0 8 8" refX="7" refY="4" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+        <path d="M0 0 L8 4 L0 8 z" fill="var(--muted)"></path>
+      </marker>
+    </defs>
+
+    <rect class="dgm-box" x="16" y="56" width="170" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="76">Headless</text>
+    <text class="dgm-title" x="32" y="96" font-size="13">Hermes</text>
+    <text class="dgm-sub" x="32" y="108" text-anchor="start">CLI · kanban · Notion</text>
+    <rect class="dgm-box" x="16" y="126" width="170" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="146">Headless</text>
+    <text class="dgm-title" x="32" y="166" font-size="13">Claude Code</text>
+    <text class="dgm-sub" x="32" y="178">review · refactor</text>
+    <rect class="dgm-box" x="16" y="196" width="170" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="216">Headless</text>
+    <text class="dgm-title" x="32" y="236" font-size="13">Antigravity</text>
+    <text class="dgm-sub" x="32" y="248">UI · second opinion</text>
+    <rect class="dgm-box" x="16" y="266" width="170" height="56" rx="5"></rect>
+    <text class="dgm-label" x="32" y="286">IDE only</text>
+    <text class="dgm-title" x="32" y="306" font-size="13">Qoder</text>
+    <text class="dgm-sub" x="32" y="318">in-editor work</text>
+
+    <line class="dgm-line" x1="186" y1="84" x2="226" y2="84" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="186" y1="154" x2="226" y2="154" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="186" y1="224" x2="226" y2="224" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="186" y1="294" x2="226" y2="294" marker-end="url(#agentos-arrow)"></line>
+
+    <rect class="dgm-accent" x="226" y="56" width="196" height="266" rx="6"></rect>
+    <text class="dgm-label" x="244" y="78">One binary</text>
+    <text class="dgm-title" x="244" y="104" font-size="15">AgentOS Studio</text>
+    <text class="dgm-sub" x="244" y="126">Tauri 2 desktop window</text>
+    <text class="dgm-sub" x="244" y="142">agentos-hub MCP server</text>
+    <text class="dgm-sub" x="244" y="158">13 tools over JSON-RPC 2.0</text>
+    <text class="dgm-sub" x="244" y="180">Agent registry and missions</text>
+    <text class="dgm-sub" x="244" y="196">Run timeline and approvals</text>
+    <text class="dgm-sub" x="244" y="212">Safety Center and quotas</text>
+    <text class="dgm-sub" x="244" y="234">Rust core</text>
+    <text class="dgm-sub" x="244" y="250">React 19 and Tailwind 4</text>
+    <text class="dgm-sub" x="244" y="272">Runs on Windows, macOS</text>
+    <text class="dgm-sub" x="244" y="288">and Linux</text>
+
+    <line class="dgm-line" x1="422" y1="84" x2="452" y2="84" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="422" y1="160" x2="452" y2="160" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="422" y1="236" x2="452" y2="236" marker-end="url(#agentos-arrow)"></line>
+    <line class="dgm-line" x1="422" y1="304" x2="452" y2="304" marker-end="url(#agentos-arrow)"></line>
+
+    <rect class="dgm-ok" x="452" y="56" width="292" height="70" rx="5"></rect>
+    <text class="dgm-label" x="468" y="76">Memory</text>
+    <text class="dgm-title" x="468" y="96" font-size="13">Obsidian vault and SQLite</text>
+    <text class="dgm-sub" x="468" y="112">notes · missions · run events</text>
+
+    <rect class="dgm-ok" x="452" y="140" width="292" height="70" rx="5"></rect>
+    <text class="dgm-label" x="468" y="160">Work</text>
+    <text class="dgm-title" x="468" y="180" font-size="13">Mission worktrees</text>
+    <text class="dgm-sub" x="468" y="196">git branches · review · merge</text>
+
+    <rect class="dgm-box" x="452" y="224" width="292" height="70" rx="5"></rect>
+    <text class="dgm-label" x="468" y="244">Releases</text>
+    <text class="dgm-title" x="468" y="264" font-size="13">GitHub Releases</text>
+    <text class="dgm-sub" x="468" y="280">Windows · macOS · Linux builds</text>
+
+    <rect class="dgm-box" x="452" y="308" width="292" height="70" rx="5"></rect>
+    <text class="dgm-label" x="468" y="328">Verification</text>
+    <text class="dgm-title" x="468" y="348" font-size="13">Tests and CI checks</text>
+    <text class="dgm-sub" x="468" y="364">gates run before any merge</text>
+
+    <rect class="dgm-box" x="16" y="356" width="356" height="90" rx="5"></rect>
+    <text class="dgm-label" x="32" y="376">Stays on the machine</text>
+    <text class="dgm-title" x="32" y="398" font-size="13">No telemetry</text>
+    <text class="dgm-sub" x="32" y="416">the app sends no analytics or logs</text>
+    <text class="dgm-sub" x="32" y="432">credentials live in the OS keychain</text>
+
+    <rect class="dgm-box" x="388" y="356" width="356" height="90" rx="5"></rect>
+    <text class="dgm-label" x="404" y="376">Leaves the machine</text>
+    <text class="dgm-title" x="404" y="398" font-size="13">Only what you ask for</text>
+    <text class="dgm-sub" x="404" y="416">model calls and git remotes</text>
+    <text class="dgm-sub" x="404" y="432">each action is visible in the timeline</text>
+
+    <rect class="dgm-band" x="16" y="466" width="728" height="38" rx="5"></rect>
+    <text class="dgm-sub" x="32" y="489">The desktop app and the MCP server are one program, so the fleet and the interface cannot drift apart.</text>
+  </svg>
+</DiagramFrame>

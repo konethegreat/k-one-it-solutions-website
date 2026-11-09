@@ -9,6 +9,7 @@ import VigilDiagram from '../../components/diagrams/VigilDiagram.astro';
 import SajasDiagram from '../../components/diagrams/SajasDiagram.astro';
 import ClearCutDiagram from '../../components/diagrams/ClearCutDiagram.astro';
 import TimeLexDiagram from '../../components/diagrams/TimeLexDiagram.astro';
+import AgentOSDiagram from '../../components/diagrams/AgentOSDiagram.astro';
 import { dossiers, type DiagramKind } from '../../data/dossiers';
 import { site, links } from '../../config';
 
@@ -25,6 +26,7 @@ const diagramMap: Record<DiagramKind, typeof VigilDiagram> = {
   sajas: SajasDiagram,
   clearcut: ClearCutDiagram,
   timelex: TimeLexDiagram,
+  agentos: AgentOSDiagram,
 };
 const Diagram = diagramMap[dossier.diagram];
 const dossierNo = String(index + 1).padStart(2, '0');
