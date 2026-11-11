@@ -29,6 +29,16 @@ interface Curated {
 }
 
 const curated: Record<string, Curated> = {
+  'agentos-studio': {
+    title: 'AgentOS Studio',
+    summary:
+      'A local control plane for a multi-agent fleet: one desktop app and MCP hub where agents take work from a shared bus, share one memory and merge only after the checks pass. Released, v1.0.0.',
+    category: 'AI & agents',
+    status: 'public',
+    featured: 0,
+    tech: ['Rust', 'Tauri', 'React', 'SQLite', 'MCP'],
+    highlights: ['v1.0.0', '13 hub tools', '436 Rust tests'],
+  },
   Vigil: {
     title: 'Vigil',
     summary:

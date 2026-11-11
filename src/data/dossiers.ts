@@ -11,9 +11,12 @@ import sajasSaved from '../assets/work/sajas/05-saved-answer.jpg';
 import clearcutDemo from '../assets/work/clearcut/demo.png';
 import clearcutRead from '../assets/work/clearcut/read.png';
 import clearcutResult from '../assets/work/clearcut/result.png';
+import agentosBrain from '../assets/work/agentos-studio/01-brain.png';
+import agentosTimeline from '../assets/work/agentos-studio/02-run-timeline.png';
+import agentosAgents from '../assets/work/agentos-studio/03-agents.png';
 
 export type DossierStatus = 'source' | 'live-alpha';
-export type DiagramKind = 'vigil' | 'timelex' | 'clearcut' | 'sajas';
+export type DiagramKind = 'vigil' | 'timelex' | 'clearcut' | 'sajas' | 'agentos';
 
 export interface DossierFact {
   label: string;
@@ -617,6 +620,134 @@ export const dossiers: Dossier[] = [
       { area: 'Claims', status: 'Designed', note: 'The autonomy ladder is a design commitment. It has not run in production.' },
     ],
     relatedService: { label: 'Sovereign AI', href: '/services/sovereign-ai/' },
+  },
+  {
+    slug: 'agentos-studio',
+    title: 'AgentOS Studio',
+    codename: 'The studio that runs the fleet',
+    status: 'source',
+    statusLabel: 'Released, v1.0.0',
+    statusTone: 'ok',
+    year: '2026',
+    role: 'Founder, architecture and full-stack engineering',
+    summary:
+      'A local control plane for a multi-agent fleet: one desktop app where agents take work from a shared bus, write to one memory, show every action in a timeline, and merge only after the checks pass.',
+    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+    repoUrl: 'https://github.com/konethegreat/agentos-studio',
+    docsUrl: 'https://github.com/konethegreat/agentos-studio/blob/main/docs/ARCHITECTURE.md',
+    licence: 'MIT',
+    stack: [
+      'Rust',
+      'Tauri 2',
+      'React 19',
+      'TypeScript',
+      'Tailwind 4',
+      'SQLite',
+      'JSON-RPC 2.0',
+      'MCP',
+      'Obsidian',
+    ],
+    facts: [
+      { label: 'Status', value: 'Released, v1.0.0' },
+      { label: 'Binary', value: 'One program, desktop app and hub server' },
+      { label: 'Hub tools', value: '13 over JSON-RPC 2.0' },
+      { label: 'Agents', value: '4, headless and IDE' },
+      { label: 'Data', value: 'Local SQLite and the Obsidian vault' },
+      { label: 'Licence', value: 'MIT' },
+    ],
+    problem: [
+      'A fleet of coding agents fails in the gaps between the agents. One tool holds the task queue, another holds the memory, a third holds the pull requests, and nobody can answer who did what, when, and on whose instruction.',
+      'AgentOS Studio puts that record in one place on the machine. The same Rust binary is the desktop window people use and the agentos-hub MCP server the agents call, so the queue, the memory, the worktrees and the audit trail cannot drift apart.',
+      'It runs the fleet in this portfolio: Hermes on CLI and DevOps, Claude Code and Antigravity on review and implementation, and Qoder in the editor.',
+    ],
+    capabilities: [
+      {
+        title: 'One binary, two faces',
+        body: 'The Tauri desktop app and the agentos-hub MCP server are the same program. Agents call 13 tools over JSON-RPC 2.0 while the window shows the same state.',
+      },
+      {
+        title: 'Agent registry',
+        body: 'Each agent lists how it starts, its cost model, quota headroom, strengths and the missions it has actually approved or failed.',
+      },
+      {
+        title: 'Missions and worktrees',
+        body: 'Work is a mission with a plan, an isolated git worktree, a review and a merge step, and a run timeline that records every bus line, tool call and check.',
+      },
+      {
+        title: 'One memory',
+        body: 'The Brain view reads the Obsidian vault: notes carry types, links and provenance, and recall ranks by keyword match, recency and how much the rest of the vault points at a note.',
+      },
+      {
+        title: 'Gates, not hope',
+        body: 'Destructive actions and merges pass approvals in the app, and a mission does not count as done until its tests and checks pass.',
+      },
+      {
+        title: 'Local-first, no telemetry',
+        body: 'Memory, missions and run events live in SQLite and the vault on disk. Credentials are held by the operating system keychain.',
+      },
+    ],
+    diagram: 'agentos',
+    diagramCaption:
+      'Agents reach the same hub as the desktop app because both run inside one binary. Memory, worktrees, releases and checks stay on the machine or in the repository.',
+    decisions: [
+      {
+        code: 'Architecture',
+        title: 'One binary, two roles',
+        decision:
+          'The desktop application and the MCP hub server ship as one Rust program, with the JSON-RPC server started from the same executable.',
+        why:
+          'Two programs would drift: the window would show a queue the agents do not use, or the agents would write a record the window cannot read. Shipping one binary removes that class of bug.',
+        href: 'https://github.com/konethegreat/agentos-studio/blob/main/docs/ARCHITECTURE.md',
+        state: 'Shipped',
+      },
+      {
+        code: 'Privacy',
+        title: 'Local record, no telemetry',
+        decision:
+          'State lives in SQLite and the Obsidian vault on the machine. The app sends no analytics and keeps credentials in the OS keychain.',
+        why:
+          'The record contains client repositories, branch names and agent conversations. Moving it to a hosted service would create a breach target without making the fleet better.',
+        href: 'https://github.com/konethegreat/agentos-studio/blob/main/docs/PRIVACY.md',
+        state: 'Shipped',
+      },
+      {
+        code: 'Safety',
+        title: 'Merge only after the checks',
+        decision:
+          'Missions move through plan, worktree, review, merge and verify, and a merge is refused when its checks have not passed.',
+        why:
+          'An agent that can merge without evidence turns a small mistake into a broken main branch. The gate costs a few minutes and removes that failure.',
+        href: 'https://github.com/konethegreat/agentos-studio/blob/main/docs/AUTOMATIONS.md',
+        state: 'Shipped',
+      },
+    ],
+    screenshots: [
+      {
+        src: agentosBrain,
+        alt: 'AgentOS Studio Brain view listing 63 vault notes with type chips, link counts and the Hermes memory files open beside the index.',
+        caption: 'The Brain view reads one vault on disk: 63 notes with their types, link counts and change times, and the agent memory files beside the index.',
+      },
+      {
+        src: agentosTimeline,
+        alt: 'AgentOS Studio run timeline for a real mission, from the bus claim through tool calls to a pull request, review and a done status.',
+        caption: 'The run timeline for a real mission. Bus lines, tool calls, the pull request, the review and the done status, each with its timestamp and source store.',
+      },
+      {
+        src: agentosAgents,
+        alt: 'AgentOS Studio agent registry showing Hermes, Claude Code, Antigravity and Qoder with start commands, cost models, quota headroom and measured missions.',
+        caption: 'The agent registry: how each agent starts, what it costs, how much quota it has left, its strengths and its measured mission record.',
+      },
+    ],
+    excerpts: [],
+    honesty: [
+      { area: 'Release state', status: 'v1.0.0', note: 'Installers are on GitHub Releases and unsigned, so the operating system asks once before the first run.' },
+      { area: 'Download site', status: 'Live', note: 'The download site at https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to the installer of the latest release.' },
+      { area: 'Telemetry', status: 'None', note: 'The app sends no analytics and no remote logging.' },
+      { area: 'Tests', status: 'Measured', note: 'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.' },
+      { area: 'Quotas', status: 'Measured', note: 'Usage comes from Hermes. Qoder and Antigravity report no quota to the app.' },
+      { area: 'Licence', status: 'MIT', note: 'Source and installers are public under the MIT licence.' },
+    ],
+    relatedService: { label: 'AI agents and automation', href: '/services/ai-agents/' },
   },
 ];
 

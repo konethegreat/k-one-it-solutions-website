@@ -19,7 +19,7 @@ An independent software studio in Johannesburg, South Africa, building AI system
 | --- | --- |
 | Home | Who we are, the live proof, services at a glance, featured work |
 | Services | Six service lines, the four working rules and the four-step process |
-| Work | Four evidence dossiers, the live products, and every public repository, searchable and filterable with honest status labels |
+| Work | Five evidence dossiers, the live products, and every public repository, searchable and filterable with honest status labels |
 | About | The founder, working principles, timeline, current builds, skills and credentials |
 | Contact | Direct lines, what happens next and an enquiry form |
 | Privacy | Plain-language notice (no cookies, no analytics, no ad scripts) |
@@ -94,7 +94,7 @@ npm run preview    # serve the built site locally
 
 ### Work, dossiers and live links
 
-The Work page leads with four dossiers: Vigil, SA-JAS, ClearCut and TimeLex. Each has its own page with screenshots, architecture, decisions and an honest status. Below the dossiers is the live products band and the searchable archive of every public repository.
+The Work page leads with five dossiers: AgentOS Studio, Vigil, SA-JAS, ClearCut and TimeLex. Each has its own page with screenshots, architecture, decisions and an honest status. Below the dossiers is the live products band and the searchable archive of every public repository.
 
 `npm run build` first runs `scripts/sync-repos.mjs`, which reads the public repositories of the GitHub profile and updates `src/data/repos.json`. If GitHub is unreachable or rate-limited, the committed snapshot is used and the build continues. Only public repositories are ever listed. A new public repository appears in the archive automatically; add an entry to `curated` in `src/data/projects.ts` to give it a title, summary, category, `status`, `liveUrl` and `highlights`.
 
@@ -112,7 +112,7 @@ npm run preview
   http://localhost:4321/briefs/vigil/
 ```
 
-Repeat for `sajas`, `clearcut` and `timelex`, using the Chrome path for your operating system. Each brief must stay exactly two A4 pages; check the page count and inspect page two after regenerating.
+Repeat for `agentos-studio`, `sajas`, `clearcut` and `timelex`, using the Chrome path for your operating system. Each brief must stay exactly two A4 pages; check the page count and inspect page two after regenerating.
 
 ### The contact form
 
