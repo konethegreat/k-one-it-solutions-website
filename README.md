@@ -78,6 +78,7 @@ npm ci
 npm run dev        # local dev server
 npm run build      # refresh project list, type-check, build to dist/
 npm run preview    # serve the built site locally
+npm test           # content tests in tests/ (node:test, no extra dependencies)
 ```
 
 ## Where to change things
@@ -134,7 +135,7 @@ Every push to `main` builds and deploys the site. To use a custom domain later, 
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs `npm ci` and `npm run build` (type-check included) on pushes to `main` and on pull requests, so a broken change is caught before it deploys.
+`.github/workflows/ci.yml` runs `npm ci`, `npm run build` (type-check included) and `npm test` on pushes to `main` and on pull requests, so a broken change is caught before it deploys.
 
 ## History
 
