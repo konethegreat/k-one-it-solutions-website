@@ -1,0 +1,8 @@
+{
+  "allow_merge": true,
+  "autonomy": {
+    "enabled": true,
+    "level": "full",
+    "brief": "Keep the design exactly as it is: layout, page structure, components, styles, colours, fonts, images and animations do not change, and no redesigns, new visual components or dependency swaps. Change content only, so the site is current about Kone Tshivhinda, K-ONE IT SOLUTIONS and his GitHub: the latest projects and their status, releases (AgentOS Studio is at 1.2.3), services, skills, experience and links. Use only facts that can be checked: gh repo list konethegreat, each repository's README and GitHub releases, and the live sites; never claim a feature, client, number or result those sources do not show. Put project facts in the existing data files and scripts rather than hard-coded copy. The build and every existing test must pass. Credit stays with Kone Tshivhinda and K-ONE IT SOLUTIONS."
+  }
+}
