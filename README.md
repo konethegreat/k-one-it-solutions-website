@@ -89,6 +89,7 @@ npm test           # content tests in tests/ (node:test, no extra dependencies)
 | Services and process | `src/data/services.ts` and `src/data/content.ts` |
 | Dossier copy, screenshots and PDF content, and the home page dossier cards (each card's copy, accent and screenshot in the dossier's optional `homeCard` field, shown in `homeCard.index` order) | `src/data/dossiers.ts` and `src/components/diagrams/` |
 | About intro, principles, timeline, credentials | `src/data/about.ts` and `src/data/content.ts` |
+| "Working stack" marquee on `/` (items in display order) | `stack` in `src/data/content.ts`, next to `skillGroups` |
 | Project titles, summaries, categories and featured projects | `src/data/projects.ts` |
 | Live products band on `/work/`, "Live right now" list on `/` and "Live work" list in the footer (name, link and each surface's own copy in its `work`, `home` or `footer` field; the home "live deployments" figure is the number of entries) | `liveProducts` in `src/data/projects.ts`, links in `src/config.ts` |
 | Colours, fonts, spacing | `src/styles/global.css` |
