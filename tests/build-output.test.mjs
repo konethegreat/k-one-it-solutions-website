@@ -348,11 +348,12 @@ const projectCard = (html, repo) => {
   return html.slice(start, html.indexOf('</article>', at));
 };
 
-// Each link is read as a whole <a> element, and a Live link is one whose visible text, with tags
-// removed, starts with "Live" (the Source link starts with "Source").
+// Each link is read as a whole <a> element, and a Live link is one whose text, with each tag replaced
+// by a space, starts with the word "Live" (the Source link starts with "Source"). Tags become spaces
+// because the screen-reader span follows the word directly: `Live<span class="sr-only">site for`.
 const liveLinks = (card) =>
   [...card.matchAll(/<a\b[^>]*\bhref="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
-    .filter((match) => /^\s*Live\b/.test(match[2].replace(/<[^>]*>/g, '')))
+    .filter((match) => /^\s*Live\b/.test(match[2].replace(/<[^>]*>/g, ' ')))
     .map((match) => match[1]);
 
 // The curated entries for repositories added to the profile in November 2026, checked against each
