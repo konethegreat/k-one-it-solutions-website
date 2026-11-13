@@ -137,6 +137,16 @@ const curated: Record<string, Curated> = {
     tech: ['TypeScript', 'Astro'],
     highlights: ['Live gallery', 'MIT'],
   },
+  reservoir: {
+    title: 'Reservoir',
+    summary:
+      'A free, open, community-grown memory for South African cultural knowledge: plants, practices, languages and stories, with community-controlled consent and a mission-native AI. Planning phase, docs site live.',
+    category: 'Legal & civic tech',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/reservoir/',
+    tech: [],
+    highlights: ['Planning / pre-alpha', 'Docs live', 'Apache-2.0'],
+  },
   Diary: {
     title: 'Diary',
     summary:

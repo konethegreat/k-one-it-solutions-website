@@ -336,6 +336,10 @@ const CURATED_WORK_ENTRIES = [
     title: 'AgentOS Studio download site',
     liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
   },
+  {
+    title: 'Reservoir',
+    liveUrl: 'https://konethegreat.github.io/reservoir/',
+  },
 ];
 
 test('/work/ includes the curated repository entries with their live links', { skip: distSkip }, () => {
