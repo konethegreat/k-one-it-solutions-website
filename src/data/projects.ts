@@ -188,12 +188,14 @@ export const allProjects = [...projects].sort(
 /**
  * The live deployments. `href` is the matching entry in `links` in src/config.ts. Each page that
  * lists them reads its own copy from a per-surface field: `work` holds the note and status shown
- * in the live products band on /work/.
+ * in the live products band on /work/, and `home` holds the note and status shown in the "Live right
+ * now" list on the home page, whose length is also the home page's "live deployments" figure.
  */
 export interface LiveProduct {
   name: string;
   href: string;
   work: { note: string; status: string };
+  home: { note: string; status: string };
 }
 
 export const liveProducts: LiveProduct[] = [
@@ -201,25 +203,30 @@ export const liveProducts: LiveProduct[] = [
     name: 'SA-JAS',
     href: links.sajas,
     work: { note: 'Find vacancies, tailor the CV, guide the application.', status: 'Hosted alpha' },
+    home: { note: 'AI job application suite', status: 'Alpha' },
   },
   {
     name: 'ClearCut',
     href: links.clearcut,
     work: { note: 'Read a South African invoice and check every figure.', status: 'Live alpha, invite only' },
+    home: { note: 'Invoice reading demo', status: 'Alpha' },
   },
   {
     name: 'MuniSolve ZA',
     href: links.munisolve,
     work: { note: 'Report a municipal fault and follow it on a live map.', status: 'Live' },
+    home: { note: 'Municipal issue reporting', status: 'Live' },
   },
   {
     name: 'Portfolio',
     href: links.portfolio,
     work: { note: 'The personal site and the rest of the public record.', status: 'Live' },
+    home: { note: 'Personal site and notes', status: 'Live' },
   },
   {
     name: 'UI Vault',
     href: links.vault,
     work: { note: 'A sourced index of interface patterns and their rights.', status: 'Live' },
+    home: { note: 'Interface reference gallery', status: 'Live' },
   },
 ];

@@ -11,7 +11,7 @@ import ProjectEvidenceCard from '../components/ProjectEvidenceCard.astro';
 import { site, contact, links } from '../config';
 import { services } from '../data/services';
 import { principles } from '../data/content';
-import { projects } from '../data/projects';
+import { projects, liveProducts } from '../data/projects';
 import portrait from '../assets/about/portrait.webp';
 import sajasShot from '../assets/work/sajas/01-dashboard.jpg';
 import clearcutShot from '../assets/work/clearcut/result.png';
@@ -83,17 +83,9 @@ const dossiers = [
   },
 ];
 
-const liveNow = [
-  { name: 'SA-JAS', note: 'AI job application suite', href: links.sajas, status: 'Alpha' },
-  { name: 'ClearCut', note: 'Invoice reading demo', href: links.clearcut, status: 'Alpha' },
-  { name: 'MuniSolve ZA', note: 'Municipal issue reporting', href: links.munisolve, status: 'Live' },
-  { name: 'Portfolio', note: 'Personal site and notes', href: links.portfolio, status: 'Live' },
-  { name: 'UI Vault', note: 'Interface reference gallery', href: links.vault, status: 'Live' },
-];
-
 const proof = [
   { value: projects.length, label: 'public repositories' },
-  { value: liveNow.length, label: 'live deployments' },
+  { value: liveProducts.length, label: 'live deployments' },
   { value: dossiers.length, label: 'technical dossiers' },
   { value: services.length, label: 'services offered' },
 ];
@@ -287,7 +279,7 @@ const proof = [
 
       <ul class="mt-10 grid gap-x-10 border-t border-line md:grid-cols-2">
         {
-          liveNow.map((item) => (
+          liveProducts.map((item) => (
             <li class="border-b border-line">
               <a
                 href={item.href}
@@ -295,12 +287,12 @@ const proof = [
                 rel="noopener noreferrer"
                 class="group flex items-center gap-4 py-5 no-underline"
               >
-                <span class:list={['status-dot', item.status === 'Live' ? 'bg-ok' : 'bg-warn']} aria-hidden="true" />
+                <span class:list={['status-dot', item.home.status === 'Live' ? 'bg-ok' : 'bg-warn']} aria-hidden="true" />
                 <span class="min-w-0 flex-1">
                   <span class="block text-lg font-medium text-fg">{item.name}</span>
-                  <span class="block text-sm text-muted">{item.note}</span>
+                  <span class="block text-sm text-muted">{item.home.note}</span>
                 </span>
-                <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">{item.status}</span>
+                <span class="font-mono text-[0.6rem] uppercase tracking-[0.14em] text-muted">{item.home.status}</span>
                 <ExternalLink size={16} class="text-muted transition-colors group-hover:text-brand" aria-hidden="true" />
                 <span class="sr-only">for {item.name} (opens in a new tab)</span>
               </a>
