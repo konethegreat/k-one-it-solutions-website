@@ -49,6 +49,20 @@ const htmlFiles = (dir) =>
 
 const shortPath = (path) => relative(ROOT, path).split(sep).join('/');
 
+// Dossier pages are the dist/work/<slug>/ directories that hold an index.html. The /work/ index
+// page is dist/work/index.html itself, a file rather than a directory, so it is not counted.
+const dossierPageCount = () => {
+  const work = join(DIST, 'work');
+  return readdirSync(work, { withFileTypes: true }).filter(
+    (entry) => entry.isDirectory() && existsSync(join(work, entry.name, 'index.html')),
+  ).length;
+};
+
+const NUMBER_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+
+// Reads a count written as a word (any case) or as digits.
+const parseCount = (text) => (/^\d+$/.test(text) ? Number(text) : NUMBER_WORDS.indexOf(text.toLowerCase()));
+
 const pageFile = (route) => (route === '/' ? join(DIST, 'index.html') : join(DIST, ...route.split('/').filter(Boolean), 'index.html'));
 
 const excerpt = (html, index) =>
@@ -100,4 +114,20 @@ test('no HTML page contains an em dash or an en dash', { skip: distSkip }, () =>
     }
   }
   assert.deepEqual(hits, [], `dashes found in dist/:\n${hits.join('\n')}`);
+});
+
+test('the dossier count on /about/ matches the /work/<slug>/ dossier pages', { skip: distSkip }, () => {
+  requireDist();
+  const pages = dossierPageCount();
+  assert.ok(pages > 0, 'no /work/<slug>/ dossier pages found in dist/');
+  const html = readFileSync(pageFile('/about/'), 'utf8');
+  const phrases = [
+    { name: 'intro', pattern: /The (\w+) dossiers on this site/ },
+    { name: 'credentials', pattern: /(\w+) technical dossiers and every public repository/ },
+  ];
+  for (const { name, pattern } of phrases) {
+    const match = html.match(pattern);
+    assert.ok(match, `/about/ ${name}: no dossier count matching ${pattern}`);
+    assert.equal(parseCount(match[1]), pages, `/about/ ${name} says "${match[1]}" but dist/ has ${pages} dossier pages`);
+  }
 });
