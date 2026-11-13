@@ -330,3 +330,21 @@ test('AgentOS Studio dossier and brief show the README and release facts, with t
     assert.deepEqual(undated, [], `${route} shows the 436 Rust test figure without its measurement date: ${undated.join(' | ')}`);
   }
 });
+
+const CURATED_WORK_ENTRIES = [
+  {
+    title: 'AgentOS Studio download site',
+    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+  },
+];
+
+test('/work/ includes the curated repository entries with their live links', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  for (const { title, liveUrl } of CURATED_WORK_ENTRIES) {
+    assert.ok(html.includes(escapeHtml(title)), `/work/ does not include curated entry "${title}"`);
+    if (liveUrl) {
+      assert.ok(html.includes(`href="${escapeHtml(liveUrl)}"`), `/work/ does not link ${title} to ${liveUrl}`);
+    }
+  }
+});

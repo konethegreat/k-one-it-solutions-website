@@ -64,6 +64,16 @@ const curated: Record<string, Curated> = {
     tech: ['Rust', 'Tauri', 'React', 'SQLite', 'MCP'],
     highlights: [agentosStudioTag, '13 hub tools', 'MIT'],
   },
+  'agentos-studio-website': {
+    title: 'AgentOS Studio download site',
+    summary:
+      'The download site for AgentOS Studio: a Cloudflare Worker that serves static pages, redirects each platform to its installer on the latest GitHub release, and includes a setup guide for Windows, macOS and Linux.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+    tech: ['Cloudflare Workers', 'HTML', 'CSS', 'JavaScript'],
+    highlights: ['Live', 'MIT'],
+  },
   Vigil: {
     title: 'Vigil',
     summary:
