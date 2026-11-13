@@ -1,6 +1,9 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
 // and no HTML page contains an em dash or an en dash. Run `npm run build` before `npm test`.
+// Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
+// checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
+// as GitHub Actions sets it, a missing dist/ fails instead, because CI always builds first.
 import { test } from 'node:test';
 import assert from 'node:assert/strict';
 import { existsSync, readFileSync, readdirSync } from 'node:fs';
@@ -17,8 +20,13 @@ const DASHES = [
   { char: '\u2013', name: 'en dash (U+2013)' },
 ];
 
+const MISSING_DIST = 'dist/ not found: run npm run build before npm test';
+
+// The `skip` option for the dist/ tests: false when dist/ exists or in CI, otherwise the reason.
+const distSkip = existsSync(DIST) || process.env.CI ? false : MISSING_DIST;
+
 const requireDist = () => {
-  assert.ok(existsSync(DIST), 'dist/ not found: run npm run build before npm test');
+  assert.ok(existsSync(DIST), MISSING_DIST);
 };
 
 // services.ts is TypeScript that imports ../config without an extension, so a .mjs test cannot
@@ -55,7 +63,7 @@ test('service slugs are read from src/data/services.ts', () => {
   assert.equal(new Set(slugs).size, slugs.length, `duplicate service slugs: ${slugs.join(', ')}`);
 });
 
-test('every expected page is built', () => {
+test('every expected page is built', { skip: distSkip }, () => {
   requireDist();
   const routes = [
     '/',
@@ -72,7 +80,7 @@ test('every expected page is built', () => {
   assert.deepEqual(missing, [], `pages missing from dist/:\n${missing.join('\n')}`);
 });
 
-test(`every HTML page names ${BRAND}`, () => {
+test(`every HTML page names ${BRAND}`, { skip: distSkip }, () => {
   requireDist();
   const files = htmlFiles(DIST);
   assert.ok(files.length > 0, 'dist/ contains no HTML files: run npm run build before npm test');
@@ -80,7 +88,7 @@ test(`every HTML page names ${BRAND}`, () => {
   assert.deepEqual(without, [], `HTML pages without "${BRAND}":\n${without.join('\n')}`);
 });
 
-test('no HTML page contains an em dash or an en dash', () => {
+test('no HTML page contains an em dash or an en dash', { skip: distSkip }, () => {
   requireDist();
   const hits = [];
   for (const file of htmlFiles(DIST)) {
