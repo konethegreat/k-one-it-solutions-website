@@ -95,6 +95,16 @@ const curated: Record<string, Curated> = {
     tech: ['Electron', 'React', 'Express', 'Playwright', 'Claude'],
     highlights: ['Hosted alpha', '3 AI agents', '12 job boards'],
   },
+  'animation-and-game-studio': {
+    title: 'Animation and Game Studio',
+    summary:
+      '2D and 3D animation plus playable games, authored as code, rendered headless and checked before they ship. The published work includes a Godot arcade game playable in the browser and the short film The Maker at Work.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+    tech: ['Python', 'Blender', 'Godot', 'Three.js', 'FFmpeg'],
+    highlights: ['Live showcase', '5 published works', 'All rights reserved'],
+  },
   'munisolve-za': {
     title: 'MuniSolve ZA',
     summary:

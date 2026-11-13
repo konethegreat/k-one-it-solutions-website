@@ -341,6 +341,13 @@ const NEW_CURATED = [
   // The repository homepage names a GitHub Pages docs site that could not be confirmed to load, so
   // the card shows no Live link (`liveUrl: null` in src/data/projects.ts overrides the homepage).
   { repo: 'reservoir', title: 'Reservoir', status: 'Public source', live: null },
+  // The repository has no homepage; the README names the GitHub Pages showcase as its live site.
+  {
+    repo: 'animation-and-game-studio',
+    title: 'Animation and Game Studio',
+    status: 'Live',
+    live: 'https://konethegreat.github.io/animation-and-game-studio/',
+  },
 ];
 
 test('/work/ shows the curated entries for the new repositories with their live links', { skip: distSkip }, () => {
