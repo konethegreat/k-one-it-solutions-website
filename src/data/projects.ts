@@ -70,7 +70,7 @@ const curated: Record<string, Curated> = {
       'The download site for AgentOS Studio: a Cloudflare Worker serves static pages and sends each platform to its installer on the latest GitHub release, with a step by step setup guide for Windows, macOS and Linux.',
     category: 'Web & apps',
     status: 'live',
-    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+    liveUrl: links.agentosStudio,
     tech: ['Cloudflare Workers', 'JavaScript', 'HTML', 'CSS'],
     highlights: ['Live', 'MIT', 'Installers from GitHub Releases'],
   },
@@ -268,6 +268,13 @@ export const liveProducts: LiveProduct[] = [
     work: { note: 'Read a South African invoice and check every figure.', status: 'Live alpha, invite only' },
     home: { note: 'Invoice reading demo', status: 'Alpha' },
     footer: { note: 'Live alpha' },
+  },
+  {
+    name: 'AgentOS Studio',
+    href: links.agentosStudio,
+    work: { note: 'Download the desktop app for Windows, macOS or Linux.', status: 'Live' },
+    home: { note: 'Desktop app download site', status: 'Live' },
+    footer: { note: 'Download site' },
   },
   {
     name: 'MuniSolve ZA',

@@ -159,6 +159,26 @@ test('/work/ lists every live product by name and URL', { skip: distSkip }, () =
   assert.deepEqual(missing, [], `live products missing from /work/:\n${missing.join('\n')}`);
 });
 
+// The live deployments, each confirmed against its live site or its README and deploy record. The
+// AgentOS Studio download site joined in Phase 3; Reservoir is left out until its docs site is
+// confirmed to load. The checks below then find each of these on /work/, / and the footer, and the
+// "live deployments" figure follows their number.
+const EXPECTED_LIVE = [
+  { name: 'SA-JAS', url: 'https://sajas.pages.dev/' },
+  { name: 'ClearCut', url: 'https://145-241-100-85.sslip.io/' },
+  { name: 'AgentOS Studio', url: 'https://agentos-studio-website.erictshivhinda.workers.dev' },
+  { name: 'MuniSolve ZA', url: 'https://munisolve-za.vercel.app/' },
+  { name: 'Portfolio', url: 'https://konethegreat.github.io' },
+  { name: 'UI Vault', url: 'https://konethegreat.github.io/ui-vault/' },
+];
+
+// Grouped with the dist/ checks because tests/build-output-guard.test.mjs runs this file in a folder
+// that holds only services.ts, where src/data/projects.ts and src/config.ts cannot be read.
+test('liveProducts lists the expected live deployments, including the AgentOS Studio download site', { skip: distSkip }, () => {
+  requireDist();
+  assert.deepEqual(liveProducts(), EXPECTED_LIVE);
+});
+
 // The "Live right now" list on / is the section labelled by its `live-title` heading. Names and URLs
 // are looked up inside it, because the dossier cards and the footer on the same page repeat some.
 test('/ lists every live product by name and URL', { skip: distSkip }, () => {
@@ -280,7 +300,8 @@ test('the "technical dossiers" figure on / equals the number of /work/<slug>/ do
 // AgentOS Studio is the only project on the site with a `vX.Y.Z` release tag (Vigil uses `P0 v1.0`,
 // TimeLex uses `0.1.0`), so matching `v\d+\.\d+\.\d+` across a built page catches any stale or
 // hard-coded AgentOS Studio version without false positives from unrelated versions. The home page `/`
-// renders the four homeCards and liveProducts (not AgentOS Studio), so it has no `v\d+\.\d+\.\d+`
+// renders the four homeCards and liveProducts (AgentOS Studio only as its download site, with no
+// version), so it has no `v\d+\.\d+\.\d+`
 // string, while `/work/`, `/work/agentos-studio/`, `/about/` and `/briefs/agentos-studio/` must show
 // `latestRelease.tag` from src/data/repos.json and no other `v\d+\.\d+\.\d+` string.
 const agentosStudioTag = () => {
