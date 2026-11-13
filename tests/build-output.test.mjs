@@ -2,8 +2,9 @@
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
-// src/data/content.ts, the dossier count on /about/ equals the number of /work/<slug>/ pages, and
-// the AgentOS Studio dossier and brief show its README and release facts with the test count dated.
+// src/data/content.ts, the dossier count on /about/ and the "technical dossiers" figure on / equal
+// the number of /work/<slug>/ pages, and the AgentOS Studio dossier and brief show its README and
+// release facts with the test count dated.
 // Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -260,6 +261,19 @@ test('the dossier count on /about/ equals the number of /work/<slug>/ dossier pa
     assert.ok(match, `/about/ has no dossier count in the ${label}`);
     assert.equal(countValue(match[1]), pages.length, `the ${label} on /about/ says "${match[1]}" dossiers, dist/work/ has ${pages.length}: ${pages.join(', ')}`);
   }
+});
+
+// The "technical dossiers" figure on / counts every dossier in src/data/dossiers.ts, not only the ones
+// with a homeCard, so it must equal the number of /work/<slug>/ dossier pages. StatTicker renders the
+// final number on the server as `<span>N</span>` just before its label.
+test('the "technical dossiers" figure on / equals the number of /work/<slug>/ dossier pages', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/'), 'utf8');
+  const pages = dossierPages();
+  assert.ok(pages.length > 0, 'dist/work/ has no /work/<slug>/ dossier pages');
+  const match = html.match(/<span>(\d+)<\/span><\/p><p[^>]*>technical dossiers<\/p>/);
+  assert.ok(match, '/ has no "technical dossiers" figure');
+  assert.equal(Number(match[1]), pages.length, `the "technical dossiers" figure on / says ${match[1]}, dist/work/ has ${pages.length}: ${pages.join(', ')}`);
 });
 
 // AgentOS Studio is the only project on the site with a `vX.Y.Z` release tag (Vigil uses `P0 v1.0`,

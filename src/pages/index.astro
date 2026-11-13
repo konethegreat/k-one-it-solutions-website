@@ -12,7 +12,7 @@ import { site, contact, links } from '../config';
 import { services } from '../data/services';
 import { principles, stack } from '../data/content';
 import { projects, liveProducts } from '../data/projects';
-import { homeDossiers } from '../data/dossiers';
+import { dossiers, homeDossiers } from '../data/dossiers';
 import portrait from '../assets/about/portrait.webp';
 
 const jsonLd = {
@@ -46,7 +46,7 @@ const homeCards = homeDossiers.map((d) => ({
 const proof = [
   { value: projects.length, label: 'public repositories' },
   { value: liveProducts.length, label: 'live deployments' },
-  { value: homeCards.length, label: 'technical dossiers' },
+  { value: dossiers.length, label: 'technical dossiers' },
   { value: services.length, label: 'services offered' },
 ];
 ---
