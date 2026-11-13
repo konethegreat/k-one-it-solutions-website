@@ -17,6 +17,30 @@ export const statusLabel: Record<Status, string> = {
   coursework: 'Coursework',
 };
 
+interface LatestRelease {
+  tag: string;
+  name: string;
+  publishedAt: string;
+  url: string;
+}
+
+interface RepoSnapshot {
+  name: string;
+  description: string;
+  language: string | null;
+  topics: string[];
+  homepage: string | null;
+  fork: boolean;
+  license: string | null;
+  latestRelease?: LatestRelease;
+}
+
+const agentosStudioRepo = (repos as RepoSnapshot[]).find((r) => r.name === 'agentos-studio');
+if (!agentosStudioRepo?.latestRelease?.tag) {
+  throw new Error('src/data/repos.json is missing agentos-studio latestRelease.tag');
+}
+export const agentosStudioTag = agentosStudioRepo.latestRelease.tag;
+
 interface Curated {
   /** Overrides the GitHub homepage field for the live link. */
   liveUrl?: string;
@@ -33,12 +57,12 @@ const curated: Record<string, Curated> = {
   'agentos-studio': {
     title: 'AgentOS Studio',
     summary:
-      'A local control plane for a multi-agent fleet: one desktop app and MCP hub where agents take work from a shared bus, share one memory and merge only after the checks pass. Released, v1.0.0.',
+      `A local control plane for a multi-agent fleet: one desktop app and MCP hub where agents take work from a shared bus, share one memory and merge only after the checks pass. Released, ${agentosStudioTag}.`,
     category: 'AI & agents',
     status: 'public',
     featured: 0,
     tech: ['Rust', 'Tauri', 'React', 'SQLite', 'MCP'],
-    highlights: ['v1.0.0', '13 hub tools', '436 Rust tests'],
+    highlights: [agentosStudioTag, '13 hub tools', '436 Rust tests'],
   },
   Vigil: {
     title: 'Vigil',
@@ -152,24 +176,6 @@ export interface Project {
 
 const prettify = (name: string) => name.replace(/[-_.]+/g, ' ').replace(/\s+/g, ' ').trim();
 const tidy = (text: string) => text.replace(/\s*\u2014\s*/g, ', ');
-
-interface LatestRelease {
-  tag: string;
-  name: string;
-  publishedAt: string;
-  url: string;
-}
-
-interface RepoSnapshot {
-  name: string;
-  description: string;
-  language: string | null;
-  topics: string[];
-  homepage: string | null;
-  fork: boolean;
-  license: string | null;
-  latestRelease?: LatestRelease;
-}
 
 export const projects: Project[] = (repos as RepoSnapshot[]).map((r) => {
   const c = curated[r.name];
