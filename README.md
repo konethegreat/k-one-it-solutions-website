@@ -90,7 +90,7 @@ npm test           # content tests in tests/ (node:test, no extra dependencies)
 | Dossier copy, screenshots and PDF content | `src/data/dossiers.ts` and `src/components/diagrams/` |
 | About intro, principles, timeline, credentials | `src/data/about.ts` and `src/data/content.ts` |
 | Project titles, summaries, categories and featured projects | `src/data/projects.ts` |
-| Live products band on `/work/` (name, link and the page's note and status) | `liveProducts` in `src/data/projects.ts`, links in `src/config.ts` |
+| Live products band on `/work/` and "Live right now" list on `/` (name, link and each page's note and status in its `work` or `home` field; the home "live deployments" figure is the number of entries) | `liveProducts` in `src/data/projects.ts`, links in `src/config.ts` |
 | Colours, fonts, spacing | `src/styles/global.css` |
 | Public site address (sitemap, canonical links, social image) | `SITE_URL` in `astro.config.mjs`, or the `SITE_URL` environment variable at build time |
 
@@ -136,7 +136,7 @@ Every push to `main` builds and deploys the site. To use a custom domain later, 
 
 ## Continuous integration
 
-`.github/workflows/ci.yml` runs `npm ci`, `npm run build` (type-check included) and `npm test` on pushes to `main` and on pull requests, so a broken change is caught before it deploys. `tests/build-output.test.mjs` reads `dist/`, so run `npm run build` before `npm test` locally too: it checks that every page (each service from `src/data/services.ts`, each dossier and brief, and `404.html`) is built, that every HTML page names "K-ONE IT SOLUTIONS", that no page contains an em dash or an en dash, and that the live products band on `/work/` shows the name and URL of every entry in `liveProducts` in `src/data/projects.ts`. On a checkout that has not been built, those `dist/` checks are skipped with the message "dist/ not found: run npm run build before npm test", so `npm test` still passes there; when `CI` is set (GitHub Actions sets it) a missing `dist/` fails them instead. `tests/build-output-guard.test.mjs` covers both cases.
+`.github/workflows/ci.yml` runs `npm ci`, `npm run build` (type-check included) and `npm test` on pushes to `main` and on pull requests, so a broken change is caught before it deploys. `tests/build-output.test.mjs` reads `dist/`, so run `npm run build` before `npm test` locally too: it checks that every page (each service from `src/data/services.ts`, each dossier and brief, and `404.html`) is built, that every HTML page names "K-ONE IT SOLUTIONS", that no page contains an em dash or an en dash, that the live products band on `/work/` and the "Live right now" list on `/` show the name and URL of every entry in `liveProducts` in `src/data/projects.ts`, and that the "live deployments" figure on `/` equals the number of those entries. On a checkout that has not been built, those `dist/` checks are skipped with the message "dist/ not found: run npm run build before npm test", so `npm test` still passes there; when `CI` is set (GitHub Actions sets it) a missing `dist/` fails them instead. `tests/build-output-guard.test.mjs` covers both cases.
 
 ## History
 

@@ -1,6 +1,6 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
-// no HTML page contains an em dash or an en dash, and /work/ lists every live product from
+// no HTML page contains an em dash or an en dash, and / and /work/ list every live product from
 // src/data/projects.ts. Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -150,4 +150,28 @@ test('/work/ lists every live product by name and URL', { skip: distSkip }, () =
     ...(band.includes(`href="${escapeHtml(url)}"`) ? [] : [`${name}: no link to ${url}`]),
   ]);
   assert.deepEqual(missing, [], `live products missing from /work/:\n${missing.join('\n')}`);
+});
+
+// The "Live right now" list on / is the section labelled by its `live-title` heading. Names and URLs
+// are looked up inside it, because the dossier cards and the footer on the same page repeat some.
+test('/ lists every live product by name and URL', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/'), 'utf8');
+  const start = html.indexOf('aria-labelledby="live-title"');
+  assert.ok(start !== -1, '/ has no "Live right now" section (aria-labelledby="live-title")');
+  const section = html.slice(start, html.indexOf('</section>', start));
+  const missing = liveProducts().flatMap(({ name, url }) => [
+    ...(section.includes(`>${escapeHtml(name)}</span>`) ? [] : [`${name}: no <span> with the name`]),
+    ...(section.includes(`href="${escapeHtml(url)}"`) ? [] : [`${name}: no link to ${url}`]),
+  ]);
+  assert.deepEqual(missing, [], `live products missing from /:\n${missing.join('\n')}`);
+});
+
+// StatTicker renders the final number on the server as `<span>N</span>` just before its label.
+test('the "live deployments" figure on / equals the number of live products', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/'), 'utf8');
+  const match = html.match(/<span>(\d+)<\/span><\/p><p[^>]*>live deployments<\/p>/);
+  assert.ok(match, '/ has no "live deployments" figure');
+  assert.equal(Number(match[1]), liveProducts().length, 'the "live deployments" figure on / does not match liveProducts');
 });
