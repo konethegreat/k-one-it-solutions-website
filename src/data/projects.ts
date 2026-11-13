@@ -1,7 +1,31 @@
 // Written by Kone Tshivhinda & Claude
 // Merges the GitHub snapshot (repos.json, public repositories only) with curated copy.
 // Any new public repo appears automatically; add an entry to `curated` to give it a title, summary and category.
-import repos from './repos.json';
+import reposJson from './repos.json';
+
+/** The latest GitHub release, stored by scripts/sync-repos.mjs on the agentos-studio entry only. */
+export interface LatestRelease {
+  tag: string;
+  name: string;
+  publishedAt: string;
+  url: string;
+}
+
+/** One entry of repos.json, as written by scripts/sync-repos.mjs. */
+export interface RepoSnapshot {
+  name: string;
+  description: string;
+  language: string | null;
+  topics: string[];
+  homepage: string | null;
+  fork: boolean;
+  license: string | null;
+  latestRelease?: LatestRelease;
+}
+
+// Typed explicitly: with `latestRelease` on one entry, the inferred JSON type is a union of
+// entry shapes and an entry with no topics would type `topics` as never[].
+const repos: RepoSnapshot[] = reposJson;
 
 export type Status = 'live' | 'public' | 'prototype' | 'demo' | 'coursework';
 export type Category = 'AI & agents' | 'Legal & civic tech' | 'Web & apps' | 'Tools & DevOps' | 'Learning';

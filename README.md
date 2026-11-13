@@ -99,6 +99,17 @@ The Work page leads with five dossiers: AgentOS Studio, Vigil, SA-JAS, ClearCut 
 
 `npm run build` first runs `scripts/sync-repos.mjs`, which reads the public repositories of the GitHub profile and updates `src/data/repos.json`. If GitHub is unreachable or rate-limited, the committed snapshot is used and the build continues. Only public repositories are ever listed. The filter, field selection and sort live in the exported pure function `toSnapshot(apiRepos)`, which `tests/sync-repos.test.mjs` covers with a fixture; the fetch and write run only when the script is executed directly, so importing it never calls GitHub. A new public repository appears in the archive automatically; add an entry to `curated` in `src/data/projects.ts` to give it a title, summary, category, `status`, `liveUrl` and `highlights`.
 
+The same script also reads `GET /repos/konethegreat/agentos-studio/releases/latest` and stores the result as `latestRelease` on the `agentos-studio` entry of `src/data/repos.json`, and on no other entry:
+
+| Field | From the GitHub API | Example |
+|---|---|---|
+| `tag` | `tag_name` | `v1.2.6` |
+| `name` | `name` (the tag when the release has no name) | `AgentOS Studio v1.2.6` |
+| `publishedAt` | `published_at` | `2026-11-13T09:56:25Z` |
+| `url` | `html_url` | `https://github.com/konethegreat/agentos-studio/releases/tag/v1.2.6` |
+
+The release request has its own fallback, the same as the repository list: if it fails on its own (an error status or a response without a tag), the committed `latestRelease` is kept while the repository list still refreshes, and if both requests fail (GitHub unreachable, rate-limited or a bad `GITHUB_TOKEN`) `src/data/repos.json` is left byte for byte as committed and the build continues. In the site code the entry type is `RepoSnapshot` (with an optional `latestRelease: LatestRelease`), exported from `src/data/projects.ts`. The mapping lives in the exported `toRelease(apiRelease)` and `withLatestRelease(repos, release)`, and `tests/sync-repos.test.mjs` runs the exported `sync()` against a mocked fetch for the success and failure cases. `tests/repos-snapshot.test.mjs` checks that the committed `agentos-studio` entry has a `latestRelease` with exactly these four fields and a `url` matching its `tag`.
+
 ### Technical briefs
 
 `/briefs/<slug>/` is a print-first A4 layout. It is `noindex` and points its canonical at the matching dossier. The committed PDFs in `public/briefs/` are generated from those pages with headless Chrome:
