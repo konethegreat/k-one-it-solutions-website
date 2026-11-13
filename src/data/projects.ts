@@ -42,8 +42,8 @@ if (!agentosStudioRepo?.latestRelease?.tag) {
 export const agentosStudioTag = agentosStudioRepo.latestRelease.tag;
 
 interface Curated {
-  /** Overrides the GitHub homepage field for the live link. */
-  liveUrl?: string;
+  /** Overrides the GitHub homepage field for the live link. `null` shows no live link even when the repository has a homepage. */
+  liveUrl?: string | null;
   title: string;
   summary?: string;
   category: Category;
@@ -63,6 +63,16 @@ const curated: Record<string, Curated> = {
     featured: 0,
     tech: ['Rust', 'Tauri', 'React', 'SQLite', 'MCP'],
     highlights: [agentosStudioTag, '13 hub tools', 'MIT'],
+  },
+  'agentos-studio-website': {
+    title: 'AgentOS Studio download site',
+    summary:
+      'The download site for AgentOS Studio: a Cloudflare Worker serves static pages and sends each platform to its installer on the latest GitHub release, with a step by step setup guide for Windows, macOS and Linux.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: links.agentosStudio,
+    tech: ['Cloudflare Workers', 'JavaScript', 'HTML', 'CSS'],
+    highlights: ['Live', 'MIT', 'Installers from GitHub Releases'],
   },
   Vigil: {
     title: 'Vigil',
@@ -84,6 +94,16 @@ const curated: Record<string, Curated> = {
     featured: 2,
     tech: ['Electron', 'React', 'Express', 'Playwright', 'Claude'],
     highlights: ['Hosted alpha', '3 AI agents', '12 job boards'],
+  },
+  'animation-and-game-studio': {
+    title: 'Animation and Game Studio',
+    summary:
+      '2D and 3D animation plus playable games, authored as code, rendered headless and checked before they ship. The published work includes a Godot arcade game playable in the browser and the short film The Maker at Work.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+    tech: ['Python', 'Blender', 'Godot', 'Three.js', 'FFmpeg'],
+    highlights: ['Live showcase', '5 published works', 'All rights reserved'],
   },
   'munisolve-za': {
     title: 'MuniSolve ZA',
@@ -116,6 +136,16 @@ const curated: Record<string, Curated> = {
     featured: 5,
     tech: ['Rust', 'Python', 'TypeScript', 'PostgreSQL', 'MCP'],
     highlights: ['Pre-alpha', 'Apache-2.0', 'Designed in the open'],
+  },
+  reservoir: {
+    title: 'Reservoir',
+    summary:
+      'A free, open, community-grown memory of South African culture: plants, practices and languages, with community-controlled consent and a mission-native AI. In the planning phase: vision, research and architecture decisions, no production code yet.',
+    category: 'Legal & civic tech',
+    status: 'public',
+    liveUrl: null,
+    tech: [],
+    highlights: ['Planning phase', 'Apache-2.0', 'Docs CC BY 4.0'],
   },
   'ui-vault': {
     title: 'UI Vault',
@@ -195,7 +225,7 @@ export const projects: Project[] = (repos as RepoSnapshot[]).map((r) => {
     tech,
     highlights: c?.highlights ?? [],
     repoUrl: `https://github.com/konethegreat/${r.name}`,
-    liveUrl: c?.liveUrl ?? r.homepage,
+    liveUrl: c?.liveUrl !== undefined ? c.liveUrl : r.homepage,
     license: r.license,
   };
 });
@@ -238,6 +268,13 @@ export const liveProducts: LiveProduct[] = [
     work: { note: 'Read a South African invoice and check every figure.', status: 'Live alpha, invite only' },
     home: { note: 'Invoice reading demo', status: 'Alpha' },
     footer: { note: 'Live alpha' },
+  },
+  {
+    name: 'AgentOS Studio',
+    href: links.agentosStudio,
+    work: { note: 'Download the desktop app for Windows, macOS or Linux.', status: 'Live' },
+    home: { note: 'Desktop app download site', status: 'Live' },
+    footer: { note: 'Download site' },
   },
   {
     name: 'MuniSolve ZA',

@@ -28,6 +28,7 @@ export const links = {
   sajas: 'https://sajas.pages.dev/',
   clearcut: 'https://145-241-100-85.sslip.io/',
   munisolve: 'https://munisolve-za.vercel.app/',
+  agentosStudio: 'https://agentos-studio-website.erictshivhinda.workers.dev',
   liveSite: 'https://k-one-it-solutions-website.erictshivhinda.workers.dev/',
   ibmCertificate: 'https://coursera.org/account/accomplishments/specialization/ESSIQ8HCQBA6',
 };

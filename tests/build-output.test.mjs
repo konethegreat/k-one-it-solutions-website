@@ -3,8 +3,9 @@
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
 // src/data/content.ts, the dossier count on /about/ and the "technical dossiers" figure on / equal
-// the number of /work/<slug>/ pages, and the AgentOS Studio dossier and brief show its README and
-// release facts with the test count dated.
+// the number of /work/<slug>/ pages, the AgentOS Studio dossier and brief show its README and
+// release facts with the test count dated, and the curated entries for the newest repositories show
+// on /work/ with the right Live link.
 // Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -158,6 +159,26 @@ test('/work/ lists every live product by name and URL', { skip: distSkip }, () =
   assert.deepEqual(missing, [], `live products missing from /work/:\n${missing.join('\n')}`);
 });
 
+// The live deployments, each confirmed against its live site or its README and deploy record. The
+// AgentOS Studio download site joined in Phase 3; Reservoir is left out until its docs site is
+// confirmed to load. The checks below then find each of these on /work/, / and the footer, and the
+// "live deployments" figure follows their number.
+const EXPECTED_LIVE = [
+  { name: 'SA-JAS', url: 'https://sajas.pages.dev/' },
+  { name: 'ClearCut', url: 'https://145-241-100-85.sslip.io/' },
+  { name: 'AgentOS Studio', url: 'https://agentos-studio-website.erictshivhinda.workers.dev' },
+  { name: 'MuniSolve ZA', url: 'https://munisolve-za.vercel.app/' },
+  { name: 'Portfolio', url: 'https://konethegreat.github.io' },
+  { name: 'UI Vault', url: 'https://konethegreat.github.io/ui-vault/' },
+];
+
+// Grouped with the dist/ checks because tests/build-output-guard.test.mjs runs this file in a folder
+// that holds only services.ts, where src/data/projects.ts and src/config.ts cannot be read.
+test('liveProducts lists the expected live deployments, including the AgentOS Studio download site', { skip: distSkip }, () => {
+  requireDist();
+  assert.deepEqual(liveProducts(), EXPECTED_LIVE);
+});
+
 // The "Live right now" list on / is the section labelled by its `live-title` heading. Names and URLs
 // are looked up inside it, because the dossier cards and the footer on the same page repeat some.
 test('/ lists every live product by name and URL', { skip: distSkip }, () => {
@@ -279,7 +300,8 @@ test('the "technical dossiers" figure on / equals the number of /work/<slug>/ do
 // AgentOS Studio is the only project on the site with a `vX.Y.Z` release tag (Vigil uses `P0 v1.0`,
 // TimeLex uses `0.1.0`), so matching `v\d+\.\d+\.\d+` across a built page catches any stale or
 // hard-coded AgentOS Studio version without false positives from unrelated versions. The home page `/`
-// renders the four homeCards and liveProducts (not AgentOS Studio), so it has no `v\d+\.\d+\.\d+`
+// renders the four homeCards and liveProducts (AgentOS Studio only as its download site, with no
+// version), so it has no `v\d+\.\d+\.\d+`
 // string, while `/work/`, `/work/agentos-studio/`, `/about/` and `/briefs/agentos-studio/` must show
 // `latestRelease.tag` from src/data/repos.json and no other `v\d+\.\d+\.\d+` string.
 const agentosStudioTag = () => {
@@ -314,6 +336,57 @@ const AGENTOS_FACTS = [
   'https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to its installer on the latest GitHub release.',
   'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.',
 ];
+
+// ProjectCard renders each repository in the archive on /work/ as an <article> that opens with the
+// repository name in a `text-brand` span and the curated title in an <h3>, and ends with the Source
+// link and, when the project has one, a Live link. `projectCard` returns that article's HTML.
+const projectCard = (html, repo) => {
+  const marker = `<span class="text-brand">${escapeHtml(repo)}</span>`;
+  const at = html.indexOf(marker);
+  assert.ok(at !== -1, `/work/ has no project card for ${repo}`);
+  const start = html.lastIndexOf('<article', at);
+  return html.slice(start, html.indexOf('</article>', at));
+};
+
+// Each link is read as a whole <a> element, and a Live link is one whose text, with each tag replaced
+// by a space, starts with the word "Live" (the Source link starts with "Source"). Tags become spaces
+// because the screen-reader span follows the word directly: `Live<span class="sr-only">site for`.
+const liveLinks = (card) =>
+  [...card.matchAll(/<a\b[^>]*\bhref="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
+    .filter((match) => /^\s*Live\b/.test(match[2].replace(/<[^>]*>/g, ' ')))
+    .map((match) => match[1]);
+
+// The curated entries for repositories added to the profile in November 2026, checked against each
+// README and repository homepage. `live` is the Live link the card must show, or null for none.
+const NEW_CURATED = [
+  {
+    repo: 'agentos-studio-website',
+    title: 'AgentOS Studio download site',
+    status: 'Live',
+    live: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+  },
+  // The repository homepage names a GitHub Pages docs site that could not be confirmed to load, so
+  // the card shows no Live link (`liveUrl: null` in src/data/projects.ts overrides the homepage).
+  { repo: 'reservoir', title: 'Reservoir', status: 'Public source', live: null },
+  // The repository has no homepage; the README names the GitHub Pages showcase as its live site.
+  {
+    repo: 'animation-and-game-studio',
+    title: 'Animation and Game Studio',
+    status: 'Live',
+    live: 'https://konethegreat.github.io/animation-and-game-studio/',
+  },
+];
+
+test('/work/ shows the curated entries for the new repositories with their live links', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  for (const { repo, title, status, live } of NEW_CURATED) {
+    const card = projectCard(html, repo);
+    assert.ok(card.includes(`>${escapeHtml(title)}</h3>`), `${repo}: card title is not "${title}"`);
+    assert.ok(card.includes(`>${escapeHtml(status)}</span>`), `${repo}: card status is not "${status}"`);
+    assert.deepEqual(liveLinks(card), live ? [live] : [], `${repo}: card Live link should be ${live ?? 'absent'}`);
+  }
+});
 
 test('AgentOS Studio dossier and brief show the README and release facts, with the test count dated', { skip: distSkip }, () => {
   requireDist();
