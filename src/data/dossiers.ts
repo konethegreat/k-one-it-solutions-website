@@ -2,6 +2,7 @@
 // Every fact below is sourced from the public repositories and live sites listed in
 // docs/research/2026-10-30-dossier-notes.md. No metrics, clients or claims are invented.
 import type { ImageMetadata } from 'astro';
+import { agentosStudioTag } from './projects';
 
 import sajasDashboard from '../assets/work/sajas/01-dashboard.jpg';
 import sajasCopilot from '../assets/work/sajas/02-copilot-form.png';
@@ -683,7 +684,7 @@ export const dossiers: Dossier[] = [
     title: 'AgentOS Studio',
     codename: 'The studio that runs the fleet',
     status: 'source',
-    statusLabel: 'Released, v1.0.0',
+    statusLabel: `Released, ${agentosStudioTag}`,
     statusTone: 'ok',
     year: '2026',
     role: 'Founder, architecture and full-stack engineering',
@@ -705,7 +706,7 @@ export const dossiers: Dossier[] = [
       'Obsidian',
     ],
     facts: [
-      { label: 'Status', value: 'Released, v1.0.0' },
+      { label: 'Status', value: `Released, ${agentosStudioTag}` },
       { label: 'Binary', value: 'One program, desktop app and hub server' },
       { label: 'Hub tools', value: '13 over JSON-RPC 2.0' },
       { label: 'Agents', value: '4, headless and IDE' },
@@ -797,7 +798,7 @@ export const dossiers: Dossier[] = [
     ],
     excerpts: [],
     honesty: [
-      { area: 'Release state', status: 'v1.0.0', note: 'Installers are on GitHub Releases and unsigned, so the operating system asks once before the first run.' },
+      { area: 'Release state', status: agentosStudioTag, note: 'Installers are on GitHub Releases and unsigned, so the operating system asks once before the first run.' },
       { area: 'Download site', status: 'Live', note: 'The download site at https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to the installer of the latest release.' },
       { area: 'Telemetry', status: 'None', note: 'The app sends no analytics and no remote logging.' },
       { area: 'Tests', status: 'Measured', note: 'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.' },

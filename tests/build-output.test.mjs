@@ -19,6 +19,7 @@ const SERVICES = join(ROOT, 'src', 'data', 'services.ts');
 const PROJECTS = join(ROOT, 'src', 'data', 'projects.ts');
 const CONFIG = join(ROOT, 'src', 'config.ts');
 const CONTENT = join(ROOT, 'src', 'data', 'content.ts');
+const REPOS = join(ROOT, 'src', 'data', 'repos.json');
 const BRAND = 'K-ONE IT SOLUTIONS';
 const DOSSIERS = ['agentos-studio', 'vigil', 'sajas', 'clearcut', 'timelex'];
 const DASHES = [
@@ -257,5 +258,33 @@ test('the dossier count on /about/ equals the number of /work/<slug>/ dossier pa
   for (const { label, match } of statements) {
     assert.ok(match, `/about/ has no dossier count in the ${label}`);
     assert.equal(countValue(match[1]), pages.length, `the ${label} on /about/ says "${match[1]}" dossiers, dist/work/ has ${pages.length}: ${pages.join(', ')}`);
+  }
+});
+
+// AgentOS Studio is the only project on the site with a `vX.Y.Z` release tag (Vigil uses `P0 v1.0`,
+// TimeLex uses `0.1.0`), so matching `v\d+\.\d+\.\d+` across a built page catches any stale or
+// hard-coded AgentOS Studio version without false positives from unrelated versions. The home page `/`
+// renders the four homeCards and liveProducts (not AgentOS Studio), so it has no `v\d+\.\d+\.\d+`
+// string, while `/work/`, `/work/agentos-studio/`, `/about/` and `/briefs/agentos-studio/` must show
+// `latestRelease.tag` from src/data/repos.json and no other `v\d+\.\d+\.\d+` string.
+const agentosStudioTag = () => {
+  const repos = JSON.parse(readFileSync(REPOS, 'utf8'));
+  const studio = repos.find((entry) => entry.name === 'agentos-studio');
+  assert.ok(studio?.latestRelease?.tag, 'src/data/repos.json must have agentos-studio latestRelease.tag');
+  return studio.latestRelease.tag;
+};
+
+test('AgentOS Studio pages show latestRelease.tag from src/data/repos.json and no other version string', { skip: distSkip }, () => {
+  requireDist();
+  const tag = agentosStudioTag();
+  const homeHtml = readFileSync(pageFile('/'), 'utf8');
+  const homeVersions = homeHtml.match(/v\d+\.\d+\.\d+/g) ?? [];
+  assert.deepEqual(homeVersions, [], `/ should not contain an AgentOS Studio version string, found: ${homeVersions.join(', ')}`);
+  for (const route of ['/work/', '/work/agentos-studio/', '/about/', '/briefs/agentos-studio/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    assert.ok(html.includes(tag), `${route} does not contain AgentOS Studio latestRelease.tag (${tag})`);
+    const versions = html.match(/v\d+\.\d+\.\d+/g) ?? [];
+    const stale = versions.filter((v) => v !== tag);
+    assert.deepEqual(stale, [], `${route} contains AgentOS Studio version(s) other than ${tag}: ${stale.join(', ')}`);
   }
 });
