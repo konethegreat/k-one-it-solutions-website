@@ -3,16 +3,10 @@
 import { ArrowUpRight, Mail, MapPin, Phone } from '@lucide/astro';
 import Logo from './Logo.astro';
 import SocialLinks from './SocialLinks.astro';
-import { contact, links, nav, site } from '../config';
+import { contact, nav, site } from '../config';
+import { liveProducts } from '../data/projects';
 
 const year = new Date().getFullYear();
-const liveWork = [
-  { label: 'SA-JAS', href: links.sajas, note: 'Hosted alpha' },
-  { label: 'ClearCut', href: links.clearcut, note: 'Live alpha' },
-  { label: 'MuniSolve ZA', href: links.munisolve, note: 'Live demo' },
-  { label: 'Portfolio', href: links.portfolio, note: 'Personal site' },
-  { label: 'UI Vault', href: links.vault, note: 'Reference index' },
-];
 ---
 
 <footer class="mt-8 border-t border-line bg-surface-2/40">
@@ -42,7 +36,7 @@ const liveWork = [
       <p class="eyebrow">Live work</p>
       <ul class="space-y-2 text-sm">
         {
-          liveWork.map((item) => (
+          liveProducts.map((item) => (
             <li>
               <a
                 href={item.href}
@@ -50,8 +44,8 @@ const liveWork = [
                 rel="noopener noreferrer"
                 class="group inline-flex items-center gap-1.5 text-fg no-underline hover:underline"
               >
-                {item.label}
-                <span class="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted">{item.note}</span>
+                {item.name}
+                <span class="font-mono text-[0.58rem] uppercase tracking-[0.12em] text-muted">{item.footer.note}</span>
                 <ArrowUpRight size={12} class="text-muted" aria-hidden="true" />
                 <span class="sr-only">(opens in a new tab)</span>
               </a>
