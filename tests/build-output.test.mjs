@@ -288,3 +288,24 @@ test('AgentOS Studio pages show latestRelease.tag from src/data/repos.json and n
     assert.deepEqual(stale, [], `${route} contains AgentOS Studio version(s) other than ${tag}: ${stale.join(', ')}`);
   }
 });
+
+// The SA-JAS dossier was re-checked against the konethegreat/scratch README and its Apply Assistant
+// extension release on 2026-11-13. The dossier page and its brief must keep the checked facts, and
+// must not bring back the two claims the README does not support: a 15-minute refresh for the 12
+// job boards (the 15-minute refresh belongs to the web Job Feeds) and 60 seconds to change your mind
+// (the copilot waits up to 60 seconds for the site's confirmation after the person confirms).
+const SAJAS_FACTS = ['Hosted web alpha', '3, with human sign-off', '12 South African fallbacks', 'MIT'];
+const SAJAS_DROPPED = ['15-minute feed cycle', 'change their mind'];
+
+test('the SA-JAS dossier and brief show the facts checked against the scratch README', { skip: distSkip }, () => {
+  requireDist();
+  for (const route of ['/work/sajas/', '/briefs/sajas/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    const missing = SAJAS_FACTS.filter((fact) => !html.includes(fact));
+    assert.deepEqual(missing, [], `${route} is missing SA-JAS facts: ${missing.join(', ')}`);
+    const stale = SAJAS_DROPPED.filter((claim) => html.includes(claim));
+    assert.deepEqual(stale, [], `${route} repeats claims the scratch README does not support: ${stale.join(', ')}`);
+  }
+  const work = readFileSync(pageFile('/work/sajas/'), 'utf8');
+  assert.ok(work.includes('Apply Assistant'), '/work/sajas/ does not name the Apply Assistant extension');
+});
