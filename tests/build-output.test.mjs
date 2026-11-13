@@ -1,7 +1,7 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
-// no HTML page contains an em dash or an en dash, and /, /work/ and the /about/ footer list every live product from
-// src/data/projects.ts. Run `npm run build` before `npm test`.
+// no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
+// src/data/projects.ts, and the home page links its dossier cards in order. Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
 // as GitHub Actions sets it, a missing dist/ fails instead, because CI always builds first.
@@ -191,4 +191,19 @@ test('the footer on /about/ lists every live product by name and URL', { skip: d
     ...(list.includes(`href="${escapeHtml(url)}"`) ? [] : [`${name}: no link to ${url}`]),
   ]);
   assert.deepEqual(missing, [], `live products missing from the footer on /about/:\n${missing.join('\n')}`);
+});
+
+// The home cards come from the dossiers in src/data/dossiers.ts that have a homeCard, ordered by its
+// index. Each card links its dossier page from the image, the title and the "Read the dossier" link,
+// so the first link to each page is the card's image and the first links must appear in this order.
+const HOME_CARD_ORDER = ['/work/sajas/', '/work/clearcut/', '/work/vigil/', '/work/timelex/'];
+
+test('/ links the SA-JAS, ClearCut, Vigil and TimeLex dossiers in that order', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/'), 'utf8');
+  const positions = HOME_CARD_ORDER.map((href) => ({ href, at: html.indexOf(`href="${href}"`) }));
+  const missing = positions.filter(({ at }) => at === -1).map(({ href }) => href);
+  assert.deepEqual(missing, [], `/ does not link: ${missing.join(', ')}`);
+  const found = [...positions].sort((a, b) => a.at - b.at).map(({ href }) => href);
+  assert.deepEqual(found, HOME_CARD_ORDER, 'the dossier links on / are out of order');
 });

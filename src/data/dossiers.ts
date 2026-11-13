@@ -56,6 +56,20 @@ export interface DossierHonesty {
   note: string;
 }
 
+export type HomeCardAccent = 'brand' | 'cyan' | 'violet' | 'ok';
+
+// The card a dossier shows in the "Selected work" grid on the home page. Only dossiers with a
+// homeCard appear there, ordered by its index.
+export interface DossierHomeCard {
+  index: string;
+  status: string;
+  summary: string;
+  meta: string[];
+  accent: HomeCardAccent;
+  layers?: string[];
+  screenshot?: { src: ImageMetadata; alt: string };
+}
+
 export interface Dossier {
   slug: string;
   title: string;
@@ -81,6 +95,7 @@ export interface Dossier {
   excerpts: DossierExcerpt[];
   honesty: DossierHonesty[];
   relatedService: { label: string; href: string };
+  homeCard?: DossierHomeCard;
 }
 
 export const dossiers: Dossier[] = [
@@ -222,6 +237,15 @@ export const dossiers: Dossier[] = [
       { area: 'AI claims', status: 'Designed', note: 'Agents are designed and specified. They are not in production.' },
     ],
     relatedService: { label: 'Sovereign AI', href: '/services/sovereign-ai/' },
+    homeCard: {
+      index: '03',
+      status: 'In development',
+      summary:
+        'A sovereign operational-intelligence platform that models evidence, investigations and missions as a governed ontology, designed so no prompt has to leave the country.',
+      meta: ['Java', 'PostgreSQL', '12 ADRs'],
+      layers: ['Clients', 'Gateway and Warden', 'Core ontology', 'Data plane and AI plane', 'Sovereign delivery'],
+      accent: 'brand',
+    },
   },
   {
     slug: 'sajas',
@@ -360,6 +384,18 @@ export const dossiers: Dossier[] = [
       { area: 'Licence', status: 'MIT', note: 'Source is public under the MIT licence.' },
     ],
     relatedService: { label: 'AI agents and automation', href: '/services/ai-agents/' },
+    homeCard: {
+      index: '01',
+      status: 'Hosted alpha',
+      summary:
+        'AI agents find South African vacancies, tailor an ATS-friendly CV for each role and prepare the application. The final submit always stays with the person.',
+      meta: ['Electron', 'React', '3 agents'],
+      accent: 'cyan',
+      screenshot: {
+        src: sajasDashboard,
+        alt: 'SA-JAS dashboard showing a tailored application and the agent terminal',
+      },
+    },
   },
   {
     slug: 'clearcut',
@@ -491,6 +527,18 @@ export const dossiers: Dossier[] = [
       { area: 'Tax advice', status: 'None', note: 'ClearCut checks figures. It does not give tax advice.' },
     ],
     relatedService: { label: 'AI agents and automation', href: '/services/ai-agents/' },
+    homeCard: {
+      index: '02',
+      status: 'Live alpha',
+      summary:
+        'Agent-native invoice reading for South Africa. One Rust core, exposed as a REST API, an MCP server and a Claude plugin, with VAT checks written as tested code.',
+      meta: ['Rust', 'axum', 'MCP'],
+      accent: 'violet',
+      screenshot: {
+        src: clearcutResult,
+        alt: 'ClearCut demo showing invoice figures checked to the cent',
+      },
+    },
   },
   {
     slug: 'timelex',
@@ -620,6 +668,15 @@ export const dossiers: Dossier[] = [
       { area: 'Claims', status: 'Designed', note: 'The autonomy ladder is a design commitment. It has not run in production.' },
     ],
     relatedService: { label: 'Sovereign AI', href: '/services/sovereign-ai/' },
+    homeCard: {
+      index: '04',
+      status: 'Pre-alpha',
+      summary:
+        'Open, API-first practice management for South African law firms. It captures work signals, drafts the narrative and prepares the bill, asking a person only when it must.',
+      meta: ['Rust', 'Python', '12 ADRs'],
+      layers: ['Clients', 'Identity and vault', 'Capture and attribution', 'Narrative', 'Ledger and billing'],
+      accent: 'ok',
+    },
   },
   {
     slug: 'agentos-studio',
@@ -754,6 +811,13 @@ export const dossiers: Dossier[] = [
 export const getDossier = (slug: string) => dossiers.find((d) => d.slug === slug);
 
 export const dossierOrder = dossiers.map((d) => d.slug);
+
+export type HomeDossier = Dossier & { homeCard: DossierHomeCard };
+
+// The home page cards: SA-JAS, ClearCut, Vigil and TimeLex, in homeCard.index order.
+export const homeDossiers: HomeDossier[] = dossiers
+  .filter((d): d is HomeDossier => d.homeCard !== undefined)
+  .sort((a, b) => a.homeCard.index.localeCompare(b.homeCard.index));
 
 export const statusToneLabel: Record<Dossier['statusTone'], string> = {
   ok: 'Live alpha',
