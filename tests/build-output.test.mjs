@@ -348,7 +348,12 @@ const projectCard = (html, repo) => {
   return html.slice(start, html.indexOf('</article>', at));
 };
 
-const liveLinks = (card) => [...card.matchAll(/href="([^"]+)"[^>]*>(?:<svg[\s\S]*?<\/svg>)?\s*Live\b/g)].map((match) => match[1]);
+// Each link is read as a whole <a> element, and a Live link is one whose visible text, with tags
+// removed, starts with "Live" (the Source link starts with "Source").
+const liveLinks = (card) =>
+  [...card.matchAll(/<a\b[^>]*\bhref="([^"]+)"[^>]*>([\s\S]*?)<\/a>/g)]
+    .filter((match) => /^\s*Live\b/.test(match[2].replace(/<[^>]*>/g, '')))
+    .map((match) => match[1]);
 
 // The curated entries for repositories added to the profile in November 2026, checked against each
 // README and repository homepage. `live` is the Live link the card must show, or null for none.
