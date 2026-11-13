@@ -290,4 +290,18 @@ export const liveProducts: LiveProduct[] = [
     home: { note: 'Interface reference gallery', status: 'Live' },
     footer: { note: 'Reference index' },
   },
+  {
+    name: 'AgentOS Studio',
+    href: links.agentosStudio,
+    work: { note: 'Download installers for Windows, macOS and Linux, plus the setup guide.', status: 'Live' },
+    home: { note: 'Desktop app download site', status: 'Live' },
+    footer: { note: 'Download site' },
+  },
+  {
+    name: 'Reservoir',
+    href: links.reservoir,
+    work: { note: 'Vision, architecture and research docs for a South African cultural memory.', status: 'Docs live' },
+    home: { note: 'Cultural knowledge docs', status: 'Docs live' },
+    footer: { note: 'Docs live' },
+  },
 ];

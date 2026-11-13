@@ -356,3 +356,23 @@ test('/work/ includes the curated repository entries with their live links', { s
     }
   }
 });
+
+test('liveProducts includes AgentOS Studio and Reservoir with 7 live deployments', { skip: distSkip }, () => {
+  requireDist();
+  const products = liveProducts();
+  assert.equal(products.length, 7, `expected 7 liveProducts, got ${products.length}`);
+  for (const expected of [
+    { name: 'AgentOS Studio', url: 'https://agentos-studio-website.erictshivhinda.workers.dev' },
+    { name: 'Reservoir', url: 'https://konethegreat.github.io/reservoir/' },
+  ]) {
+    assert.ok(
+      products.some((p) => p.name === expected.name && p.url === expected.url),
+      `liveProducts is missing ${expected.name} (${expected.url})`,
+    );
+  }
+  const homeHtml = readFileSync(pageFile('/'), 'utf8');
+  assert.ok(
+    /<span>7<\/span><\/p><p[^>]*>live deployments<\/p>/.test(homeHtml),
+    '/ does not show 7 live deployments',
+  );
+});
