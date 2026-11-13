@@ -330,3 +330,49 @@ test('AgentOS Studio dossier and brief show the README and release facts, with t
     assert.deepEqual(undated, [], `${route} shows the 436 Rust test figure without its measurement date: ${undated.join(' | ')}`);
   }
 });
+
+const CURATED_WORK_ENTRIES = [
+  {
+    title: 'AgentOS Studio download site',
+    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+  },
+  {
+    title: 'Reservoir',
+    liveUrl: 'https://konethegreat.github.io/reservoir/',
+  },
+  {
+    title: 'Animation and Game Studio',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+  },
+];
+
+test('/work/ includes the curated repository entries with their live links', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  for (const { title, liveUrl } of CURATED_WORK_ENTRIES) {
+    assert.ok(html.includes(escapeHtml(title)), `/work/ does not include curated entry "${title}"`);
+    if (liveUrl) {
+      assert.ok(html.includes(`href="${escapeHtml(liveUrl)}"`), `/work/ does not link ${title} to ${liveUrl}`);
+    }
+  }
+});
+
+test('liveProducts includes AgentOS Studio and Reservoir with 7 live deployments', { skip: distSkip }, () => {
+  requireDist();
+  const products = liveProducts();
+  assert.equal(products.length, 7, `expected 7 liveProducts, got ${products.length}`);
+  for (const expected of [
+    { name: 'AgentOS Studio', url: 'https://agentos-studio-website.erictshivhinda.workers.dev' },
+    { name: 'Reservoir', url: 'https://konethegreat.github.io/reservoir/' },
+  ]) {
+    assert.ok(
+      products.some((p) => p.name === expected.name && p.url === expected.url),
+      `liveProducts is missing ${expected.name} (${expected.url})`,
+    );
+  }
+  const homeHtml = readFileSync(pageFile('/'), 'utf8');
+  assert.ok(
+    /<span>7<\/span><\/p><p[^>]*>live deployments<\/p>/.test(homeHtml),
+    '/ does not show 7 live deployments',
+  );
+});
