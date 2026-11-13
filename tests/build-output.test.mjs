@@ -1,6 +1,6 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
-// no HTML page contains an em dash or an en dash, and / and /work/ list every live product from
+// no HTML page contains an em dash or an en dash, and /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts. Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -174,4 +174,21 @@ test('the "live deployments" figure on / equals the number of live products', { 
   const match = html.match(/<span>(\d+)<\/span><\/p><p[^>]*>live deployments<\/p>/);
   assert.ok(match, '/ has no "live deployments" figure');
   assert.equal(Number(match[1]), liveProducts().length, 'the "live deployments" figure on / does not match liveProducts');
+});
+
+// The "Live work" list in the site footer starts at its eyebrow and ends at the list's `</ul>`. Each
+// product is a link whose text starts with the name, followed by the note in a `<span>`.
+test('the footer on /about/ lists every live product by name and URL', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/about/'), 'utf8');
+  const footerStart = html.indexOf('<footer');
+  assert.ok(footerStart !== -1, '/about/ has no <footer>');
+  const start = html.indexOf('>Live work</p>', footerStart);
+  assert.ok(start !== -1, 'the footer on /about/ has no "Live work" list');
+  const list = html.slice(start, html.indexOf('</ul>', start));
+  const missing = liveProducts().flatMap(({ name, url }) => [
+    ...(list.includes(`>${escapeHtml(name)}<span`) ? [] : [`${name}: no link text with the name`]),
+    ...(list.includes(`href="${escapeHtml(url)}"`) ? [] : [`${name}: no link to ${url}`]),
+  ]);
+  assert.deepEqual(missing, [], `live products missing from the footer on /about/:\n${missing.join('\n')}`);
 });
