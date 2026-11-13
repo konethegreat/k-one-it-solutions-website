@@ -338,6 +338,9 @@ const NEW_CURATED = [
     status: 'Live',
     live: 'https://agentos-studio-website.erictshivhinda.workers.dev',
   },
+  // The repository homepage names a GitHub Pages docs site that could not be confirmed to load, so
+  // the card shows no Live link (`liveUrl: null` in src/data/projects.ts overrides the homepage).
+  { repo: 'reservoir', title: 'Reservoir', status: 'Public source', live: null },
 ];
 
 test('/work/ shows the curated entries for the new repositories with their live links', { skip: distSkip }, () => {

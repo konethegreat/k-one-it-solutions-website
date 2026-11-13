@@ -42,8 +42,8 @@ if (!agentosStudioRepo?.latestRelease?.tag) {
 export const agentosStudioTag = agentosStudioRepo.latestRelease.tag;
 
 interface Curated {
-  /** Overrides the GitHub homepage field for the live link. */
-  liveUrl?: string;
+  /** Overrides the GitHub homepage field for the live link. `null` shows no live link even when the repository has a homepage. */
+  liveUrl?: string | null;
   title: string;
   summary?: string;
   category: Category;
@@ -127,6 +127,16 @@ const curated: Record<string, Curated> = {
     tech: ['Rust', 'Python', 'TypeScript', 'PostgreSQL', 'MCP'],
     highlights: ['Pre-alpha', 'Apache-2.0', 'Designed in the open'],
   },
+  reservoir: {
+    title: 'Reservoir',
+    summary:
+      'A free, open, community-grown memory of South African culture: plants, practices and languages, with community-controlled consent and a mission-native AI. In the planning phase: vision, research and architecture decisions, no production code yet.',
+    category: 'Legal & civic tech',
+    status: 'public',
+    liveUrl: null,
+    tech: [],
+    highlights: ['Planning phase', 'Apache-2.0', 'Docs CC BY 4.0'],
+  },
   'ui-vault': {
     title: 'UI Vault',
     summary:
@@ -205,7 +215,7 @@ export const projects: Project[] = (repos as RepoSnapshot[]).map((r) => {
     tech,
     highlights: c?.highlights ?? [],
     repoUrl: `https://github.com/konethegreat/${r.name}`,
-    liveUrl: c?.liveUrl ?? r.homepage,
+    liveUrl: c?.liveUrl !== undefined ? c.liveUrl : r.homepage,
     license: r.license,
   };
 });
