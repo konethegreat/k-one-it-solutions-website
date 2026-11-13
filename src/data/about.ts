@@ -4,6 +4,16 @@ import { principles, timeline } from './content';
 import { dossiers } from './dossiers';
 import { links } from '../config';
 
+// Spells out small counts so the copy reads as before ("five dossiers", "Five technical dossiers").
+// A count with no word in the list falls back to its digits.
+const COUNT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+
+const countWord = (count: number): string => COUNT_WORDS[count] ?? String(count);
+
+const capitalise = (text: string): string => text.charAt(0).toUpperCase() + text.slice(1);
+
+const dossierCount = countWord(dossiers.length);
+
 export interface AboutData {
   intro: string[];
   principles: { title: string; body: string }[];
@@ -20,7 +30,7 @@ export const about: AboutData = {
   intro: [
     'I am Kone Tshivhinda, founder of K-ONE IT SOLUTIONS. I am an AI systems engineer and full-stack developer based in Johannesburg.',
     'I ship agent-driven software from the first commit to live deployment: sovereign and local-first AI, legal tech, civic tech and developer tooling, always with a person signing off the decisions that matter.',
-    'I use the major AI coding tools every day, and I am just as comfortable running local and open-weight models. The four dossiers on this site show the work, including the parts that are still in development.',
+    `I use the major AI coding tools every day, and I am just as comfortable running local and open-weight models. The ${dossierCount} dossiers on this site show the work, including the parts that are still in development.`,
   ],
   principles,
   timeline: timeline.map((entry, index) => ({ ...entry, current: index === 0 })),
@@ -43,7 +53,7 @@ export const about: AboutData = {
     },
     {
       title: 'Public engineering record',
-      detail: 'Four technical dossiers and every public repository',
+      detail: `${capitalise(dossierCount)} technical dossiers and every public repository`,
       href: '/work/',
     },
   ],
