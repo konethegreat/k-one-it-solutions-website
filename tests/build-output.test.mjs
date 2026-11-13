@@ -2,7 +2,8 @@
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
-// src/data/content.ts. Run `npm run build` before `npm test`.
+// src/data/content.ts, and the dossier count on /about/ equals the number of /work/<slug>/ pages.
+// Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
 // as GitHub Actions sets it, a missing dist/ fails instead, because CI always builds first.
@@ -230,4 +231,31 @@ test('/ shows every stack item from src/data/content.ts in the Working stack mar
   const list = html.slice(start, html.indexOf('</ul>', start));
   const missing = stackItems().filter((item) => !list.includes(`<li>${escapeHtml(item)}</li>`));
   assert.deepEqual(missing, [], `stack items missing from /:\n${missing.join('\n')}`);
+});
+
+// The /about/ page states the dossier count twice: "The <count> dossiers on this site" in the intro and
+// "<Count> technical dossiers" in the credentials, as a word or as digits. Both must equal the number of
+// dossier pages, which are the folders under dist/work/ that hold an index.html.
+const COUNT_WORDS = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve'];
+
+const countValue = (text) => (/^\d+$/.test(text) ? Number(text) : COUNT_WORDS.indexOf(text.toLowerCase()));
+
+const dossierPages = () =>
+  readdirSync(join(DIST, 'work'), { withFileTypes: true })
+    .filter((entry) => entry.isDirectory() && existsSync(join(DIST, 'work', entry.name, 'index.html')))
+    .map((entry) => entry.name);
+
+test('the dossier count on /about/ equals the number of /work/<slug>/ dossier pages', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/about/'), 'utf8');
+  const pages = dossierPages();
+  assert.ok(pages.length > 0, 'dist/work/ has no /work/<slug>/ dossier pages');
+  const statements = [
+    { label: 'intro', match: html.match(/The (\w+) dossiers on this site/) },
+    { label: 'credentials', match: html.match(/>\s*(\w+) technical dossiers/) },
+  ];
+  for (const { label, match } of statements) {
+    assert.ok(match, `/about/ has no dossier count in the ${label}`);
+    assert.equal(countValue(match[1]), pages.length, `the ${label} on /about/ says "${match[1]}" dossiers, dist/work/ has ${pages.length}: ${pages.join(', ')}`);
+  }
 });
