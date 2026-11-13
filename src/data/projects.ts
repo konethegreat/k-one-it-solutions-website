@@ -153,7 +153,25 @@ export interface Project {
 const prettify = (name: string) => name.replace(/[-_.]+/g, ' ').replace(/\s+/g, ' ').trim();
 const tidy = (text: string) => text.replace(/\s*\u2014\s*/g, ', ');
 
-export const projects: Project[] = repos.map((r) => {
+interface LatestRelease {
+  tag: string;
+  name: string;
+  publishedAt: string;
+  url: string;
+}
+
+interface RepoSnapshot {
+  name: string;
+  description: string;
+  language: string | null;
+  topics: string[];
+  homepage: string | null;
+  fork: boolean;
+  license: string | null;
+  latestRelease?: LatestRelease;
+}
+
+export const projects: Project[] = (repos as RepoSnapshot[]).map((r) => {
   const c = curated[r.name];
   const isLearning = r.fork || r.topics.includes('coursework');
   const category: Category = c?.category ?? (isLearning ? 'Learning' : 'Web & apps');

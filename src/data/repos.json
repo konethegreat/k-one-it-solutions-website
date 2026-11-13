@@ -1,5 +1,47 @@
 [
   {
+    "name": "agentos-studio",
+    "description": "Stop copy-pasting prompts between terminals and IDEs. 1-click bootstrapper and live control plane for Hermes, Claude Code, Qoder, Antigravity, Obsidian and Notion, with a native Rust MCP bus.",
+    "language": "Rust",
+    "topics": [
+      "ai-agents",
+      "claude-code",
+      "mcp",
+      "notion",
+      "obsidian",
+      "react",
+      "rust",
+      "tauri"
+    ],
+    "homepage": "https://agentos-studio-website.erictshivhinda.workers.dev",
+    "fork": false,
+    "license": "MIT",
+    "latestRelease": {
+      "tag": "v1.2.9",
+      "name": "AgentOS Studio v1.2.9",
+      "publishedAt": "2026-11-13T15:41:52Z",
+      "url": "https://github.com/konethegreat/agentos-studio/releases/tag/v1.2.9"
+    }
+  },
+  {
+    "name": "agentos-studio-website",
+    "description": "Download site for AgentOS Studio: a Cloudflare Worker with static assets, installers from GitHub Releases",
+    "language": "HTML",
+    "topics": [],
+    "homepage": "https://agentos-studio-website.erictshivhinda.workers.dev",
+    "fork": false,
+    "license": "MIT"
+  },
+  {
+    "name": "animation-and-game-studio",
+    "description": "2D and 3D animation plus playable games, built in the open.",
+    "language": "GDScript",
+    "topics": [],
+    "homepage": null,
+    "fork": false,
+    "license": null
+  },
+  {
     "name": "clearcut",
     "description": "Agent-native invoicing for South Africa: Rust core, REST API, MCP server and Claude plugin. VAT-correct, e-invoicing ready.",
     "language": "Rust",
@@ -118,7 +160,7 @@
   {
     "name": "konethegreat",
     "description": "Kone Tshivhinda: portfolio of civic tech, legal tech, AI assistants and practical automation.",
-    "language": null,
+    "language": "Shell",
     "topics": [
       "portfolio",
       "profile-readme",
@@ -352,7 +394,7 @@
   {
     "name": "Vigil",
     "description": "Sovereign operational intelligence for Africa, built by Africans.",
-    "language": null,
+    "language": "Java",
     "topics": [
       "africa",
       "decision-support",
@@ -366,7 +408,7 @@
     ],
     "homepage": null,
     "fork": false,
-    "license": null
+    "license": "Apache-2.0"
   },
   {
     "name": "xrwvm-fullstack_developer_capstone",

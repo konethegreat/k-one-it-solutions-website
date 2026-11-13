@@ -48,3 +48,17 @@ test('repository names are sorted with localeCompare, as sync-repos.mjs writes t
     assert.equal(name, sorted[index], `entry ${index} (${name}): out of order, expected "${sorted[index]}" at this position`);
   });
 });
+
+test('agentos-studio entry includes a valid latestRelease object', () => {
+  const studio = repos.find((repo) => repo.name === 'agentos-studio');
+  assert.ok(studio, 'agentos-studio entry must exist in repos.json');
+  const release = studio.latestRelease;
+  assert.ok(release !== null && typeof release === 'object' && !Array.isArray(release), 'agentos-studio.latestRelease must be an object');
+  assert.equal(typeof release.tag, 'string', 'latestRelease.tag must be a string');
+  assert.ok(release.tag.length > 0, 'latestRelease.tag must not be empty');
+  assert.equal(typeof release.name, 'string', 'latestRelease.name must be a string');
+  assert.equal(typeof release.url, 'string', 'latestRelease.url must be a string');
+  assert.equal(typeof release.publishedAt, 'string', 'latestRelease.publishedAt must be a string');
+  assert.match(release.publishedAt, /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/, 'latestRelease.publishedAt must be an ISO date string');
+  assert.ok(!Number.isNaN(Date.parse(release.publishedAt)), 'latestRelease.publishedAt must parse as a valid date');
+});
