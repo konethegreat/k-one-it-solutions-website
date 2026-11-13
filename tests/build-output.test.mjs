@@ -340,6 +340,10 @@ const CURATED_WORK_ENTRIES = [
     title: 'Reservoir',
     liveUrl: 'https://konethegreat.github.io/reservoir/',
   },
+  {
+    title: 'Animation and Game Studio',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+  },
 ];
 
 test('/work/ includes the curated repository entries with their live links', { skip: distSkip }, () => {

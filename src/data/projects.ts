@@ -137,6 +137,16 @@ const curated: Record<string, Curated> = {
     tech: ['TypeScript', 'Astro'],
     highlights: ['Live gallery', 'MIT'],
   },
+  'animation-and-game-studio': {
+    title: 'Animation and Game Studio',
+    summary:
+      '2D and 3D animation plus playable browser games, authored as code, rendered headless with Pillow, Blender, Godot and FFmpeg, and published to a live Vite and Three.js showcase.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+    tech: ['Python', 'Blender', 'Godot', 'Three.js', 'FFmpeg'],
+    highlights: ['Live showcase', 'All rights reserved'],
+  },
   reservoir: {
     title: 'Reservoir',
     summary:
