@@ -2,6 +2,7 @@
 // Merges the GitHub snapshot (repos.json, public repositories only) with curated copy.
 // Any new public repo appears automatically; add an entry to `curated` to give it a title, summary and category.
 import repos from './repos.json';
+import { links } from '../config';
 
 export type Status = 'live' | 'public' | 'prototype' | 'demo' | 'coursework';
 export type Category = 'AI & agents' | 'Legal & civic tech' | 'Web & apps' | 'Tools & DevOps' | 'Learning';
@@ -183,3 +184,42 @@ const learningLast = (p: Project) => (p.category === 'Learning' ? 1 : 0);
 export const allProjects = [...projects].sort(
   (a, b) => learningLast(a) - learningLast(b) || (a.featured ?? 99) - (b.featured ?? 99) || a.title.localeCompare(b.title),
 );
+
+/**
+ * The live deployments. `href` is the matching entry in `links` in src/config.ts. Each page that
+ * lists them reads its own copy from a per-surface field: `work` holds the note and status shown
+ * in the live products band on /work/.
+ */
+export interface LiveProduct {
+  name: string;
+  href: string;
+  work: { note: string; status: string };
+}
+
+export const liveProducts: LiveProduct[] = [
+  {
+    name: 'SA-JAS',
+    href: links.sajas,
+    work: { note: 'Find vacancies, tailor the CV, guide the application.', status: 'Hosted alpha' },
+  },
+  {
+    name: 'ClearCut',
+    href: links.clearcut,
+    work: { note: 'Read a South African invoice and check every figure.', status: 'Live alpha, invite only' },
+  },
+  {
+    name: 'MuniSolve ZA',
+    href: links.munisolve,
+    work: { note: 'Report a municipal fault and follow it on a live map.', status: 'Live' },
+  },
+  {
+    name: 'Portfolio',
+    href: links.portfolio,
+    work: { note: 'The personal site and the rest of the public record.', status: 'Live' },
+  },
+  {
+    name: 'UI Vault',
+    href: links.vault,
+    work: { note: 'A sourced index of interface patterns and their rights.', status: 'Live' },
+  },
+];

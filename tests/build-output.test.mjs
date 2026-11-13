@@ -1,6 +1,7 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
-// and no HTML page contains an em dash or an en dash. Run `npm run build` before `npm test`.
+// no HTML page contains an em dash or an en dash, and /work/ lists every live product from
+// src/data/projects.ts. Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
 // as GitHub Actions sets it, a missing dist/ fails instead, because CI always builds first.
@@ -13,6 +14,8 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const DIST = join(ROOT, 'dist');
 const SERVICES = join(ROOT, 'src', 'data', 'services.ts');
+const PROJECTS = join(ROOT, 'src', 'data', 'projects.ts');
+const CONFIG = join(ROOT, 'src', 'config.ts');
 const BRAND = 'K-ONE IT SOLUTIONS';
 const DOSSIERS = ['agentos-studio', 'vigil', 'sajas', 'clearcut', 'timelex'];
 const DASHES = [
@@ -39,6 +42,38 @@ const serviceSlugs = () => {
   assert.ok(start !== -1, 'src/data/services.ts must export serviceDetails');
   return [...source.slice(start).matchAll(/^ {4}id: '([^']+)'/gm)].map((match) => match[1]);
 };
+
+// The live products are read from source the same way. Each `links` entry in src/config.ts is a
+// `<key>: '<url>',` line indented two spaces. Each `liveProducts` entry in src/data/projects.ts has a
+// `name: '<name>',` line and an `href: links.<key>,` line indented four spaces, so the URL is the
+// `links` value for that key. Both files are read inside the dist/ check that uses them, because
+// tests/build-output-guard.test.mjs runs this file in a folder that holds only services.ts.
+const configLinks = () => {
+  const source = readFileSync(CONFIG, 'utf8');
+  const start = source.indexOf('export const links = {');
+  assert.ok(start !== -1, 'src/config.ts must export links');
+  const body = source.slice(start, source.indexOf('};', start));
+  return Object.fromEntries([...body.matchAll(/^ {2}(\w+): '([^']+)',/gm)].map((match) => [match[1], match[2]]));
+};
+
+const liveProducts = () => {
+  const source = readFileSync(PROJECTS, 'utf8');
+  const start = source.indexOf('export const liveProducts');
+  assert.ok(start !== -1, 'src/data/projects.ts must export liveProducts');
+  const body = source.slice(start, source.indexOf('\n];', start));
+  const names = [...body.matchAll(/^ {4}name: '([^']+)',/gm)].map((match) => match[1]);
+  const keys = [...body.matchAll(/^ {4}href: links\.(\w+),/gm)].map((match) => match[1]);
+  assert.ok(names.length > 0, 'no live products found in src/data/projects.ts');
+  assert.equal(keys.length, names.length, 'every live product in src/data/projects.ts needs an `href: links.<key>` line');
+  const urls = configLinks();
+  return names.map((name, index) => {
+    const url = urls[keys[index]];
+    assert.ok(url, `${name}: links.${keys[index]} is not in src/config.ts`);
+    return { name, url };
+  });
+};
+
+const escapeHtml = (text) => text.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 
 const htmlFiles = (dir) =>
   readdirSync(dir, { withFileTypes: true }).flatMap((entry) => {
@@ -100,4 +135,19 @@ test('no HTML page contains an em dash or an en dash', { skip: distSkip }, () =>
     }
   }
   assert.deepEqual(hits, [], `dashes found in dist/:\n${hits.join('\n')}`);
+});
+
+// The live products band on /work/ is its only `section band-ink` section. Names and URLs are looked
+// up inside it, because the dossiers and the repository archive on the same page repeat some of them.
+test('/work/ lists every live product by name and URL', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  const start = html.indexOf('<section class="section band-ink">');
+  assert.ok(start !== -1, '/work/ has no live products band (<section class="section band-ink">)');
+  const band = html.slice(start, html.indexOf('</section>', start));
+  const missing = liveProducts().flatMap(({ name, url }) => [
+    ...(band.includes(`>${escapeHtml(name)}</h3>`) ? [] : [`${name}: no <h3> with the name`]),
+    ...(band.includes(`href="${escapeHtml(url)}"`) ? [] : [`${name}: no link to ${url}`]),
+  ]);
+  assert.deepEqual(missing, [], `live products missing from /work/:\n${missing.join('\n')}`);
 });

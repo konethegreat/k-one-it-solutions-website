@@ -6,44 +6,11 @@ import Base from '../layouts/Base.astro';
 import PageHero from '../components/PageHero.astro';
 import SectionHeading from '../components/SectionHeading.astro';
 import ProjectExplorer from '../components/ProjectExplorer';
-import { allProjects, categories } from '../data/projects';
+import { allProjects, categories, liveProducts } from '../data/projects';
 import { dossiers } from '../data/dossiers';
 import { links } from '../config';
 
 const covers: Record<string, number> = { sajas: 0, clearcut: 2 };
-
-const liveProducts = [
-  {
-    name: 'SA-JAS',
-    note: 'Find vacancies, tailor the CV, guide the application.',
-    href: links.sajas,
-    status: 'Hosted alpha',
-  },
-  {
-    name: 'ClearCut',
-    note: 'Read a South African invoice and check every figure.',
-    href: links.clearcut,
-    status: 'Live alpha, invite only',
-  },
-  {
-    name: 'MuniSolve ZA',
-    note: 'Report a municipal fault and follow it on a live map.',
-    href: links.munisolve,
-    status: 'Live',
-  },
-  {
-    name: 'Portfolio',
-    note: 'The personal site and the rest of the public record.',
-    href: links.portfolio,
-    status: 'Live',
-  },
-  {
-    name: 'UI Vault',
-    note: 'A sourced index of interface patterns and their rights.',
-    href: links.vault,
-    status: 'Live',
-  },
-];
 
 const jsonLd = {
   '@context': 'https://schema.org',
@@ -212,10 +179,10 @@ const jsonLd = {
                   <span class="font-mono text-[0.58rem] uppercase tracking-[0.16em] text-muted">
                     P{String(i + 1).padStart(2, '0')}
                   </span>
-                  <span class="stamp stamp-neutral">{p.status}</span>
+                  <span class="stamp stamp-neutral">{p.work.status}</span>
                 </div>
                 <h3 class="mt-5 text-lg">{p.name}</h3>
-                <p class="mt-2 text-sm leading-relaxed text-muted">{p.note}</p>
+                <p class="mt-2 text-sm leading-relaxed text-muted">{p.work.note}</p>
               </div>
               <div class="flex items-center justify-between gap-3 border-t border-line pt-3">
                 <span class="truncate font-mono text-[0.6rem] text-muted">
