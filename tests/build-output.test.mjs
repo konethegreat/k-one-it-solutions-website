@@ -2,7 +2,8 @@
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
-// src/data/content.ts, and the dossier count on /about/ equals the number of /work/<slug>/ pages.
+// src/data/content.ts, the dossier count on /about/ equals the number of /work/<slug>/ pages, and
+// the AgentOS Studio dossier and brief show its README and release facts with the test count dated.
 // Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -286,5 +287,32 @@ test('AgentOS Studio pages show latestRelease.tag from src/data/repos.json and n
     const versions = html.match(/v\d+\.\d+\.\d+/g) ?? [];
     const stale = versions.filter((v) => v !== tag);
     assert.deepEqual(stale, [], `${route} contains AgentOS Studio version(s) other than ${tag}: ${stale.join(', ')}`);
+  }
+});
+
+// The AgentOS Studio facts checked against its README and release notes: 13 hub tools, the MIT
+// licence, the installer formats of the release, the download site, and the Rust test count, which
+// may appear only next to the date it was measured.
+const AGENTOS_FACTS = [
+  '13 over JSON-RPC 2.0',
+  'Source and installers are public under the MIT licence.',
+  'Installers for Windows (NSIS and MSI), macOS (Apple Silicon and Intel DMG) and Linux (AppImage, deb and rpm) are on GitHub Releases.',
+  'https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to its installer on the latest GitHub release.',
+  'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.',
+];
+
+test('AgentOS Studio dossier and brief show the README and release facts, with the test count dated', { skip: distSkip }, () => {
+  requireDist();
+  for (const route of ['/work/agentos-studio/', '/briefs/agentos-studio/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    for (const fact of AGENTOS_FACTS) {
+      assert.ok(html.includes(fact), `${route} does not contain "${fact}"`);
+    }
+  }
+  for (const route of ['/', '/work/', '/work/agentos-studio/', '/briefs/agentos-studio/', '/about/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    // Text nodes only: the home page system map has an SVG coordinate y="436".
+    const undated = (html.match(/>[^<]*\b436\b[^<]*</g) ?? []).filter((hit) => !hit.includes('11 November 2026: 436 passed'));
+    assert.deepEqual(undated, [], `${route} shows the 436 Rust test figure without its measurement date: ${undated.join(' | ')}`);
   }
 });

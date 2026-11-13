@@ -62,7 +62,7 @@ const curated: Record<string, Curated> = {
     status: 'public',
     featured: 0,
     tech: ['Rust', 'Tauri', 'React', 'SQLite', 'MCP'],
-    highlights: [agentosStudioTag, '13 hub tools', '436 Rust tests'],
+    highlights: [agentosStudioTag, '13 hub tools', 'MIT'],
   },
   Vigil: {
     title: 'Vigil',

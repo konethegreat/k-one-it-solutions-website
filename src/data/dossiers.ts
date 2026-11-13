@@ -798,8 +798,8 @@ export const dossiers: Dossier[] = [
     ],
     excerpts: [],
     honesty: [
-      { area: 'Release state', status: agentosStudioTag, note: 'Installers are on GitHub Releases and unsigned, so the operating system asks once before the first run.' },
-      { area: 'Download site', status: 'Live', note: 'The download site at https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to the installer of the latest release.' },
+      { area: 'Release state', status: agentosStudioTag, note: 'Installers for Windows (NSIS and MSI), macOS (Apple Silicon and Intel DMG) and Linux (AppImage, deb and rpm) are on GitHub Releases. They are not code-signed with a paid certificate, so the operating system asks once before the first run.' },
+      { area: 'Download site', status: 'Live', note: 'The download site at https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to its installer on the latest GitHub release.' },
       { area: 'Telemetry', status: 'None', note: 'The app sends no analytics and no remote logging.' },
       { area: 'Tests', status: 'Measured', note: 'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.' },
       { area: 'Quotas', status: 'Measured', note: 'Usage comes from Hermes. Qoder and Antigravity report no quota to the app.' },
