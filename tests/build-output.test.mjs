@@ -3,8 +3,9 @@
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
 // src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
 // src/data/content.ts, the dossier count on /about/ and the "technical dossiers" figure on / equal
-// the number of /work/<slug>/ pages, and the AgentOS Studio dossier and brief show its README and
-// release facts with the test count dated.
+// the number of /work/<slug>/ pages, the AgentOS Studio dossier and brief show its README and
+// release facts with the test count dated, and the curated entries for the newest repositories show
+// on /work/ with the right Live link.
 // Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
@@ -314,6 +315,41 @@ const AGENTOS_FACTS = [
   'https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to its installer on the latest GitHub release.',
   'Full Rust suite on 11 November 2026: 436 passed, 0 failed, 62 ignored.',
 ];
+
+// ProjectCard renders each repository in the archive on /work/ as an <article> that opens with the
+// repository name in a `text-brand` span and the curated title in an <h3>, and ends with the Source
+// link and, when the project has one, a Live link. `projectCard` returns that article's HTML.
+const projectCard = (html, repo) => {
+  const marker = `<span class="text-brand">${escapeHtml(repo)}</span>`;
+  const at = html.indexOf(marker);
+  assert.ok(at !== -1, `/work/ has no project card for ${repo}`);
+  const start = html.lastIndexOf('<article', at);
+  return html.slice(start, html.indexOf('</article>', at));
+};
+
+const liveLinks = (card) => [...card.matchAll(/href="([^"]+)"[^>]*>(?:<svg[\s\S]*?<\/svg>)?\s*Live\b/g)].map((match) => match[1]);
+
+// The curated entries for repositories added to the profile in November 2026, checked against each
+// README and repository homepage. `live` is the Live link the card must show, or null for none.
+const NEW_CURATED = [
+  {
+    repo: 'agentos-studio-website',
+    title: 'AgentOS Studio download site',
+    status: 'Live',
+    live: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+  },
+];
+
+test('/work/ shows the curated entries for the new repositories with their live links', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  for (const { repo, title, status, live } of NEW_CURATED) {
+    const card = projectCard(html, repo);
+    assert.ok(card.includes(`>${escapeHtml(title)}</h3>`), `${repo}: card title is not "${title}"`);
+    assert.ok(card.includes(`>${escapeHtml(status)}</span>`), `${repo}: card status is not "${status}"`);
+    assert.deepEqual(liveLinks(card), live ? [live] : [], `${repo}: card Live link should be ${live ?? 'absent'}`);
+  }
+});
 
 test('AgentOS Studio dossier and brief show the README and release facts, with the test count dated', { skip: distSkip }, () => {
   requireDist();
