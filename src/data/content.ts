@@ -37,6 +37,9 @@ export const skillGroups = [
   { title: 'Security & quality', items: ['RBAC', 'MFA', 'Rate limiting', 'CSP', 'Secret scanning', 'SBOM and CVE scanning', 'Playwright', 'pytest', 'Jest', 'Vitest'] },
 ];
 
+// The "Working stack" marquee on the home page, in display order.
+export const stack = ['Python', 'TypeScript', 'Rust', 'Java', 'PostgreSQL', 'MCP', 'AWS', 'Astro', 'Playwright', 'Docker'];
+
 export const timeline = [
   {
     when: '2025 to present',

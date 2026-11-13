@@ -1,7 +1,8 @@
 // Written by Kone Tshivhinda & Claude
 // Checks the built site in dist/: the expected pages exist, every HTML page names the company,
 // no HTML page contains an em dash or an en dash, /, /work/ and the /about/ footer list every live product from
-// src/data/projects.ts, and the home page links its dossier cards in order. Run `npm run build` before `npm test`.
+// src/data/projects.ts, the home page links its dossier cards in order and shows every stack item from
+// src/data/content.ts. Run `npm run build` before `npm test`.
 // Without dist/ these checks are skipped with that instruction, so `npm test` passes on a fresh
 // checkout that has not been built (AgentOS Studio runs its done checks in one). When CI is set,
 // as GitHub Actions sets it, a missing dist/ fails instead, because CI always builds first.
@@ -16,6 +17,7 @@ const DIST = join(ROOT, 'dist');
 const SERVICES = join(ROOT, 'src', 'data', 'services.ts');
 const PROJECTS = join(ROOT, 'src', 'data', 'projects.ts');
 const CONFIG = join(ROOT, 'src', 'config.ts');
+const CONTENT = join(ROOT, 'src', 'data', 'content.ts');
 const BRAND = 'K-ONE IT SOLUTIONS';
 const DOSSIERS = ['agentos-studio', 'vigil', 'sajas', 'clearcut', 'timelex'];
 const DASHES = [
@@ -206,4 +208,26 @@ test('/ links the SA-JAS, ClearCut, Vigil and TimeLex dossiers in that order', {
   assert.deepEqual(missing, [], `/ does not link: ${missing.join(', ')}`);
   const found = [...positions].sort((a, b) => a.at - b.at).map(({ href }) => href);
   assert.deepEqual(found, HOME_CARD_ORDER, 'the dossier links on / are out of order');
+});
+
+// The stack list is read from source: `export const stack = [...]` in src/data/content.ts is one line
+// of single-quoted strings. The Working stack marquee on / repeats each item as an `<li>` in its
+// screen-reader list, which is looked up from the "Working stack" label to the list's `</ul>`.
+const stackItems = () => {
+  const source = readFileSync(CONTENT, 'utf8');
+  const match = source.match(/^export const stack = \[(.*)\];/m);
+  assert.ok(match, 'src/data/content.ts must export stack on one line');
+  const items = [...match[1].matchAll(/'([^']+)'/g)].map((item) => item[1]);
+  assert.ok(items.length > 0, 'no stack items found in src/data/content.ts');
+  return items;
+};
+
+test('/ shows every stack item from src/data/content.ts in the Working stack marquee', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/'), 'utf8');
+  const start = html.indexOf('>Working stack</p>');
+  assert.ok(start !== -1, '/ has no "Working stack" marquee');
+  const list = html.slice(start, html.indexOf('</ul>', start));
+  const missing = stackItems().filter((item) => !list.includes(`<li>${escapeHtml(item)}</li>`));
+  assert.deepEqual(missing, [], `stack items missing from /:\n${missing.join('\n')}`);
 });
