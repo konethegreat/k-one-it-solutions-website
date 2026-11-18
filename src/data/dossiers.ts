@@ -258,7 +258,7 @@ export const dossiers: Dossier[] = [
     year: '2026',
     role: 'Founder, product and full-stack engineering',
     summary:
-      'Three agents find South African vacancies, tailor an ATS-friendly CV and cover letter, and guide the application in a visible browser. The person still presses submit.',
+      'Three agents find South African vacancies, tailor an ATS-friendly CV and cover letter, and guide the application in a visible browser. Nothing is submitted until the person confirms.',
     repoUrl: 'https://github.com/konethegreat/scratch',
     liveUrl: 'https://sajas.pages.dev/',
     docsUrl: 'https://github.com/konethegreat/scratch/blob/main/README.md',
@@ -285,12 +285,12 @@ export const dossiers: Dossier[] = [
     problem: [
       'A job search in South Africa means juggling several boards, rewriting a CV for every advert and retyping the same answers into long application forms. The work is repetitive and easy to abandon halfway.',
       'SA-JAS runs three agents. Job Hunter finds vacancies with grounded search and fallbacks across South African job boards. Document Tailor writes an ATS-friendly CV and a 300 to 400 word cover letter. Apply Copilot guides multi-step forms in a visible browser.',
-      'The person submits. The copilot refuses submit, send, finish, confirm and pay wording, hands CAPTCHAs to the user, and stops at final review for confirmation.',
+      'The person decides. While it fills, the copilot refuses submit, send, finish, confirm and pay wording, hands CAPTCHAs to the user and stops at final review. It presses the final button once, only after the person confirms in SA-JAS.',
     ],
     capabilities: [
       {
         title: 'Agent 1, Job Hunter',
-        body: 'Grounded search plus 12 South African job-board fallbacks, refreshed on a 15-minute feed cycle.',
+        body: 'Claude grounded web search first, then 12 South African job-board scrapers as a fallback, each with a schema.org JSON-LD safety net.',
       },
       {
         title: 'Agent 2, Document Tailor',
@@ -301,8 +301,8 @@ export const dossiers: Dossier[] = [
         body: 'A page brain that plans and fills long forms in a visible browser with a three-pass smart fill, then waits for the person.',
       },
       {
-        title: 'Two delivery modes',
-        body: 'A hosted web app for API-only work and a local Electron runner for Chromium, persistent sessions and apply.',
+        title: 'Three ways to apply',
+        body: 'A copy sheet in the hosted web app, the optional Apply Assistant Chromium extension, published as a GitHub release, and a local Electron runner for Chromium, persistent sessions and apply.',
       },
       {
         title: 'Local-first storage',
@@ -343,7 +343,7 @@ export const dossiers: Dossier[] = [
         decision:
           'Guards refuse submit, send, finish, confirm and pay wording, and allow only Next, Continue and Proceed on form pages.',
         why:
-          'An application is a representation made in someone\u2019s name. The person confirms, presses once and has 60 seconds to change their mind.',
+          'An application is a representation made in someone\u2019s name. The person confirms in SA-JAS, the copilot presses the final button once and waits up to 60 seconds for the site to confirm, and it never retries.',
         href: 'https://github.com/konethegreat/scratch/blob/main/POLICY.md',
         state: 'Design decision',
       },
@@ -377,7 +377,7 @@ export const dossiers: Dossier[] = [
     ],
     excerpts: [],
     honesty: [
-      { area: 'Live service', status: 'Alpha', note: 'Hosted web alpha at sajas.pages.dev. The Electron desktop build runs from source.' },
+      { area: 'Live service', status: 'Alpha', note: 'Hosted web alpha at sajas.pages.dev. The Electron desktop build runs from source, and the Apply Assistant extension loads unpacked.' },
       { area: 'Screenshots', status: 'Fictional data', note: 'Every screenshot uses the repository\u2019s synthetic demo fixture.' },
       { area: 'Matching score', status: 'Fixture', note: 'The 82 percent match score is demo data, not a measured result.' },
       { area: 'Submissions', status: 'Human', note: 'The copilot never submits. CAPTCHAs are handed off, never solved.' },

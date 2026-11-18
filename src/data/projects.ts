@@ -77,7 +77,7 @@ const curated: Record<string, Curated> = {
   scratch: {
     title: 'SA-JAS',
     summary:
-      'Three AI agents find South African vacancies, tailor an ATS-friendly CV and cover letter, and guide the application in a visible browser. The person still presses submit. Hosted web alpha.',
+      'Three AI agents find South African vacancies, tailor an ATS-friendly CV and cover letter, and guide the application in a visible browser. Nothing is submitted until the person confirms. Hosted web alpha.',
     category: 'AI & agents',
     status: 'live',
     liveUrl: 'https://sajas.pages.dev/',
