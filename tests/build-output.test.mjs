@@ -330,3 +330,22 @@ test('AgentOS Studio dossier and brief show the README and release facts, with t
     assert.deepEqual(undated, [], `${route} shows the 436 Rust test figure without its measurement date: ${undated.join(' | ')}`);
   }
 });
+
+// The SA-JAS dossier was re-checked against the konethegreat/scratch README, its release
+// extension-v0.1.0 (SA-JAS Apply Assistant, 2026-11-02) and https://sajas.pages.dev on
+// 20 November 2026. The checked facts stay on the dossier page and its brief, and the page
+// must not bring back the claim that the 12 fallback job boards refresh on a 15-minute cycle:
+// the README gives that refresh to the hosted Job Feeds, not to the board scrapers.
+const SAJAS_FACTS = ['Hosted web alpha', '3, with human sign-off', '12 South African fallbacks', 'MIT', 'Apply Assistant'];
+const SAJAS_DROPPED = ['15-minute feed cycle'];
+
+test('the SA-JAS dossier and brief show the facts checked against the scratch README, release and live site', { skip: distSkip }, () => {
+  requireDist();
+  for (const route of ['/work/sajas/', '/briefs/sajas/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    const missing = SAJAS_FACTS.filter((fact) => !html.includes(fact));
+    assert.deepEqual(missing, [], `${route} is missing SA-JAS facts: ${missing.join(', ')}`);
+    const stale = SAJAS_DROPPED.filter((claim) => html.includes(claim));
+    assert.deepEqual(stale, [], `${route} repeats claims the scratch README does not support: ${stale.join(', ')}`);
+  }
+});
