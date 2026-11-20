@@ -158,6 +158,16 @@ const curated: Record<string, Curated> = {
     status: 'public',
     tech: ['Python', 'Docker', 'GitHub Actions'],
   },
+  'agentos-studio-website': {
+    title: 'AgentOS Studio Download Site',
+    summary:
+      'The download site for AgentOS Studio: a Cloudflare Worker serving static pages and resolving /download/<os> to the installers on the latest GitHub release.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://agentos-studio-website.erictshivhinda.workers.dev',
+    tech: ['Cloudflare Workers', 'HTML', 'CSS', 'JavaScript', 'WebGL'],
+    highlights: ['Live', 'MIT', '0 trackers'],
+  },
 };
 
 export interface Project {

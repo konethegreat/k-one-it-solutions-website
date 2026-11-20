@@ -330,3 +330,13 @@ test('AgentOS Studio dossier and brief show the README and release facts, with t
     assert.deepEqual(undated, [], `${route} shows the 436 Rust test figure without its measurement date: ${undated.join(' | ')}`);
   }
 });
+
+test('/work/ shows AgentOS Studio Download Site with its live link', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  assert.ok(html.includes('>AgentOS Studio Download Site</h3>'), '/work/ does not show AgentOS Studio Download Site');
+  assert.ok(
+    html.includes('href="https://agentos-studio-website.erictshivhinda.workers.dev"'),
+    '/work/ does not link https://agentos-studio-website.erictshivhinda.workers.dev',
+  );
+});
