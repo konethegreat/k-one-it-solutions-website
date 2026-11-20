@@ -290,7 +290,7 @@ export const dossiers: Dossier[] = [
     capabilities: [
       {
         title: 'Agent 1, Job Hunter',
-        body: 'Grounded search plus 12 South African job-board fallbacks, refreshed on a 15-minute feed cycle.',
+        body: 'Claude grounded web search first, then 12 South African job-board scrapers as a fallback, each with a schema.org JSON-LD safety net.',
       },
       {
         title: 'Agent 2, Document Tailor',
@@ -301,8 +301,8 @@ export const dossiers: Dossier[] = [
         body: 'A page brain that plans and fills long forms in a visible browser with a three-pass smart fill, then waits for the person.',
       },
       {
-        title: 'Two delivery modes',
-        body: 'A hosted web app for API-only work and a local Electron runner for Chromium, persistent sessions and apply.',
+        title: 'Three ways to apply',
+        body: 'A hosted web app with a copy sheet, the Apply Assistant extension released as extension-v0.1.0, and a local Electron runner for Chromium, persistent sessions and apply.',
       },
       {
         title: 'Local-first storage',
@@ -377,7 +377,7 @@ export const dossiers: Dossier[] = [
     ],
     excerpts: [],
     honesty: [
-      { area: 'Live service', status: 'Alpha', note: 'Hosted web alpha at sajas.pages.dev. The Electron desktop build runs from source.' },
+      { area: 'Live service', status: 'Alpha', note: 'Hosted web alpha at sajas.pages.dev. The Apply Assistant extension installs unpacked from its release, and the Electron desktop build runs from source.' },
       { area: 'Screenshots', status: 'Fictional data', note: 'Every screenshot uses the repository\u2019s synthetic demo fixture.' },
       { area: 'Matching score', status: 'Fixture', note: 'The 82 percent match score is demo data, not a measured result.' },
       { area: 'Submissions', status: 'Human', note: 'The copilot never submits. CAPTCHAs are handed off, never solved.' },
