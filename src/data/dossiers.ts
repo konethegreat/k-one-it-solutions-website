@@ -113,7 +113,7 @@ export const dossiers: Dossier[] = [
       'A sovereign operational-intelligence platform that models assets, people, places and events as a governed ontology, so operators and AI agents can act on the same version of the truth.',
     repoUrl: 'https://github.com/konethegreat/Vigil/tree/develop',
     docsUrl: 'https://github.com/konethegreat/Vigil/blob/develop/docs/ARCHITECTURE.md',
-    licence: 'Source available, no licence declared',
+    licence: 'Apache-2.0',
     stack: [
       'Java 25',
       'Spring Boot 4',
@@ -139,8 +139,8 @@ export const dossiers: Dossier[] = [
       { label: 'Branch', value: 'develop (main is an empty shell)' },
       { label: 'Architecture', value: '12 ADRs, frozen at P0 v1.0' },
       { label: 'Roadmap', value: 'Plan spans P0 to P43' },
-      { label: 'Deployment', value: 'Sovereign first, air-gap capable' },
-      { label: 'Ontology', value: 'Metadata layer over polyglot persistence' },
+      { label: 'Local stack', value: 'Increment 03 connected (Cockpit at 127.0.0.1:3100)' },
+      { label: 'Licence', value: 'Apache-2.0' },
     ],
     problem: [
       'Operational decisions in Africa are made across disconnected systems: spreadsheets, inboxes, case files and tools that rarely share a model of the world. Analysts reconcile evidence by hand while institutional memory sits in people\u2019s heads.',
@@ -232,7 +232,7 @@ export const dossiers: Dossier[] = [
     honesty: [
       { area: 'Live service', status: 'Not live', note: 'No public deployment. The platform is in development.' },
       { area: 'Source', status: 'Available', note: 'Public repository on the develop branch.' },
-      { area: 'Licence', status: 'Not declared', note: 'Source available, not open source. No licence is granted by default.' },
+      { area: 'Licence', status: 'Apache-2.0', note: 'Public repository under the Apache 2.0 licence.' },
       { area: 'Architecture', status: 'Proposed', note: 'The P0 ADRs are proposed and await founder sign-off, not accepted.' },
       { area: 'Demo data', status: 'Fictional', note: 'Every demo identity in the repository is explicitly fictional.' },
       { area: 'AI claims', status: 'Designed', note: 'Agents are designed and specified. They are not in production.' },
