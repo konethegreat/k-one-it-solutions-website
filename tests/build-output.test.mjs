@@ -304,11 +304,11 @@ test('AgentOS Studio pages show latestRelease.tag from src/data/repos.json and n
   }
 });
 
-// The AgentOS Studio facts checked against its README and release notes: 13 hub tools, the MIT
+// The AgentOS Studio facts checked against its README and release notes: 19 hub tools, the MIT
 // licence, the installer formats of the release, the download site, and the Rust test count, which
 // may appear only next to the date it was measured.
 const AGENTOS_FACTS = [
-  '13 over JSON-RPC 2.0',
+  '19 over JSON-RPC 2.0',
   'Source and installers are public under the MIT licence.',
   'Installers for Windows (NSIS and MSI), macOS (Apple Silicon and Intel DMG) and Linux (AppImage, deb and rpm) are on GitHub Releases.',
   'https://agentos-studio-website.erictshivhinda.workers.dev sends each platform to its installer on the latest GitHub release.',
