@@ -113,7 +113,7 @@ export const dossiers: Dossier[] = [
       'A sovereign operational-intelligence platform that models assets, people, places and events as a governed ontology, so operators and AI agents can act on the same version of the truth.',
     repoUrl: 'https://github.com/konethegreat/Vigil/tree/develop',
     docsUrl: 'https://github.com/konethegreat/Vigil/blob/develop/docs/ARCHITECTURE.md',
-    licence: 'Source available, no licence declared',
+    licence: 'Apache 2.0',
     stack: [
       'Java 25',
       'Spring Boot 4',
@@ -135,9 +135,9 @@ export const dossiers: Dossier[] = [
       'Temporal',
     ],
     facts: [
-      { label: 'Status', value: 'In development, no live deployment' },
-      { label: 'Branch', value: 'develop (main is an empty shell)' },
-      { label: 'Architecture', value: '12 ADRs, frozen at P0 v1.0' },
+      { label: 'Status', value: 'Increment 03 local build, not live' },
+      { label: 'Branch', value: 'develop (default; main has only .gitkeep)' },
+      { label: 'Architecture', value: 'P0 v1.0 frozen; 12 ADRs (ADR-0001 to ADR-0012)' },
       { label: 'Roadmap', value: 'Plan spans P0 to P43' },
       { label: 'Deployment', value: 'Sovereign first, air-gap capable' },
       { label: 'Ontology', value: 'Metadata layer over polyglot persistence' },
