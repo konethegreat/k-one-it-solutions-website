@@ -349,3 +349,13 @@ test('the SA-JAS dossier and brief show the facts checked against the scratch RE
     assert.deepEqual(stale, [], `${route} repeats claims the scratch README does not support: ${stale.join(', ')}`);
   }
 });
+
+test('/work/ shows AgentOS Studio Download Site with its live link', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  assert.ok(html.includes('>AgentOS Studio Download Site</h3>'), '/work/ does not show AgentOS Studio Download Site');
+  assert.ok(
+    html.includes('href="https://agentos-studio-website.erictshivhinda.workers.dev"'),
+    '/work/ does not link https://agentos-studio-website.erictshivhinda.workers.dev',
+  );
+});
