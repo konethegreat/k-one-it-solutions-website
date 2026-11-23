@@ -168,6 +168,26 @@ const curated: Record<string, Curated> = {
     tech: ['Cloudflare Workers', 'HTML', 'CSS', 'JavaScript', 'WebGL'],
     highlights: ['Live', 'MIT', '0 trackers'],
   },
+  'animation-and-game-studio': {
+    title: 'Animation and Game Studio',
+    summary:
+      '2D and 3D animation plus playable browser games, authored as code, rendered headless with Pillow, Blender, Godot and FFmpeg, and published to a live Vite and Three.js showcase.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/',
+    tech: ['Python', 'Blender', 'Godot', 'Three.js', 'FFmpeg'],
+    highlights: ['Live showcase', 'All rights reserved'],
+  },
+  reservoir: {
+    title: 'Reservoir',
+    summary:
+      'A free, open, community-grown memory for South African cultural knowledge: plants, practices, languages and stories, with community-controlled consent and a mission-native AI. Planning phase, docs site live.',
+    category: 'Legal & civic tech',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io/reservoir/',
+    tech: [],
+    highlights: ['Planning / pre-alpha', 'Docs live', 'Apache-2.0'],
+  },
 };
 
 export interface Project {
@@ -269,5 +289,19 @@ export const liveProducts: LiveProduct[] = [
     work: { note: 'A sourced index of interface patterns and their rights.', status: 'Live' },
     home: { note: 'Interface reference gallery', status: 'Live' },
     footer: { note: 'Reference index' },
+  },
+  {
+    name: 'AgentOS Studio',
+    href: links.agentosStudio,
+    work: { note: 'Download installers for Windows, macOS and Linux, plus the setup guide.', status: 'Live' },
+    home: { note: 'Desktop app download site', status: 'Live' },
+    footer: { note: 'Download site' },
+  },
+  {
+    name: 'Reservoir',
+    href: links.reservoir,
+    work: { note: 'Vision, architecture and research docs for a South African cultural memory.', status: 'Docs live' },
+    home: { note: 'Cultural knowledge docs', status: 'Docs live' },
+    footer: { note: 'Docs live' },
   },
 ];

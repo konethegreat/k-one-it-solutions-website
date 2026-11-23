@@ -359,3 +359,15 @@ test('/work/ shows AgentOS Studio Download Site with its live link', { skip: dis
     '/work/ does not link https://agentos-studio-website.erictshivhinda.workers.dev',
   );
 });
+
+test('/work/ shows Reservoir and Animation and Game Studio with their live links', { skip: distSkip }, () => {
+  requireDist();
+  const html = readFileSync(pageFile('/work/'), 'utf8');
+  for (const { title, liveUrl } of [
+    { title: 'Reservoir', liveUrl: 'https://konethegreat.github.io/reservoir/' },
+    { title: 'Animation and Game Studio', liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/' },
+  ]) {
+    assert.ok(html.includes(`>${escapeHtml(title)}</h3>`), `/work/ does not show ${title}`);
+    assert.ok(html.includes(`href="${escapeHtml(liveUrl)}"`), `/work/ does not link ${title} to ${liveUrl}`);
+  }
+});
