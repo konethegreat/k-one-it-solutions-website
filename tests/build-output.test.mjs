@@ -367,7 +367,26 @@ test('/work/ shows Reservoir and Animation and Game Studio with their live links
     { title: 'Reservoir', liveUrl: 'https://konethegreat.github.io/reservoir/' },
     { title: 'Animation and Game Studio', liveUrl: 'https://konethegreat.github.io/animation-and-game-studio/' },
   ]) {
-    assert.ok(html.includes(`>${escapeHtml(title)}</h3>`), `/work/ does not show ${title}`);
-    assert.ok(html.includes(`href="${escapeHtml(liveUrl)}"`), `/work/ does not link ${title} to ${liveUrl}`);
+    assert.ok(html.includes(`>${title}</h3>`), `/work/ does not show ${title}`);
+    assert.ok(html.includes(`href="${liveUrl}"`), `/work/ does not link ${liveUrl}`);
+  }
+});
+
+const VIGIL_FACTS = [
+  'Apache 2.0',
+  'Increment 03 local build, not live',
+  'develop (default; main has only .gitkeep)',
+  'P0 v1.0 frozen; 12 ADRs (ADR-0001 to ADR-0012)',
+];
+const VIGIL_DROPPED = ['Source available, no licence declared', '12 ADRs, frozen at P0 v1.0'];
+
+test('the Vigil dossier and brief show the facts checked against konethegreat/Vigil develop README, LICENSE and ADRs', { skip: distSkip }, () => {
+  requireDist();
+  for (const route of ['/work/vigil/', '/briefs/vigil/']) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    const missing = VIGIL_FACTS.filter((fact) => !html.includes(fact));
+    assert.deepEqual(missing, [], `${route} is missing Vigil facts: ${missing.join(', ')}`);
+    const stale = VIGIL_DROPPED.filter((claim) => html.includes(claim));
+    assert.deepEqual(stale, [], `${route} repeats stale Vigil claims: ${stale.join(', ')}`);
   }
 });

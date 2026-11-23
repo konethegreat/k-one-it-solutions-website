@@ -67,12 +67,12 @@ const curated: Record<string, Curated> = {
   Vigil: {
     title: 'Vigil',
     summary:
-      'A sovereign operational-intelligence platform that models assets, people, places and events as a governed ontology. In development, source available, no live deployment.',
+      'A sovereign operational-intelligence platform that models assets, people, places and events as a governed ontology. Increment 03 local build, Apache 2.0 on GitHub, not live.',
     category: 'AI & agents',
     status: 'public',
     featured: 1,
     tech: ['Java', 'Python', 'TypeScript', 'Next.js', 'PostgreSQL'],
-    highlights: ['In development', '12 ADRs', 'Source available'],
+    highlights: ['In development', '12 ADRs', 'Apache 2.0'],
   },
   scratch: {
     title: 'SA-JAS',
