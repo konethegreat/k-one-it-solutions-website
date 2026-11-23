@@ -732,6 +732,10 @@ export const dossiers: Dossier[] = [
         body: 'Work is a mission with a plan, an isolated git worktree, a review and a merge step, and a run timeline that records every bus line, tool call and check.',
       },
       {
+        title: 'Replayable runs',
+        body: 'Any mission exports one Markdown record into 04_Agent_Engine/runs/ in the vault: the plan, every bus line, tool call and check in order, so a run can be read back months later.',
+      },
+      {
         title: 'One memory',
         body: 'The Brain view reads the Obsidian vault: notes carry types, links and provenance, and recall ranks by keyword match, recency and how much the rest of the vault points at a note.',
       },
@@ -742,6 +746,10 @@ export const dossiers: Dossier[] = [
       {
         title: 'Local-first, no telemetry',
         body: 'Memory, missions and run events live in SQLite and the vault on disk. Credentials are held by the operating system keychain.',
+      },
+      {
+        title: 'Works offline',
+        body: 'When the network drops, Studio switches the active provider to the first model a local runtime such as Ollama reports, and the automation and stuck-work rules honour that pin. The previous provider returns with the network.',
       },
     ],
     diagram: 'agentos',

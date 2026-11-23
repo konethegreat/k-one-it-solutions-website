@@ -57,7 +57,7 @@ const curated: Record<string, Curated> = {
   'agentos-studio': {
     title: 'AgentOS Studio',
     summary:
-      `A local control plane for a multi-agent fleet: one desktop app and MCP hub where agents take work from a shared bus, share one memory and merge only after the checks pass. Released, ${agentosStudioTag}.`,
+      `A local control plane for a multi-agent fleet: one desktop app and MCP hub where agents take work from a shared bus, share one memory and merge only after the checks pass. Missions export as replayable run records, and the fleet keeps moving offline on a local model. Released, ${agentosStudioTag}.`,
     category: 'AI & agents',
     status: 'public',
     featured: 0,
