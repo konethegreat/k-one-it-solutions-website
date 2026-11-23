@@ -708,7 +708,7 @@ export const dossiers: Dossier[] = [
     facts: [
       { label: 'Status', value: `Released, ${agentosStudioTag}` },
       { label: 'Binary', value: 'One program, desktop app and hub server' },
-      { label: 'Hub tools', value: '13 over JSON-RPC 2.0' },
+      { label: 'Hub tools', value: '19 over JSON-RPC 2.0' },
       { label: 'Agents', value: '4, headless and IDE' },
       { label: 'Data', value: 'Local SQLite and the Obsidian vault' },
       { label: 'Licence', value: 'MIT' },
@@ -721,7 +721,7 @@ export const dossiers: Dossier[] = [
     capabilities: [
       {
         title: 'One binary, two faces',
-        body: 'The Tauri desktop app and the agentos-hub MCP server are the same program. Agents call 13 tools over JSON-RPC 2.0 while the window shows the same state.',
+        body: 'The Tauri desktop app and the agentos-hub MCP server are the same program. Agents call 19 tools over JSON-RPC 2.0 while the window shows the same state.',
       },
       {
         title: 'Agent registry',
