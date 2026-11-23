@@ -378,10 +378,12 @@ test('the ClearCut dossier, brief and /work/ show the facts checked against the 
   for (const expected of ['13 MCP tools', 'Apache-2.0', 'Live alpha, invite only']) {
     assert.ok(workHtml.includes(expected), `/work/ missing ${expected}`);
   }
-  for (const route of ['/work/clearcut/', '/briefs/clearcut/']) {
-    const html = readFileSync(pageFile(route), 'utf8');
-    for (const expected of ['Live alpha, invite only', 'Apache-2.0', 'MCP server with 13 tools']) {
-      assert.ok(html.includes(expected), `${route} missing ${expected}`);
-    }
+  const workClearcutHtml = readFileSync(pageFile('/work/clearcut/'), 'utf8');
+  for (const expected of ['Live alpha, invite only', 'Apache-2.0', 'MCP server with 13 tools']) {
+    assert.ok(workClearcutHtml.includes(expected), `/work/clearcut/ missing ${expected}`);
+  }
+  const briefClearcutHtml = readFileSync(pageFile('/briefs/clearcut/'), 'utf8');
+  for (const expected of ['Live alpha, invite only', 'Apache-2.0', 'MCP tools', '<dd>13</dd>']) {
+    assert.ok(briefClearcutHtml.includes(expected), `/briefs/clearcut/ missing ${expected}`);
   }
 });
