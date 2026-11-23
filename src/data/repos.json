@@ -17,10 +17,10 @@
     "fork": false,
     "license": "MIT",
     "latestRelease": {
-      "tag": "v2.0.1",
-      "name": "AgentOS Studio v2.0.1",
-      "publishedAt": "2026-11-17T19:23:57Z",
-      "url": "https://github.com/konethegreat/agentos-studio/releases/tag/v2.0.1"
+      "tag": "v2.4.0",
+      "name": "AgentOS Studio v2.4.0",
+      "publishedAt": "2026-11-23T13:20:08Z",
+      "url": "https://github.com/konethegreat/agentos-studio/releases/tag/v2.4.0"
     }
   },
   {
@@ -35,7 +35,7 @@
   {
     "name": "animation-and-game-studio",
     "description": "2D and 3D animation plus playable games, built in the open.",
-    "language": "GDScript",
+    "language": "Python",
     "topics": [],
     "homepage": null,
     "fork": false,
