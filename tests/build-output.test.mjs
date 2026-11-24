@@ -391,15 +391,15 @@ test('the ClearCut dossier, brief and /work/ show the facts checked against the 
 test('the Vigil dossier, brief and /work/ show the facts checked against the Vigil README and ADRs', { skip: distSkip }, () => {
   requireDist();
   const workHtml = readFileSync(pageFile('/work/'), 'utf8');
-  for (const expected of ['Increment 03 local build', 'Apache-2.0', '12 ADRs, frozen at P0 v1.0']) {
+  for (const expected of ['Increment 03 local build', 'Apache-2.0', '12 ADRs']) {
     assert.ok(workHtml.includes(expected), `/work/ missing ${expected}`);
   }
   const workVigilHtml = readFileSync(pageFile('/work/vigil/'), 'utf8');
-  for (const expected of ['In development, no live deployment', 'Apache-2.0', '12 ADRs, frozen at P0 v1.0', 'develop']) {
+  for (const expected of ['In development (Increment 03 local build), no live deployment', 'Apache-2.0', '12 ADRs, frozen at P0 v1.0', 'develop']) {
     assert.ok(workVigilHtml.includes(expected), `/work/vigil/ missing ${expected}`);
   }
   const briefVigilHtml = readFileSync(pageFile('/briefs/vigil/'), 'utf8');
-  for (const expected of ['In development, no live deployment', 'Apache-2.0', '12 ADRs, frozen at P0 v1.0', 'Increment 03 local build']) {
+  for (const expected of ['In development (Increment 03 local build), no live deployment', 'Apache-2.0', '12 ADRs, frozen at P0 v1.0']) {
     assert.ok(briefVigilHtml.includes(expected), `/briefs/vigil/ missing ${expected}`);
   }
 });
