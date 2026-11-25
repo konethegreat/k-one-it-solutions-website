@@ -423,3 +423,20 @@ test('/work/ shows verified curated project summaries and highlights', { skip: d
     assert.ok(workHtml.includes(expected), `/work/ missing curated fact: ${expected}`);
   }
 });
+
+test('/about/ shows verified availability, credentials and languages from src/data/about.ts', { skip: distSkip }, () => {
+  requireDist();
+  const aboutHtml = readFileSync(pageFile('/about/'), 'utf8');
+  const bodyBeforeFooter = aboutHtml.slice(0, aboutHtml.indexOf('<footer'));
+  for (const expected of [
+    'Open to select work',
+    'Diploma in Information Technology (NQF 6)',
+    'IBM Full Stack Software Developer Professional Certificate',
+    'Tshivenda',
+    'Northern Sotho',
+    'Johannesburg, South Africa',
+  ]) {
+    assert.ok(bodyBeforeFooter.includes(expected), `/about/ missing expected detail: ${expected}`);
+  }
+  assert.ok(!bodyBeforeFooter.includes('Available for new work'), '/about/ still shows stale availability');
+});

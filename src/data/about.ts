@@ -63,6 +63,6 @@ export const about: AboutData = {
     { name: 'Northern Sotho', level: 'Intermediate' },
   ],
   location: 'Johannesburg, South Africa',
-  availability: 'Available for new work',
-  response: 'Usually within two business days',
+  availability: 'Open to select work',
+  response: 'I read every message myself and reply by email',
 };
