@@ -29,16 +29,16 @@ export const process = [
 
 export const skillGroups = [
   { title: 'AI & agents', items: ['Multi-agent orchestration', 'MCP hosts and servers', 'Tool calling', 'Human-in-the-loop controls', 'Spec-driven development'] },
-  { title: 'Retrieval & data', items: ['Hybrid RAG', 'pgvector', 'Embeddings', 'Document AI and OCR', 'Neo4j', 'PostgreSQL', 'Redis', 'SQLite'] },
-  { title: 'Models & APIs', items: ['Claude', 'OpenAI', 'Gemini', 'Ollama', 'LM Studio', 'Voyage AI', 'Open-weight models'] },
+  { title: 'Retrieval & data', items: ['Hybrid RAG', 'pgvector', 'Embeddings', 'Document AI and OCR', 'PostgreSQL', 'SQLite'] },
+  { title: 'Models & APIs', items: ['Claude', 'OpenAI', 'Gemini', 'Ollama', 'Open-weight models'] },
   { title: 'Languages', items: ['Python', 'TypeScript', 'JavaScript', 'Java', 'Rust', 'SQL', 'Bash', 'PowerShell'] },
-  { title: 'Back end & front end', items: ['FastAPI', 'Spring Boot', 'Node.js / Express', 'NestJS', 'React', 'Next.js', 'Vite', 'Tailwind CSS', 'React Native (Expo)'] },
-  { title: 'Cloud & DevOps', items: ['AWS', 'Terraform', 'CloudFormation', 'Docker', 'GitHub Actions', 'nginx'] },
-  { title: 'Security & quality', items: ['RBAC', 'MFA', 'Rate limiting', 'CSP', 'Secret scanning', 'SBOM and CVE scanning', 'Playwright', 'pytest', 'Jest', 'Vitest'] },
+  { title: 'Back end & front end', items: ['FastAPI', 'Node.js / Express', 'React', 'Next.js', 'Astro', 'Vite', 'Tailwind CSS', 'Tauri'] },
+  { title: 'Cloud & DevOps', items: ['Cloudflare Workers', 'GitHub Pages', 'Docker', 'GitHub Actions'] },
+  { title: 'Security & quality', items: ['RBAC', 'Rate limiting', 'CSP', 'Playwright', 'pytest', 'Vitest'] },
 ];
 
 // The "Working stack" marquee on the home page, in display order.
-export const stack = ['Python', 'TypeScript', 'Rust', 'Java', 'PostgreSQL', 'MCP', 'AWS', 'Astro', 'Playwright', 'Docker'];
+export const stack = ['Python', 'TypeScript', 'Rust', 'Java', 'PostgreSQL', 'MCP', 'Cloudflare', 'Astro', 'Playwright', 'Docker'];
 
 export const timeline = [
   {
