@@ -403,3 +403,23 @@ test('the Vigil dossier, brief and /work/ show the facts checked against the Vig
     assert.ok(briefVigilHtml.includes(expected), `/briefs/vigil/ missing ${expected}`);
   }
 });
+
+test('/work/ shows verified curated project summaries and highlights', { skip: distSkip }, () => {
+  requireDist();
+  const workHtml = readFileSync(pageFile('/work/'), 'utf8');
+  for (const expected of [
+    'Proprietary source-available',
+    '18 live demos',
+    'PolyForm Noncommercial 1.0.0',
+    'Slack &amp; SMTP alerts',
+    '146 unit tests',
+    'Superseded by v2',
+    '360-degree feedback',
+    '5 role dashboards',
+    'Historical prototype',
+    'Live on GitHub Pages',
+    'Profile index',
+  ]) {
+    assert.ok(workHtml.includes(expected), `/work/ missing curated fact: ${expected}`);
+  }
+});
