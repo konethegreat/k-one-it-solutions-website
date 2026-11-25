@@ -423,3 +423,27 @@ test('/work/ shows verified curated project summaries and highlights', { skip: d
     assert.ok(workHtml.includes(expected), `/work/ missing curated fact: ${expected}`);
   }
 });
+
+test('/ and /about/ list only public-repo-backed skills and stack', { skip: distSkip }, () => {
+  requireDist();
+  const homeHtml = readFileSync(pageFile('/'), 'utf8');
+  const aboutHtml = readFileSync(pageFile('/about/'), 'utf8');
+  assert.ok(homeHtml.includes('Cloudflare'), '/ missing Cloudflare in stack');
+  assert.ok(aboutHtml.includes('Cloudflare Workers'), '/about/ missing Cloudflare Workers');
+  for (const removed of [
+    'Neo4j',
+    'Redis',
+    'LM Studio',
+    'Voyage AI',
+    'Spring Boot',
+    'NestJS',
+    'React Native (Expo)',
+    'Terraform',
+    'CloudFormation',
+    'nginx',
+    'Secret scanning',
+    'SBOM and CVE scanning',
+  ]) {
+    assert.ok(!aboutHtml.includes(removed), `/about/ still contains unsupported skill: ${removed}`);
+  }
+});
