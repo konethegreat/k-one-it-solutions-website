@@ -88,13 +88,13 @@ const curated: Record<string, Curated> = {
   'munisolve-za': {
     title: 'MuniSolve ZA',
     summary:
-      'Citizens report municipal issues, administrators triage them on a live heat map, and a Claude-powered assistant answers citizen questions within a strict hourly limit.',
+      'Citizens report infrastructure faults and track progress, supervisors assign crews and record resolution, and municipal administrators manage reports and users, with an optional Siyanda AI assistant.',
     category: 'Legal & civic tech',
     status: 'live',
     liveUrl: 'https://munisolve-za.vercel.app/',
     featured: 3,
-    tech: ['React 19', 'Node.js', 'Express', 'PostgreSQL', 'Prisma'],
-    highlights: ['Live', '3 user roles', 'Rate-limited AI assistant'],
+    tech: ['React 19', 'Node.js', 'Express 5', 'PostgreSQL', 'Prisma'],
+    highlights: ['Live on Vercel', '3 user roles', 'Proprietary source-available'],
   },
   clearcut: {
     title: 'ClearCut',
@@ -120,30 +120,87 @@ const curated: Record<string, Curated> = {
   'ui-vault': {
     title: 'UI Vault',
     summary:
-      'A provenance-first index of UI and UX patterns, with attribution and usage rights recorded for every entry.',
+      'A provenance-first index of UI and UX patterns with attribution and usage rights for every entry, eighteen live demos, a hosted Worker API, a CLI and a read-only MCP server.',
     category: 'Web & apps',
     status: 'live',
     liveUrl: 'https://konethegreat.github.io/ui-vault/',
-    tech: ['TypeScript', 'Astro'],
-    highlights: ['Live gallery', 'MIT'],
+    tech: ['TypeScript', 'Astro', 'Cloudflare Workers', 'MCP'],
+    highlights: ['18 live demos', 'API, CLI & MCP', 'MIT'],
   },
   Diary: {
     title: 'Diary',
     summary:
-      'A private, single-user diary with local SQLite storage and optional AI providers, including local models, so entries can stay on your own machine.',
+      'A private, single-user installable diary with local SQLite storage, RAG search, PDF export and optional AI providers (Claude API or local Ollama) so entries stay on your own machine.',
     category: 'AI & agents',
     status: 'public',
     featured: 6,
     tech: ['Python', 'FastAPI', 'HTMX', 'SQLite', 'Ollama'],
-    highlights: ['Local-first', 'PolyForm Noncommercial'],
+    highlights: ['Local-first', 'RAG search & PDF export', 'PolyForm Noncommercial 1.0.0'],
   },
-  'timelex-automated-time-tracking-v2': { title: 'TimeLex v2 (prototype)', category: 'Legal & civic tech', status: 'prototype' },
-  'timelex-automated-time-tracking': { title: 'TimeLex v1 (prototype)', category: 'Legal & civic tech', status: 'prototype' },
-  'performance-management-tool': { title: 'Performance management tool', category: 'Legal & civic tech', status: 'demo' },
-  'systems-project-management-': { title: 'Engineering project workspace', category: 'Web & apps', status: 'demo' },
-  'k-one-solutions-media': { title: 'K-ONE Solutions Media', category: 'Web & apps', status: 'prototype' },
-  'konethegreat.github.io': { title: 'Portfolio site', category: 'Web & apps', status: 'live' },
-  konethegreat: { title: 'GitHub profile README', category: 'Web & apps', status: 'public' },
+  'timelex-automated-time-tracking-v2': {
+    title: 'TimeLex v2 (prototype)',
+    summary:
+      'Legal time-review prototype with tenant-scoped drafts, matter assignment, six-minute unit approval into a time ledger and a simulated synchronization gateway.',
+    category: 'Legal & civic tech',
+    status: 'prototype',
+    tech: ['Next.js', 'React', 'TypeScript', 'Prisma', 'PostgreSQL'],
+    highlights: ['Prototype', '146 unit tests', '36-check HTTP workflow'],
+  },
+  'timelex-automated-time-tracking': {
+    title: 'TimeLex v1 (prototype)',
+    summary:
+      'Earlier TimeLex legal time-tracking prototype preserved for reference; current development is in timelex-automated-time-tracking-v2.',
+    category: 'Legal & civic tech',
+    status: 'prototype',
+    tech: ['JavaScript', 'HTML', 'CSS'],
+    highlights: ['Superseded by v2', 'MIT'],
+  },
+  'performance-management-tool': {
+    title: 'Performance management tool',
+    summary:
+      'Full-stack legal team performance management demo with quarterly appraisals, 360-degree feedback, multi-stage approval workflows, PDF export and optional AI-assisted review drafting.',
+    category: 'Legal & civic tech',
+    status: 'demo',
+    tech: ['React', 'Node.js', 'Express', 'PostgreSQL', 'Prisma'],
+    highlights: ['Portfolio demo', '360-degree feedback', 'PDF export'],
+  },
+  'systems-project-management-': {
+    title: 'Engineering project workspace',
+    summary:
+      'Engineering workspace demo (MB IQ) with projects, sprints, five role-based dashboards, Mermaid diagrams and an optional AI assistant with human approval for destructive tools.',
+    category: 'Web & apps',
+    status: 'demo',
+    tech: ['React', 'TypeScript', 'Express', 'Prisma', 'SQLite'],
+    highlights: ['Portfolio demo', '5 role dashboards', 'Human-approved AI tools'],
+  },
+  'k-one-solutions-media': {
+    title: 'K-ONE Solutions Media',
+    summary:
+      'Historical social-media prototype built with React, Express, MongoDB and Socket.IO, exploring feeds, following, notifications, real-time messaging and media uploads.',
+    category: 'Web & apps',
+    status: 'prototype',
+    tech: ['React', 'Express', 'MongoDB', 'Socket.IO', 'Tailwind CSS'],
+    highlights: ['Historical prototype'],
+  },
+  'konethegreat.github.io': {
+    title: 'Portfolio site',
+    summary:
+      'Personal portfolio site for Kone Tshivhinda, AI systems engineer and full-stack developer in Johannesburg, South Africa, deployed to GitHub Pages.',
+    category: 'Web & apps',
+    status: 'live',
+    liveUrl: 'https://konethegreat.github.io',
+    tech: ['React', 'TypeScript', 'Tailwind CSS', 'Vite'],
+    highlights: ['Live on GitHub Pages'],
+  },
+  konethegreat: {
+    title: 'GitHub profile README',
+    summary:
+      'GitHub profile README for Kone Tshivhinda, linking flagship AI agent, legal tech, civic tech and automation projects with self-contained SVG cards.',
+    category: 'Web & apps',
+    status: 'public',
+    tech: ['Markdown', 'SVG'],
+    highlights: ['Profile index'],
+  },
   'k-one-it-solutions-website': {
     title: 'This website',
     summary: 'The source for this site: Astro, React islands and Tailwind CSS, deployed as static files.',
@@ -153,10 +210,12 @@ const curated: Record<string, Curated> = {
   },
   'server-health-monitor': {
     title: 'Server Health Monitor',
-    summary: 'Monitors CPU, memory and disk with configurable thresholds, alerting to Slack and email, with Docker packaging and tests on Windows and Linux.',
+    summary:
+      'Python tool that samples CPU, memory and disk usage against configurable thresholds and sends Slack or SMTP email alerts, tested on Windows and Linux in CI.',
     category: 'Tools & DevOps',
     status: 'public',
-    tech: ['Python', 'Docker', 'GitHub Actions'],
+    tech: ['Python', 'GitHub Actions'],
+    highlights: ['Slack & SMTP alerts', 'Windows & Linux CI'],
   },
   'agentos-studio-website': {
     title: 'AgentOS Studio Download Site',
