@@ -48,16 +48,10 @@ export const timeline = [
     body: 'An independent software studio building AI systems, web apps and tooling, from first commit to live deployment.',
   },
   {
-    when: 'Jun to Oct 2026',
+    when: 'Jun 2026 to present',
     role: 'Founding engineer',
     org: 'Law-firm technology team, Johannesburg',
     body: 'Helped set up a new in-house software engineering team and led multi-tenant, POPIA-aligned application work, including AI integrations with human sign-off, cloud infrastructure and CI/CD.',
-  },
-  {
-    when: 'Jan 2025 to Feb 2026',
-    role: 'Software tester & technical support specialist',
-    org: 'Mademe ICT, Centurion',
-    body: 'Functional, integration and performance testing, plus tier-2 support, across IT service deployments, network infrastructure and smart automation systems.',
   },
   {
     when: 'Apr to Aug 2024',
