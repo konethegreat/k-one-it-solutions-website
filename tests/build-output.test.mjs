@@ -447,3 +447,21 @@ test('/ and /about/ list only public-repo-backed skills and stack', { skip: dist
     assert.ok(!aboutHtml.includes(removed), `/about/ still contains unsupported skill: ${removed}`);
   }
 });
+
+test('/about/ timeline matches portfolio and profile sources', { skip: distSkip }, () => {
+  requireDist();
+  const aboutHtml = readFileSync(pageFile('/about/'), 'utf8');
+  for (const expected of [
+    '2025 to present',
+    'K-ONE IT SOLUTIONS, Johannesburg',
+    'Jun 2026 to present',
+    'Law-firm technology team, Johannesburg',
+    'Apr to Aug 2024',
+    'GAO Tek Inc., remote (Canada)',
+  ]) {
+    assert.ok(aboutHtml.includes(expected), `/about/ missing verified timeline fact: ${expected}`);
+  }
+  for (const removed of ['Mademe ICT', 'Jun to Oct 2026']) {
+    assert.ok(!aboutHtml.includes(removed), `/about/ still contains unverified timeline text: ${removed}`);
+  }
+});
