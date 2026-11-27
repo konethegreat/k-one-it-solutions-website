@@ -61,8 +61,8 @@ export const serviceDetails: ServiceDetail[] = [
     points: [
       'Multi-agent design with supervisor and sub-agents',
       'MCP servers and tool integrations',
-      'Workflow automation, including n8n',
-      'Usage metering, budgets and audit trails',
+      'Automated workflows and background jobs',
+      'Usage budgets, cost tracking and audit trails',
     ],
     outcomes: [
       {
@@ -97,7 +97,7 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'ClearCut live demo', href: links.clearcut, kind: 'live' },
       { label: 'ClearCut source', href: 'https://github.com/konethegreat/clearcut', kind: 'source' },
     ],
-    stack: ['Claude', 'OpenAI', 'MCP', 'Python', 'TypeScript', 'n8n', 'PostgreSQL'],
+    stack: ['Claude', 'OpenAI', 'MCP', 'Python', 'TypeScript', 'Rust', 'PostgreSQL'],
     faq: [
       {
         q: 'Will the agent act without approval?',
@@ -124,7 +124,7 @@ export const serviceDetails: ServiceDetail[] = [
     points: [
       'Hybrid keyword and vector retrieval',
       'Document and OCR pipelines',
-      'Entity resolution and knowledge graphs',
+      'Document ingestion and structured extraction',
       'Offline evaluations and source attribution',
     ],
     outcomes: [
@@ -148,7 +148,7 @@ export const serviceDetails: ServiceDetail[] = [
         items: [
           'Hybrid keyword and vector search',
           'Chunking, OCR and table extraction',
-          'Entity resolution and knowledge graphs',
+          'Document ingestion and structured extraction',
           'Grounded answering with citations',
         ],
       },
@@ -160,7 +160,7 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'Vigil architecture docs', href: 'https://github.com/konethegreat/Vigil/tree/develop/docs', kind: 'docs' },
       { label: 'ClearCut live demo', href: links.clearcut, kind: 'live' },
     ],
-    stack: ['pgvector', 'PostgreSQL', 'Neo4j', 'Tesseract', 'Voyage AI', 'Python', 'FastAPI'],
+    stack: ['pgvector', 'PostgreSQL', 'SQLite', 'Tesseract', 'Rust', 'Python', 'FastAPI'],
     faq: [
       {
         q: 'Can it answer from our internal documents only?',
@@ -183,17 +183,17 @@ export const serviceDetails: ServiceDetail[] = [
     title: 'Web & mobile applications',
     promise: 'From first commit to a live address.',
     summary:
-      'Full-stack products from first commit to live deployment: responsive web apps, progressive web apps and React Native mobile apps.',
+      'Full-stack products from first commit to live deployment: responsive web apps, installable PWAs and desktop apps.',
     points: [
       'React, Next.js and Vite front ends',
-      'FastAPI, Node.js and Spring Boot back ends',
-      'PostgreSQL, REST and GraphQL APIs',
-      'PWAs and React Native (Expo)',
+      'FastAPI, Node.js and Rust back ends',
+      'PostgreSQL, SQLite and REST APIs',
+      'PWAs, Electron and Tauri desktop apps',
     ],
     outcomes: [
       {
         title: 'One product, every screen',
-        body: 'Responsive web, PWA and React Native builds share the same API and design tokens, so the product stays consistent.',
+        body: 'Responsive web, PWA and desktop builds share the same API and design tokens, so the product stays consistent.',
       },
       {
         title: 'Safe releases',
@@ -210,8 +210,8 @@ export const serviceDetails: ServiceDetail[] = [
         group: 'Build',
         items: [
           'React, Next.js or Astro front ends',
-          'FastAPI, Node.js or Spring Boot back ends',
-          'PostgreSQL, REST and GraphQL',
+          'FastAPI, Node.js or Rust back ends',
+          'PostgreSQL, SQLite and REST APIs',
           'Authentication and role-based access',
         ],
       },
@@ -223,7 +223,7 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'SA-JAS dossier', href: '/work/sajas/', kind: 'dossier' },
       { label: 'This site source', href: 'https://github.com/konethegreat/k-one-it-solutions-website', kind: 'source' },
     ],
-    stack: ['React', 'Next.js', 'Astro', 'TypeScript', 'React Native', 'FastAPI', 'PostgreSQL'],
+    stack: ['React', 'Next.js', 'Astro', 'TypeScript', 'Tauri', 'FastAPI', 'PostgreSQL'],
     faq: [
       {
         q: 'Do you build the design too?',
@@ -234,8 +234,8 @@ export const serviceDetails: ServiceDetail[] = [
         a: 'After a short review. You get a written assessment of what is safe to keep and what needs work before a plan is agreed.',
       },
       {
-        q: 'What about app store releases?',
-        a: 'React Native apps are prepared for TestFlight and Play internal testing, with signing and store metadata handled during handover.',
+        q: 'What about desktop installers and updates?',
+        a: 'Desktop builds (Tauri or Electron) are packaged as platform installers for Windows, macOS and Linux, with release notes and update paths documented during handover.',
       },
     ],
   },
@@ -246,12 +246,12 @@ export const serviceDetails: ServiceDetail[] = [
     title: 'Cloud, DevOps & CI/CD',
     promise: 'Infrastructure you can read, rebuild and roll back.',
     summary:
-      'Infrastructure defined as code and delivery pipelines that test, scan and ship safely, on AWS and other major platforms.',
+      'Hosting and delivery pipelines that test, build and ship safely on Cloudflare, GitHub Pages, Vercel and Docker.',
     points: [
-      'AWS: ECS Fargate, RDS, S3, CloudFront',
-      'Terraform and CloudFormation',
+      'Cloudflare Workers, Pages and GitHub Pages',
+      'Wrangler configuration and Vercel deployments',
       'Docker and GitHub Actions pipelines',
-      'Secret scanning, SBOM and CVE checks',
+      'Type checks, linting and automated test gates',
     ],
     outcomes: [
       {
@@ -272,10 +272,10 @@ export const serviceDetails: ServiceDetail[] = [
       {
         group: 'Build',
         items: [
-          'AWS ECS Fargate, RDS, S3 and CloudFront',
-          'Terraform and CloudFormation',
+          'Cloudflare Workers, Pages and GitHub Pages',
+          'Wrangler configuration and Vercel deployments',
           'Docker images and GitHub Actions',
-          'Secret scanning, SBOM and CVE checks',
+          'Type checks, linting and automated test gates',
         ],
       },
       { group: 'Handover', items: ['Runbooks and on-call notes', 'Cost and alert dashboards', 'Access review and key rotation'] },
@@ -285,11 +285,11 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'This site source', href: 'https://github.com/konethegreat/k-one-it-solutions-website', kind: 'source' },
       { label: 'ClearCut source', href: 'https://github.com/konethegreat/clearcut', kind: 'source' },
     ],
-    stack: ['AWS', 'Terraform', 'CloudFormation', 'Docker', 'GitHub Actions', 'Cloudflare', 'nginx'],
+    stack: ['Cloudflare', 'GitHub Pages', 'Vercel', 'Docker', 'GitHub Actions', 'Linux', 'Windows'],
     faq: [
       {
-        q: 'Do we have to move to AWS?',
-        a: 'No. The same practices apply to Cloudflare, Azure, a South African host or your own hardware.',
+        q: 'Do we have to use a specific cloud provider?',
+        a: 'No. The same practices apply to Cloudflare, Vercel, GitHub Pages, Docker or your own hardware.',
       },
       {
         q: 'Can you work with our existing pipeline?',
@@ -310,10 +310,10 @@ export const serviceDetails: ServiceDetail[] = [
     summary:
       'AI that runs on your own hardware or in your own country when the data is sensitive, with POPIA-aware handling built in.',
     points: [
-      'Local models with Ollama and LM Studio',
-      'Open-weight model selection and fine-tuning',
+      'Local models with Ollama',
+      'Open-weight model selection and local embeddings',
       'Data residency and POPIA-aware design',
-      'Role-based access, MFA and rate limiting',
+      'Role-based access, tenant isolation and rate limiting',
     ],
     outcomes: [
       {
@@ -334,9 +334,9 @@ export const serviceDetails: ServiceDetail[] = [
       {
         group: 'Build',
         items: [
-          'Ollama and LM Studio deployments',
-          'Open-weight model selection and fine-tuning',
-          'Role-based access, MFA and rate limiting',
+          'Ollama local model deployments',
+          'Open-weight model selection and local embeddings',
+          'Role-based access, tenant isolation and rate limiting',
           'Local retrieval and audit logs',
         ],
       },
@@ -348,7 +348,7 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'TimeLex dossier', href: '/work/timelex/', kind: 'dossier' },
       { label: 'Vigil ADRs', href: 'https://github.com/konethegreat/Vigil/tree/develop/docs/adr', kind: 'docs' },
     ],
-    stack: ['Ollama', 'LM Studio', 'open-weight models', 'Python', 'Rust', 'PostgreSQL', 'Linux'],
+    stack: ['Ollama', 'SQLite', 'open-weight models', 'Python', 'Rust', 'PostgreSQL', 'Linux'],
     faq: [
       {
         q: 'Is local AI as good as a hosted model?',
@@ -374,7 +374,7 @@ export const serviceDetails: ServiceDetail[] = [
       'Testing that finds problems before users do, and hands-on technical support when systems misbehave.',
     points: [
       'Functional, integration and performance testing',
-      'Playwright, pytest, Jest and Vitest',
+      'Playwright, pytest and Vitest',
       'Tier-2 support and network troubleshooting',
       'Structured diagnostics and clear reporting',
     ],
@@ -398,7 +398,7 @@ export const serviceDetails: ServiceDetail[] = [
         group: 'Build',
         items: [
           'Functional, integration and performance testing',
-          'Playwright, pytest, Jest and Vitest suites',
+          'Playwright, pytest and Vitest suites',
           'Network and device troubleshooting',
           'Structured diagnostics and reports',
         ],
@@ -410,7 +410,7 @@ export const serviceDetails: ServiceDetail[] = [
       { label: 'ClearCut source', href: 'https://github.com/konethegreat/clearcut', kind: 'source' },
       { label: 'This site source', href: 'https://github.com/konethegreat/k-one-it-solutions-website', kind: 'source' },
     ],
-    stack: ['Playwright', 'pytest', 'Jest', 'Vitest', 'Docker', 'Linux', 'Windows'],
+    stack: ['Playwright', 'pytest', 'Vitest', 'GitHub Actions', 'Docker', 'Linux', 'Windows'],
     faq: [
       {
         q: 'Can you test without access to production?',

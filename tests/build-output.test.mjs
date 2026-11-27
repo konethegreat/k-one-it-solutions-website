@@ -447,3 +447,38 @@ test('/ and /about/ list only public-repo-backed skills and stack', { skip: dist
     assert.ok(!aboutHtml.includes(removed), `/about/ still contains unsupported skill: ${removed}`);
   }
 });
+
+test('/services/ and service detail pages contain only public-repo-backed capabilities and stack', { skip: distSkip }, () => {
+  requireDist();
+  const routes = ['/services/', ...serviceSlugs().map((slug) => `/services/${slug}/`)];
+  const unsupported = [
+    'n8n',
+    'Neo4j',
+    'Voyage AI',
+    'knowledge graphs',
+    'Spring Boot',
+    'React Native',
+    'GraphQL',
+    'ECS Fargate',
+    'CloudFront',
+    'Terraform',
+    'CloudFormation',
+    'Secret scanning',
+    'SBOM',
+    'nginx',
+    'LM Studio',
+    'fine-tuning',
+    'MFA',
+    'Jest',
+  ];
+  for (const route of routes) {
+    const html = readFileSync(pageFile(route), 'utf8');
+    for (const term of unsupported) {
+      assert.ok(!html.includes(term), `${route} still contains unsupported service claim: ${term}`);
+    }
+  }
+  const cloudHtml = readFileSync(pageFile('/services/cloud-devops/'), 'utf8');
+  assert.ok(cloudHtml.includes('Cloudflare Workers'), '/services/cloud-devops/ missing Cloudflare Workers');
+  const webHtml = readFileSync(pageFile('/services/web-mobile/'), 'utf8');
+  assert.ok(webHtml.includes('Tauri'), '/services/web-mobile/ missing Tauri');
+});
